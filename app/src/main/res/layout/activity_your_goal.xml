@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F7F8"
+    android:padding="20dp"
+    android:id="@+id/main">
+
+    <!-- سهم الرجوع -->
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back" />
+
+    <!-- العنوان -->
+    <TextView
+        android:id="@+id/tvYourGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="What's your goal?"
+        android:textColor="#0D171B"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- النص التوضيحي -->
+    <TextView
+        android:id="@+id/tvaim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="20dp"
+        android:text="Select your primary goal. This will help us personalize your plan."
+        android:textColor="#4C809A"
+        android:textSize="14sp" />
+
+    <!-- مجموعة الأزرار -->
+    <RadioGroup
+        android:id="@+id/radioGroupGoals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- خيار 1 -->
+        <LinearLayout
+            android:id="@+id/LLloseWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="12dp"
+                android:padding="8dp"
+                android:src="@android:drawable/arrow_down_float" />
+
+            <TextView
+                android:id="@+id/tvLoseWeight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lose Weight"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbLose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- خيار 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:layout_marginEnd="12dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Maintain Weight"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+
+            <RadioButton
+                android:id="@+id/rbMaintain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+        </LinearLayout>
+
+        <!-- خيار 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/arrow_up_float"
+                android:padding="8dp"
+                android:layout_marginEnd="12dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Gain Weight"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+
+            <RadioButton
+                android:id="@+id/rbGain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RadioGroup>
+
+    <!-- زر المتابعة -->
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#13A4EC"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp" />
+</LinearLayout>

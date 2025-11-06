@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="rgGoal" type="id" />
+    <item name="progressBar2" type="id" />
+    <item name="imageView1" type="id" />
+    <item name="ImageView2" type="id" />
+    <item name="ImageView3" type="id" />
+    <item name="progressBar3" type="id" />
+</resources>

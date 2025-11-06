@@ -11,8 +11,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalHamada">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".AddFoods"
+            android:exported="false" />
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Progress"
+            android:exported="false" />
+        <activity
+            android:name=".Exercises"
+            android:exported="false" />
+
+        <activity
+            android:name=".YourGoal"
+            android:exported="false" />
+        <activity
+            android:name=".AboutYourself"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp"
+            android:exported="false" />
+        <activity
+            android:name=".SignIn"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

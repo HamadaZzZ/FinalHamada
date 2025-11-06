@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#F6F7F8"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main">
+
+    <!-- ====== Header ====== -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/btnClose"
+            android:layout_alignParentStart="true"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:text="AddFood"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <!-- ====== Search Bar ====== -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
+
+        <EditText
+            android:id="@+id/etSearchFood"
+            android:hint="Search for a food"
+            android:background="@null"
+            android:textColor="#000"
+            android:textColorHint="#999"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <!-- ====== Today's Goal ====== -->
+    <TextView
+        android:text="Today's Goal"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Calories Progress -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Calories"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="1200 / 2000 cal"
+                android:textColor="#666"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressCalories"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="60"
+            android:progressTint="#13a4ec"
+            android:backgroundTint="#E0E0E0"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+    </LinearLayout>
+
+    <!-- ====== Recent Food List ====== -->
+    <TextView
+        android:text="Recent"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- طعام رقم 1 -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:backgroundTint="#13a4ec"
+                    android:layout_marginEnd="12dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Apple"
+                        android:textStyle="bold"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="150 cal"
+                        android:textColor="#666"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <ImageButton
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+            </LinearLayout>
+
+            <!-- يمكنك تكرار نفس الشكل لباقي الأطعمة -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ====== Bottom Navigation ====== -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="🏠 Home"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="#888"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="🎯 Goals"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="#888"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="🍎 Food"
+            android:textStyle="bold"
+            android:textColor="#13a4ec"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="🏋 Exercise"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="#888"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="📈 Progress"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="#888"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

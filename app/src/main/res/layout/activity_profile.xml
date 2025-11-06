@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main">
+
+    <!-- ===== العنوان العلوي ===== -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:text="Profile"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/btnSettings"
+            android:layout_alignParentEnd="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+    </RelativeLayout>
+
+    <!-- ===== صورة البروفايل ===== -->
+    <ImageView
+        android:id="@+id/imgProfile"
+        android:layout_marginTop="16dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center" />
+
+    <!-- ===== الاسم والمهنة ===== -->
+    <TextView
+        android:id="@+id/tvName"
+        android:text="Sophia Carter"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_marginTop="8dp"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:text="Fitness Enthusiast"
+        android:textColor="#888"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- ===== الثلاث بطاقات (الطول، الوزن، BMI) ===== -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="#F9F9F9"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F8F8F8"
+            android:clipToOutline="true"
+            android:elevation="1dp">
+
+            <TextView
+                android:text="5'7\"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="Height"
+                android:textColor="#777"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="#F9F9F9"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="1dp">
+
+            <TextView
+                android:text="135 lbs"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="Weight"
+                android:textColor="#777"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="#F9F9F9"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="1dp">
+
+            <TextView
+                android:text="22.5"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="BMI"
+                android:textColor="#777"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ===== أزرار ===== -->
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:text="Edit Profile"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:backgroundTint="#007BFF"
+        android:layout_marginTop="24dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:text="Log Out"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:backgroundTint="#EAEAEA"
+        android:layout_marginTop="12dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content" />
+
+    <!-- ===== شريط التنقل السفلي ===== -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:weightSum="5"
+        android:padding="8dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="📊 Dashboard"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="🍽 Add Food"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="🏋 Add Exercise"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="📈 Progress"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="👤 Profile"
+            android:textStyle="bold"
+            android:textColor="#007AFF"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
