@@ -92,13 +92,14 @@
                 android:layout_marginEnd="12dp"/>
 
             <TextView
+                android:id="@+id/tvmainWeight"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Maintain Weight"
+                android:textColor="#000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#000"/>
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbMaintain"
@@ -123,13 +124,14 @@
                 android:layout_marginEnd="12dp"/>
 
             <TextView
+                android:id="@+id/tvGainWeight"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Gain Weight"
+                android:textColor="#000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#000"/>
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbGain"

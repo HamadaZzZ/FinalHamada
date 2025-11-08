@@ -52,7 +52,10 @@ public class AboutYourself extends AppCompatActivity {
         radioFemale = findViewById(R.id.radioFemale);
         radioOther = findViewById(R.id.radioOther);
         nextButton = findViewById(R.id.nextButton);
-        Intent intent = new Intent(AboutYourself.this, YourGoal.class);
-        startActivity(intent);
+        nextButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AboutYourself.this, YourGoal.class);
+            startActivity(intent);
+            finish();
+        });
     }
 }

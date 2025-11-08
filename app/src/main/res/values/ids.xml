@@ -6,4 +6,7 @@
     <item name="ImageView2" type="id" />
     <item name="ImageView3" type="id" />
     <item name="progressBar3" type="id" />
+    <item name="tvProgres" type="id" />
+    <item name="tvcalBanana" type="id" />
+    <item name="tvTile" type="id" />
 </resources>

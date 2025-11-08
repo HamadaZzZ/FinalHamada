@@ -44,11 +44,13 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignIn.this, SignUp.class);
                 startActivity(intent);
+                finish();
             }
         });
         btnLogin.setOnClickListener(v -> {
             Intent intent = new Intent(SignIn.this, AboutYourself.class);
             startActivity(intent);
+            finish();
         });
     }
 }
