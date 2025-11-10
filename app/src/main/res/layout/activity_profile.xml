@@ -1,231 +1,278 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:gravity="center_horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/main">
-
-    <!-- ===== العنوان العلوي ===== -->
+<?xml version="1.0" ?>
+<LinearLayout
+    xmlns:ns0="http://schemas.android.com/apk/res/android"
+    ns0:orientation="vertical"
+    ns0:background="#FFFFFF"
+    ns0:gravity="center_horizontal"
+    ns0:layout_width="match_parent"
+    ns0:layout_height="match_parent"
+    ns0:id="@+id/main">
+    
+    
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
-
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content"
+        ns0:padding="16dp">
+        
+        
         <TextView
-            android:id="@+id/tvTitle"
-            android:text="Profile"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            ns0:id="@+id/tvTitle"
+            ns0:text="Profile"
+            ns0:textSize="20sp"
+            ns0:textStyle="bold"
+            ns0:layout_centerHorizontal="true"
+            ns0:layout_width="wrap_content"
+            ns0:layout_height="wrap_content"/>
+        
+        
         <ImageView
-            android:id="@+id/btnSettings"
-            android:layout_alignParentEnd="true"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
+            ns0:id="@+id/btnSettings"
+            ns0:layout_alignParentEnd="true"
+            ns0:layout_width="24dp"
+            ns0:layout_height="24dp"/>
+        
+        
     </RelativeLayout>
-
-    <!-- ===== صورة البروفايل ===== -->
+    
+    
     <ImageView
-        android:id="@+id/imgProfile"
-        android:layout_marginTop="16dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center" />
-
-    <!-- ===== الاسم والمهنة ===== -->
+        ns0:id="@+id/imgProfile"
+        ns0:layout_marginTop="16dp"
+        ns0:layout_width="100dp"
+        ns0:layout_height="100dp"
+        ns0:scaleType="centerCrop"
+        ns0:layout_gravity="center"/>
+    
+    
     <TextView
-        android:id="@+id/tvName"
-        android:text="Sophia Carter"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:layout_marginTop="8dp"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        ns0:id="@+id/tvName"
+        ns0:text="Hamada Abd"
+        ns0:textStyle="bold"
+        ns0:textSize="22sp"
+        ns0:layout_marginTop="8dp"
+        ns0:textColor="#000"
+        ns0:layout_width="wrap_content"
+        ns0:layout_height="wrap_content"/>
+    
+    
     <TextView
-        android:id="@+id/tvSubtitle"
-        android:text="Fitness Enthusiast"
-        android:textColor="#888"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <!-- ===== الثلاث بطاقات (الطول، الوزن، BMI) ===== -->
+        ns0:id="@+id/tvSubtitle"
+        ns0:text="FitnessEnthusiast"
+        ns0:textColor="#888"
+        ns0:textSize="14sp"
+        ns0:layout_marginBottom="16dp"
+        ns0:layout_width="wrap_content"
+        ns0:layout_height="wrap_content"/>
+    
+    
     <LinearLayout
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center"
-        android:layout_marginHorizontal="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        ns0:orientation="horizontal"
+        ns0:weightSum="3"
+        ns0:gravity="center"
+        ns0:layout_marginHorizontal="16dp"
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content">
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:background="#F9F9F9"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#F8F8F8"
-            android:clipToOutline="true"
-            android:elevation="1dp">
-
+            ns0:orientation="vertical"
+            ns0:background="#F9F9F9"
+            ns0:gravity="center"
+            ns0:padding="16dp"
+            ns0:layout_margin="4dp"
+            ns0:layout_weight="1"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:backgroundTint="#F8F8F8"
+            ns0:clipToOutline="true"
+            ns0:elevation="1dp">
+            
+            
             <TextView
-                android:text="5'7\"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
+                ns0:text="6.1\"
+                ns0:textStyle="bold"
+                ns0:textSize="18sp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvN57"/>
+            
+            
             <TextView
-                android:text="Height"
-                android:textColor="#777"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="Height"
+                ns0:textColor="#777"
+                ns0:textSize="14sp"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvHeight"/>
+            
+            
         </LinearLayout>
-
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:background="#F9F9F9"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="1dp">
-
+            ns0:orientation="vertical"
+            ns0:background="#F9F9F9"
+            ns0:gravity="center"
+            ns0:padding="16dp"
+            ns0:layout_margin="4dp"
+            ns0:layout_weight="1"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:elevation="1dp">
+            
+            
             <TextView
-                android:text="135 lbs"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
+                ns0:text="148 lbs"
+                ns0:textStyle="bold"
+                ns0:textSize="18sp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvN135Lbs"/>
+            
+            
             <TextView
-                android:text="Weight"
-                android:textColor="#777"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="Weight"
+                ns0:textColor="#777"
+                ns0:textSize="14sp"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvWeight"/>
+            
+            
         </LinearLayout>
-
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:background="#F9F9F9"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="1dp">
-
+            ns0:orientation="vertical"
+            ns0:background="#F9F9F9"
+            ns0:gravity="center"
+            ns0:padding="16dp"
+            ns0:layout_margin="4dp"
+            ns0:layout_weight="1"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:elevation="1dp">
+            
+            
             <TextView
-                android:text="22.5"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
+                ns0:text="20"
+                ns0:textStyle="bold"
+                ns0:textSize="18sp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvN225"/>
+            
+            
             <TextView
-                android:text="BMI"
-                android:textColor="#777"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="BMI"
+                ns0:textColor="#777"
+                ns0:textSize="14sp"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvBmi"/>
+            
+            
         </LinearLayout>
+        
+        
     </LinearLayout>
-
-    <!-- ===== أزرار ===== -->
+    
+    
     <Button
-        android:id="@+id/btnEditProfile"
-        android:text="Edit Profile"
-        android:textStyle="bold"
-        android:textColor="#FFF"
-        android:backgroundTint="#007BFF"
-        android:layout_marginTop="24dp"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content" />
-
+        ns0:id="@+id/btnEditProfile"
+        ns0:text="Edit
+        Profile"
+        ns0:textStyle="bold"
+        ns0:textColor="#FFF"
+        ns0:backgroundTint="#007BFF"
+        ns0:layout_marginTop="24dp"
+        ns0:layout_width="250dp"
+        ns0:layout_height="wrap_content"/>
+    
+    
     <Button
-        android:id="@+id/btnLogout"
-        android:text="Log Out"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:backgroundTint="#EAEAEA"
-        android:layout_marginTop="12dp"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content" />
-
-    <!-- ===== شريط التنقل السفلي ===== -->
+        ns0:id="@+id/btnLogout"
+        ns0:text="Log
+        Out"
+        ns0:textStyle="bold"
+        ns0:textColor="#000"
+        ns0:backgroundTint="#EAEAEA"
+        ns0:layout_marginTop="12dp"
+        ns0:layout_width="250dp"
+        ns0:layout_height="wrap_content"/>
+    
+    
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#FFFFFF"
-        android:weightSum="5"
-        android:padding="8dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        ns0:orientation="horizontal"
+        ns0:gravity="center"
+        ns0:background="#FFFFFF"
+        ns0:weightSum="5"
+        ns0:padding="8dp"
+        ns0:layout_gravity="bottom"
+        ns0:layout_marginTop="24dp"
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content">
+        
+        
         <TextView
-            android:text="📊 Dashboard"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
+            ns0:text="📊
+            Dashboard"
+            ns0:gravity="center"
+            ns0:layout_weight="1"
+            ns0:textSize="12sp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:id="@+id/tvDashboard"/>
+        
+        
         <TextView
-            android:text="🍽 Add Food"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
+            ns0:text="🍽 Add  Food"
+            ns0:gravity="center"
+            ns0:layout_weight="1"
+            ns0:textSize="12sp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:id="@+id/tvAddFood"/>
+        
+        
         <TextView
-            android:text="🏋 Add Exercise"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
+            ns0:text="🏋Add Exercise"
+            ns0:gravity="center"
+            ns0:layout_weight="1"
+            ns0:textSize="12sp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:id="@+id/tvAddExercise"/>
+        
+        
         <TextView
-            android:text="📈 Progress"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
+            ns0:text="📈
+            Progress"
+            ns0:gravity="center"
+            ns0:layout_weight="1"
+            ns0:textSize="12sp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:id="@+id/tvProgress"/>
+        
+        
         <TextView
-            android:text="👤 Profile"
-            android:textStyle="bold"
-            android:textColor="#007AFF"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            ns0:text="👤
+              Profile"
+            ns0:textStyle="bold"
+            ns0:textColor="#007AFF"
+            ns0:gravity="center"
+            ns0:layout_weight="1"
+            ns0:textSize="12sp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:id="@+id/tvProfile"/>
+        
+        
     </LinearLayout>
-
+    
+    
 </LinearLayout>

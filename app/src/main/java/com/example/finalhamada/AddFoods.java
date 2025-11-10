@@ -66,50 +66,21 @@ public class AddFoods extends AppCompatActivity {
         tvFood = findViewById(R.id.tvFood);
         tvExcercises = findViewById(R.id.tvExcercises);
         tvProgres = findViewById(R.id.tvProgres);
-        tvApple.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
-            startActivity(intent);
-            finish();
-        });
-        tvBanana.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
-            startActivity(intent);
-            finish();
-        });
-        tvOrange.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
-            startActivity(intent);
-            finish();
-        });
-        tvBroccoli.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
-            startActivity(intent);
-            finish();
-        });
         tvHome.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
+            Intent intent = new Intent(AddFoods.this, DashboardActivity.class);
             startActivity(intent);
-            finish();
         });
         tvGoals.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
+            Intent intent = new Intent(AddFoods.this, YourGoal.class);
             startActivity(intent);
-            finish();
-        });
-        tvFood.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
-            startActivity(intent);
-            finish();
         });
         tvExcercises.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
+            Intent intent = new Intent(AddFoods.this, Exercises.class);
             startActivity(intent);
-            finish();
+
         });
-        tvProgres.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, AddFoods.class);
-            startActivity(intent);
-            finish();
-        });
+
+
+
     }
 }

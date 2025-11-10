@@ -1,24 +1,67 @@
 package com.example.finalhamada;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class Profile extends AppCompatActivity {
+
+    private ViewGroup main;
+    private TextView tvTitle;
+    private ImageView btnSettings;
+    private ImageView imgProfile;
+    private TextView tvName;
+    private TextView tvSubtitle;
+    private TextView tvN57;
+    private TextView tvHeight;
+    private TextView tvN135Lbs;
+    private TextView tvWeight;
+    private TextView tvN225;
+    private TextView tvBmi;
+    private Button btnEditProfile;
+    private Button btnLogout;
+    private TextView tvDashboard;
+    private TextView tvAddFood;
+    private TextView tvAddExercise;
+    private TextView tvProgress;
+    private TextView tvProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        main = findViewById(R.id.main);
+        tvTitle = findViewById(R.id.tvTitle);
+        btnSettings = findViewById(R.id.btnSettings);
+        imgProfile = findViewById(R.id.imgProfile);
+        tvName = findViewById(R.id.tvName);
+        tvSubtitle = findViewById(R.id.tvSubtitle);
+        tvN57 = findViewById(R.id.tvN57);
+        tvHeight = findViewById(R.id.tvHeight);
+        tvN135Lbs = findViewById(R.id.tvN135Lbs);
+        tvWeight = findViewById(R.id.tvWeight);
+        tvN225 = findViewById(R.id.tvN225);
+        tvBmi = findViewById(R.id.tvBmi);
+        btnEditProfile = findViewById(R.id.btnEditProfile);
+        btnLogout = findViewById(R.id.btnLogout);
+        tvDashboard = findViewById(R.id.tvDashboard);
+        tvAddFood = findViewById(R.id.tvAddFood);
+        tvAddExercise = findViewById(R.id.tvAddExercise);
+        tvProgress = findViewById(R.id.tvProgress);
+        tvProfile = findViewById(R.id.tvProfile);
+
+        btnEditProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(Profile.this, Profile.class);
+            startActivity(intent);
+        });
+
+        btnLogout.setOnClickListener(v -> {
+            Intent intent = new Intent(Profile.this, SplashScreen.class);
+            startActivity(intent);
         });
     }
 }

@@ -1,273 +1,333 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" ?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:padding="16dp"
-    android:id="@+id/main">
-
-    <!-- 🔹 العنوان العلوي -->
+    xmlns:ns0="http://schemas.android.com/apk/res/android"
+    ns0:layout_width="match_parent"
+    ns0:layout_height="match_parent"
+    ns0:orientation="vertical"
+    ns0:background="#FFFFFF"
+    ns0:padding="16dp"
+    ns0:id="@+id/main">
+    
+    
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content"
+        ns0:layout_marginBottom="8dp">
+        
+        
         <ImageView
-            android:id="@+id/btnClose"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:layout_alignParentStart="true"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Close"/>
-
+            ns0:id="@+id/btnClose"
+            ns0:src="@android:drawable/ic_menu_close_clear_cancel"
+            ns0:layout_alignParentStart="true"
+            ns0:layout_width="24dp"
+            ns0:layout_height="24dp"
+            ns0:contentDescription="Close"/>
+        
+        
         <TextView
-            android:text="Add Exercise"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
-            android:textColor="#000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            ns0:text="Add
+            Exercise"
+            ns0:textStyle="bold"
+            ns0:textSize="20sp"
+            ns0:layout_centerHorizontal="true"
+            ns0:textColor="#000"
+            ns0:layout_width="wrap_content"
+            ns0:layout_height="wrap_content"
+            ns0:id="@+id/tvAddExercise"/>
+        
+        
     </RelativeLayout>
-
-    <!-- 🔹 Categories Title -->
+    
+    
     <TextView
-        android:text="Categories"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:textColor="#000"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <!-- 🔹 Categories Grid -->
+        ns0:text="Categories"
+        ns0:textStyle="bold"
+        ns0:textSize="22sp"
+        ns0:textColor="#000"
+        ns0:layout_marginTop="8dp"
+        ns0:layout_marginBottom="8dp"
+        ns0:layout_width="wrap_content"
+        ns0:layout_height="wrap_content"
+        ns0:id="@+id/tvCategories"/>
+    
+    
     <GridLayout
-        android:columnCount="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- Category 1 -->
+        ns0:columnCount="2"
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content">
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="#DFFFD9"
-            android:layout_margin="8dp"
-            android:padding="16dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:backgroundTint="#DFFFD9"
-            android:elevation="2dp"
-            android:clipToOutline="true"
-            android:layout_gravity="fill">
-
+            ns0:orientation="vertical"
+            ns0:gravity="center"
+            ns0:background="#DFFFD9"
+            ns0:layout_margin="8dp"
+            ns0:padding="16dp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:layout_columnWeight="1"
+            ns0:backgroundTint="#DFFFD9"
+            ns0:elevation="2dp"
+            ns0:clipToOutline="true"
+            ns0:layout_gravity="fill">
+            
+            
             <ImageView
-                android:src="@android:drawable/ic_menu_myplaces"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
-
+                ns0:src="@android:drawable/ic_menu_myplaces"
+                ns0:layout_width="40dp"
+                ns0:layout_height="40dp"/>
+            
+            
             <TextView
-                android:text="Cardio"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="Cardio"
+                ns0:textStyle="bold"
+                ns0:textSize="16sp"
+                ns0:layout_marginTop="8dp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvCardio"/>
+            
+            
         </LinearLayout>
-
-        <!-- Category 2 -->
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="#DFFFD9"
-            android:layout_margin="8dp"
-            android:padding="16dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1">
-
+            ns0:orientation="vertical"
+            ns0:gravity="center"
+            ns0:background="#DFFFD9"
+            ns0:layout_margin="8dp"
+            ns0:padding="16dp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:layout_columnWeight="1">
+            
+            
             <ImageView
-                android:src="@android:drawable/ic_menu_manage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
-
+                ns0:src="@android:drawable/ic_menu_manage"
+                ns0:layout_width="40dp"
+                ns0:layout_height="40dp"/>
+            
+            
             <TextView
-                android:text="Strength"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="Strength"
+                ns0:textStyle="bold"
+                ns0:textSize="16sp"
+                ns0:layout_marginTop="8dp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvStrength"/>
+            
+            
         </LinearLayout>
-
-        <!-- Category 3 -->
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="#DFFFD9"
-            android:layout_margin="8dp"
-            android:padding="16dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1">
-
+            ns0:orientation="vertical"
+            ns0:gravity="center"
+            ns0:background="#DFFFD9"
+            ns0:layout_margin="8dp"
+            ns0:padding="16dp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:layout_columnWeight="1">
+            
+            
             <ImageView
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
-
+                ns0:src="@android:drawable/ic_menu_gallery"
+                ns0:layout_width="40dp"
+                ns0:layout_height="40dp"/>
+            
+            
             <TextView
-                android:text="Yoga"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="Yoga"
+                ns0:textStyle="bold"
+                ns0:textSize="16sp"
+                ns0:layout_marginTop="8dp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvYoga"/>
+            
+            
         </LinearLayout>
-
-        <!-- Category 4 -->
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="#DFFFD9"
-            android:layout_margin="8dp"
-            android:padding="16dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1">
-
+            ns0:orientation="vertical"
+            ns0:gravity="center"
+            ns0:background="#DFFFD9"
+            ns0:layout_margin="8dp"
+            ns0:padding="16dp"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content"
+            ns0:layout_columnWeight="1">
+            
+            
             <ImageView
-                android:src="@android:drawable/ic_menu_compass"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
-
+                ns0:src="@android:drawable/ic_menu_compass"
+                ns0:layout_width="40dp"
+                ns0:layout_height="40dp"/>
+            
+            
             <TextView
-                android:text="Cycling"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="Cycling"
+                ns0:textStyle="bold"
+                ns0:textSize="16sp"
+                ns0:layout_marginTop="8dp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvCycling"/>
+            
+            
         </LinearLayout>
-
+        
+        
     </GridLayout>
-
-    <!-- 🔹 Quick Add Section -->
+    
+    
     <TextView
-        android:text="Quick Add"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:textColor="#000"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <!-- Running -->
+        ns0:text="Quick
+        Add"
+        ns0:textStyle="bold"
+        ns0:textSize="22sp"
+        ns0:textColor="#000"
+        ns0:layout_marginTop="16dp"
+        ns0:layout_marginBottom="8dp"
+        ns0:layout_width="wrap_content"
+        ns0:layout_height="wrap_content"
+        ns0:id="@+id/tvQuickAdd"/>
+    
+    
     <LinearLayout
-        android:orientation="horizontal"
-        android:background="#DFFFD9"
-        android:gravity="center_vertical"
-        android:padding="12dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp">
-
+        ns0:orientation="horizontal"
+        ns0:background="#DFFFD9"
+        ns0:gravity="center_vertical"
+        ns0:padding="12dp"
+        ns0:layout_marginBottom="8dp"
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content"
+        ns0:elevation="2dp">
+        
+        
         <ImageView
-            android:src="@android:drawable/ic_media_play"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-
+            ns0:src="@android:drawable/ic_media_play"
+            ns0:layout_width="40dp"
+            ns0:layout_height="40dp"/>
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-
+            ns0:orientation="vertical"
+            ns0:layout_marginStart="8dp"
+            ns0:layout_weight="1"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content">
+            
+            
             <TextView
-                android:text="Running"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
+                ns0:text="Running"
+                ns0:textStyle="bold"
+                ns0:textSize="16sp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvRunning"/>
+            
+            
             <TextView
-                android:text="150 calories"
-                android:textColor="#555"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="150
+                calories"
+                ns0:textColor="#555"
+                ns0:textSize="14sp"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvN150Calories"/>
+            
+            
         </LinearLayout>
-
+        
+        
         <ImageView
-            android:src="@android:drawable/ic_input_add"
-            android:layout_width="32dp"
-            android:layout_height="32dp"/>
+            ns0:src="@android:drawable/ic_input_add"
+            ns0:layout_width="32dp"
+            ns0:layout_height="32dp"/>
+        
+        
     </LinearLayout>
-
-    <!-- Weightlifting -->
+    
+    
     <LinearLayout
-        android:orientation="horizontal"
-        android:background="#DFFFD9"
-        android:gravity="center_vertical"
-        android:padding="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp">
-
+        ns0:orientation="horizontal"
+        ns0:background="#DFFFD9"
+        ns0:gravity="center_vertical"
+        ns0:padding="12dp"
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content"
+        ns0:elevation="2dp">
+        
+        
         <ImageView
-            android:src="@android:drawable/ic_menu_agenda"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-
+            ns0:src="@android:drawable/ic_menu_agenda"
+            ns0:layout_width="40dp"
+            ns0:layout_height="40dp"/>
+        
+        
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-
+            ns0:orientation="vertical"
+            ns0:layout_marginStart="8dp"
+            ns0:layout_weight="1"
+            ns0:layout_width="0dp"
+            ns0:layout_height="wrap_content">
+            
+            
             <TextView
-                android:text="Weightlifting"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
+                ns0:text="Weightlifting"
+                ns0:textStyle="bold"
+                ns0:textSize="16sp"
+                ns0:textColor="#000"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvWeightlifting"/>
+            
+            
             <TextView
-                android:text="200 calories"
-                android:textColor="#555"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                ns0:text="200
+                calories"
+                ns0:textColor="#555"
+                ns0:textSize="14sp"
+                ns0:layout_width="wrap_content"
+                ns0:layout_height="wrap_content"
+                ns0:id="@+id/tvN200Calories"/>
+            
+            
         </LinearLayout>
-
+        
+        
         <ImageView
-            android:src="@android:drawable/ic_input_add"
-            android:layout_width="32dp"
-            android:layout_height="32dp"/>
+            ns0:src="@android:drawable/ic_input_add"
+            ns0:layout_width="32dp"
+            ns0:layout_height="32dp"/>
+        
+        
     </LinearLayout>
-
-    <!-- 🔹 زر أخضر في الأسفل -->
+    
+    
     <Button
-        android:text="Add New Exercise  +"
-        android:backgroundTint="#00E000"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:layout_gravity="bottom"/>
+        ns0:text="Add
+        New
+        Exercise
+        +"
+        ns0:backgroundTint="#00E000"
+        ns0:textColor="#FFFFFF"
+        ns0:textStyle="bold"
+        ns0:layout_marginTop="16dp"
+        ns0:layout_width="match_parent"
+        ns0:layout_height="wrap_content"
+        ns0:padding="12dp"
+        ns0:layout_gravity="bottom"
+        ns0:id="@+id/btnAddNewExercise"/>
+    
+    
 </LinearLayout>
