@@ -33,7 +33,7 @@ public class AddFoods extends AppCompatActivity {
     private TextView tvGoals;
     private TextView tvFood;
     private TextView tvExcercises;
-    private TextView tvProgres;
+    private TextView tvProgress;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -65,7 +65,7 @@ public class AddFoods extends AppCompatActivity {
         tvGoals = findViewById(R.id.tvGoals);
         tvFood = findViewById(R.id.tvFood);
         tvExcercises = findViewById(R.id.tvExcercises);
-        tvProgres = findViewById(R.id.tvProgres);
+        tvProgress = findViewById(R.id.tvProgress);
         tvHome.setOnClickListener(v -> {
             Intent intent = new Intent(AddFoods.this, DashboardActivity.class);
             startActivity(intent);
@@ -79,6 +79,11 @@ public class AddFoods extends AppCompatActivity {
             startActivity(intent);
 
         });
+        tvProgress.setOnClickListener(v -> {
+            Intent intent = new Intent(AddFoods.this, Progress.class);
+            startActivity(intent);
+        });
+
 
 
 

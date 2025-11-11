@@ -121,36 +121,36 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="429dp"
         android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
             <!-- طعام رقم 1 -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
-                    android:backgroundTint="#13a4ec"
-                    android:layout_marginEnd="12dp"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="#13a4ec" />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvApple"
@@ -174,25 +174,25 @@
 
             <!-- طعام رقم 2 -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
-                    android:backgroundTint="#f44336"
-                    android:layout_marginEnd="12dp"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="#f44336" />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvBanana"
@@ -216,25 +216,25 @@
 
             <!-- طعام رقم 3 -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
-                    android:backgroundTint="#ff9800"
-                    android:layout_marginEnd="12dp"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="#ff9800" />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvOrange"
@@ -258,25 +258,25 @@
 
             <!-- طعام رقم 4 -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
-                    android:backgroundTint="#4caf50"
-                    android:layout_marginEnd="12dp"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="#4caf50" />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvBroccoli"

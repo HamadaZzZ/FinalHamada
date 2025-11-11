@@ -45,7 +45,7 @@ public class Exercises extends AppCompatActivity {
         btnAddNewExercise = findViewById(R.id.btnAddNewExercise);
 
         btnAddNewExercise.setOnClickListener(v -> {
-            Intent intent = new Intent(Exercises.this, Exercises.class);
+            Intent intent = new Intent(Exercises.this, AddNewExercise.class);
             startActivity(intent);
             finish();
         });
