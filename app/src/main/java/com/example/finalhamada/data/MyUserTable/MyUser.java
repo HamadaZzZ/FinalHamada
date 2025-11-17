@@ -1,138 +1,152 @@
 package com.example.finalhamada.data.MyUserTable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+// هذا الكلاس يمثل جدول المستخدمين في قاعدة البيانات
+@Entity
 public class MyUser {
 
-    public class UserTable {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-        // الخصائص (الصفات)
-        private int user_id;
-        private String username;
-        private String email;
-        private String password;
-        private int age;
-        private String gender;
-        private float height;
-        private float weight;
-        private int goalCalories;
-        private int dailyIntake;
-        private String activityLevel;
-        private String profileImage;
+    private String fullName;
+    private String email;
+    private String password;
+    private String phone;
+    private String gender;
+    private int age;
+    private float height;
+    private float weight;
+    private float goalWeight;
+    private String goalType;
+    private String activityLevel;
+    private int dailyCaloriesTarget;
+    private String profileImage;
+    private String createdAt;
+    private String lastLogin;
+    private boolean notificationsEnabled;
 
-        // المُنشئ (Constructor)
-        public UserTable(int user_id, String username, String email, String password,
-                         int age, String gender, float height, float weight,
-                         int goalCalories, int dailyIntake,
-                         String activityLevel, String profileImage) {
-            this.user_id = user_id;
-            this.username = username;
-            this.email = email;
-            this.password = password;
-            this.age = age;
-            this.gender = gender;
-            this.height = height;
-            this.weight = weight;
-            this.goalCalories = goalCalories;
-            this.dailyIntake = dailyIntake;
-            this.activityLevel = activityLevel;
-            this.profileImage = profileImage;
-        }
+    // ==========================
+    //       Getters & Setters
+    // ==========================
 
-        // Getters و Setters
-        public int getUserId() {
-            return user_id;
-        }
-
-        public void setUserId(int user_id) {
-            this.user_id = user_id;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-
-        public String getGender() {
-            return gender;
-        }
-
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
-
-        public float getHeight() {
-            return height;
-        }
-
-        public void setHeight(float height) {
-            this.height = height;
-        }
-
-        public float getWeight() {
-            return weight;
-        }
-
-        public void setWeight(float weight) {
-            this.weight = weight;
-        }
-
-        public int getGoalCalories() {
-            return goalCalories;
-        }
-
-        public void setGoalCalories(int goalCalories) {
-            this.goalCalories = goalCalories;
-        }
-
-        public int getDailyIntake() {
-            return dailyIntake;
-        }
-
-        public void setDailyIntake(int dailyIntake) {
-            this.dailyIntake = dailyIntake;
-        }
-
-        public String getActivityLevel() {
-            return activityLevel;
-        }
-
-        public void setActivityLevel(String activityLevel) {
-            this.activityLevel = activityLevel;
-        }
-
-        public String getProfileImage() {
-            return profileImage;
-        }
-
-        public void setProfileImage(String profileImage) {
-            this.profileImage = profileImage;
-        }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public float getGoalWeight() {
+        return goalWeight;
+    }
+    public void setGoalWeight(float goalWeight) {
+        this.goalWeight = goalWeight;
+    }
+
+    public String getGoalType() {
+        return goalType;
+    }
+    public void setGoalType(String goalType) {
+        this.goalType = goalType;
+    }
+
+    public String getActivityLevel() {
+        return activityLevel;
+    }
+    public void setActivityLevel(String activityLevel) {
+        this.activityLevel = activityLevel;
+    }
+
+    public int getDailyCaloriesTarget() {
+        return dailyCaloriesTarget;
+    }
+    public void setDailyCaloriesTarget(int dailyCaloriesTarget) {
+        this.dailyCaloriesTarget = dailyCaloriesTarget;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public boolean isNotificationsEnabled() {
+        return notificationsEnabled;
+    }
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
+    }
 }
