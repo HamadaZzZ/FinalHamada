@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">FinalHamada</string>
+    <string name="app_name">MyApp</string>
+    <string name="nav_header_title">Hamada</string>
+    <string name="nav_header_subtitle">hamada@example.com</string>
+    <string name="navigation_drawer_open">فتح القائمة</string>
+    <string name="navigation_drawer_close">إغلاق القائمة</string>
+
 </resources>

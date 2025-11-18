@@ -14,13 +14,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.finalhamada.data.AppDataBase.AppDataBase1;
+import com.example.finalhamada.data.MyUserTable.MyUser;
+import com.example.finalhamada.data.MyUserTable.MyUserQuery;
+
 public class SignIn extends AppCompatActivity {
 
-    private EditText etEmail;
-    private EditText etPassword;
+    private EditText etEmail, etPassword;
     private Button btnLogin;
-    private TextView tvRegister;
-    private TextView tvaccount;
+    private TextView tvRegister, tvaccount;
+    private MyUserQuery dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,50 +37,55 @@ public class SignIn extends AppCompatActivity {
             return insets;
         });
 
-        // ربط الـ Views
+        // ⬅️ ربط Views
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
         tvaccount = findViewById(R.id.tvaccount);
 
-        // الانتقال إلى التسجيل
+        // ⬅️ ربط قاعدة البيانات
+        dao = AppDataBase1.getDatabase(this).myUserQuery();
+
+        // ⬅️ انتقال إلى صفحة التسجيل
         tvRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(SignIn.this, SignUp.class);
-            startActivity(intent);
+            startActivity(new Intent(SignIn.this, SignUp.class));
         });
 
-        // التحقق من تسجيل الدخول
+        // ⬅️ عملية تسجيل الدخول
         btnLogin.setOnClickListener(v -> {
             if (validateAndLogin()) {
-                Toast.makeText(SignIn.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignIn.this, AboutYourself.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(SignIn.this, "Please fill in all fields correctly", Toast.LENGTH_SHORT).show();
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+
+                // فحص وجود المستخدم
+                MyUser user = dao.login(email, password);
+
+                if (user != null) {
+                    Toast.makeText(SignIn.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SignIn.this, AboutYourself.class));
+                    finish();
+                } else {
+                    Toast.makeText(SignIn.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    public boolean validateAndLogin() {
+    private boolean validateAndLogin() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
         boolean isValid = true;
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Please enter a valid email address");
+            etEmail.setError("Enter valid email");
             isValid = false;
         }
-
-        if (password.isEmpty()) {
-            etPassword.setError("Password is required");
-            isValid = false;
-        } else if (password.length() < 6) {
+        if (password.isEmpty() || password.length() < 6) {
             etPassword.setError("Password must be at least 6 characters");
             isValid = false;
         }
-
         return isValid;
     }
 }
