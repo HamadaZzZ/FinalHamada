@@ -79,7 +79,11 @@ public class SignUp extends AppCompatActivity {
 
         if (!isValid) return false;
 
-        // إنشاء مستخدم جديد + قيم أولية
+        MyUser existingUser = dao.getUserByEmail(email);
+        if (existingUser != null) {
+            Toast.makeText(this, "Email already exists ❌", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         MyUser user = new MyUser();
         user.setFullName(name);
         user.setEmail(email);
@@ -87,7 +91,6 @@ public class SignUp extends AppCompatActivity {
         user.setNotificationsEnabled(true);
         user.setCreatedAt(String.valueOf(System.currentTimeMillis()));
 
-        // حفظه في قاعدة البيانات
         dao.insertUser(user);
 
         Toast.makeText(this, "Account Created Successfully ✔", Toast.LENGTH_SHORT).show();

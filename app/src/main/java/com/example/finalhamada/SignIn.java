@@ -44,21 +44,17 @@ public class SignIn extends AppCompatActivity {
         tvRegister = findViewById(R.id.tvRegister);
         tvaccount = findViewById(R.id.tvaccount);
 
-        // ⬅️ ربط قاعدة البيانات
         dao = AppDataBase1.getDatabase(this).myUserQuery();
 
-        // ⬅️ انتقال إلى صفحة التسجيل
         tvRegister.setOnClickListener(v -> {
             startActivity(new Intent(SignIn.this, SignUp.class));
         });
 
-        // ⬅️ عملية تسجيل الدخول
         btnLogin.setOnClickListener(v -> {
             if (validateAndLogin()) {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
-                // فحص وجود المستخدم
                 MyUser user = dao.login(email, password);
 
                 if (user != null) {

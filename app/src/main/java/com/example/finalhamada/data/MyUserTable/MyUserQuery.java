@@ -28,7 +28,5 @@ public interface MyUserQuery {
 
     @Query("SELECT * FROM MyUser WHERE email = :email AND password = :password LIMIT 1")
     MyUser login(String email, String password);
-
-    @Query("SELECT COUNT(*) FROM MyUser WHERE email = :email AND password = :password")
-    int checkEmailPassword(String email, String password);
 }
+
