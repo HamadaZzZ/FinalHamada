@@ -7,6 +7,12 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Class: Exercises
+ * Purpose (EN): Auto-generated documentation for class Exercises.
+ * الهدف (AR): توثيق تلقائي للكلاس Exercises.
+ * TODO: Add more detailed description about class functionality
+ */
 public class Exercises extends AppCompatActivity {
 
     private ViewGroup main;
@@ -25,7 +31,18 @@ public class Exercises extends AppCompatActivity {
     private Button btnAddNewExercise;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+/**
+ * Method: onCreate
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param savedInstanceState - description
+ */
+    /**
+ * دالة onCreate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
 

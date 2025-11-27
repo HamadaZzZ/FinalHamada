@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:backgroundTint="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="14dp"
+        android:gravity="center_vertical">
+
+        <!-- صورة المهمة -->
+        <ImageView
+            android:id="@+id/imgVitm"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person"
+            android:contentDescription="item image"
+            android:background="@drawable/circle_bg"
+            android:padding="6dp" />
+
+        <!-- النصوص (عنوان، وصف، أهمية) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="14dp">
+
+            <TextView
+                android:id="@+id/tvItmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#222222" />
+
+            <TextView
+                android:id="@+id/tvItmText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For Text"
+                android:textSize="14sp"
+                android:textColor="#555555"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tvItmImportance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For Importance"
+                android:textSize="13sp"
+                android:textColor="#FF6B00"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- أزرار الإجراء -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="8dp">
+
+            <!-- زر إكمال المهمة -->
+            <ImageButton
+                android:id="@+id/imgBtnSendSmitm"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/btn_circle"
+                android:contentDescription="complete"
+                android:padding="8dp"
+                android:src="@drawable/circle_background" />
+
+            <!-- زر المفضلة ❤️ -->
+            <ImageButton
+                android:id="@+id/imgBtnFavoriteitm"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/btn_circle"
+                android:contentDescription="favorite"
+                android:padding="8dp"
+                android:src="@drawable/ic_favorite"
+            android:layout_marginStart="6dp" />
+
+            <!-- زر تعديل المهمة -->
+            <ImageButton
+                android:id="@+id/imgBtnEdititm"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_edit"
+                android:background="@drawable/btn_circle"
+                android:contentDescription="edit"
+                android:padding="8dp"
+                android:layout_marginStart="6dp" />
+
+            <!-- زر حذف المهمة -->
+            <ImageButton
+                android:id="@+id/imgBtnDeleteitm"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_delete"
+                android:background="@drawable/btn_circle"
+                android:contentDescription="delete"
+                android:padding="8dp"
+                android:layout_marginStart="6dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

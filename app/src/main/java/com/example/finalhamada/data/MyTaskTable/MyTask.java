@@ -3,73 +3,48 @@ package com.example.finalhamada.data.MyTaskTable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/**
- * فئة تمثل المستخدم في التطبيق
- * تحتوي على جميع صفات المستخدم، وتُستخدم كجدول داخل قاعدة البيانات
- */
 @Entity
 public class MyTask {
 
     @PrimaryKey(autoGenerate = true)
-    /** رقم المستخدم (يتولّد تلقائياً) */
     private int id;
 
-    /** الاسم الكامل للمستخدم */
     private String fullName;
 
-    /** البريد الإلكتروني */
     private String email;
 
-    /** كلمة المرور */
     private String password;
 
-    /** رقم الهاتف */
     private String phone;
 
-    /** الجنس (ذكر / أنثى) */
     private String gender;
 
-    /** العمر */
     private int age;
 
-    /** الطول بالسنتيمتر */
     private float height;
 
-    /** الوزن الحالي بالكيلوغرام */
     private float weight;
 
-    /** الوزن المستهدف */
     private float goalWeight;
 
-    /** نوع الهدف (خسارة وزن / بناء عضلات / الحفاظ على الوزن) */
     private String goalType;
 
-    /** مستوى النشاط (منخفض / متوسط / مرتفع) */
     private String activityLevel;
 
-    /** عدد السعرات المستهدفة يومياً */
     private int dailyCaloriesTarget;
 
-    /** رابط أو مسار صورة المستخدم */
     private String profileImage;
 
-    /** تاريخ إنشاء الحساب */
     private String createdAt;
 
-    /** آخر تسجيل دخول */
     private String lastLogin;
 
-    /** هل التذكيرات مفعّلة */
     private boolean notificationsEnabled;
 
-     public MyTask()
-     {}
+    private boolean isFavorite;
 
 
-
-    // ===============================
-    //       Getters & Setters
-    // ===============================
+    public MyTask() {}
 
     public int getId() {
         return id;
@@ -190,10 +165,12 @@ public class MyTask {
         this.notificationsEnabled = notificationsEnabled;
     }
 
-
-    // ===============================
-    //             toString
-    // ===============================
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 
     @Override
     public String toString() {
@@ -215,6 +192,7 @@ public class MyTask {
                 ", createdAt='" + createdAt + '\'' +
                 ", lastLogin='" + lastLogin + '\'' +
                 ", notificationsEnabled=" + notificationsEnabled +
+                ", isFavorite=" + isFavorite +
                 '}';
     }
 }
