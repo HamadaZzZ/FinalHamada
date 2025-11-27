@@ -15,7 +15,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * AboutYourself Activity
+ * ----------------------------------------------
+ * EN:
+ * This screen collects basic personal information from the user
+ * such as age, height, weight, and gender. It is the first step
+ * toward building a personalized health or fitness profile.
+ *
+ * AR:
+ * هذه الشاشة تجمع المعلومات الأساسية من المستخدم
+ * مثل العمر والطول والوزن والجنس. وهي الخطوة الأولى
+ * في إنشاء ملف شخصي صحي أو رياضي مخصص.
+ */
 public class AboutYourself extends AppCompatActivity {
+
     private TextView tvstepText;
     private TextView tvheading;
     private EditText etAge;
@@ -29,17 +43,33 @@ public class AboutYourself extends AppCompatActivity {
     private RadioButton radioOther;
     private Button nextButton;
 
-
+    /**
+     * onCreate()
+     * ----------------------------------------------
+     * EN:
+     * Initializes the UI components of the screen, applies
+     * edge-to-edge layout styling, and sets the action for the
+     * "Next" button to navigate to the YourGoal activity.
+     *
+     * AR:
+     * تهيئة عناصر الشاشة، وتطبيق واجهة Edge-to-Edge،
+     * وتحديد وظيفة زر "التالي" للانتقال إلى شاشة الأهداف YourGoal.
+     *
+     * @param savedInstanceState الحالة السابقة للنشاط (إن وُجدت)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_about_yourself);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // UI References
         tvstepText = findViewById(R.id.tvstepText);
         tvheading = findViewById(R.id.tvheading);
         etAge = findViewById(R.id.etAge);
@@ -52,6 +82,8 @@ public class AboutYourself extends AppCompatActivity {
         radioFemale = findViewById(R.id.radioFemale);
         radioOther = findViewById(R.id.radioOther);
         nextButton = findViewById(R.id.nextButton);
+
+        // Handle "Next" button click
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(AboutYourself.this, YourGoal.class);
             startActivity(intent);

@@ -13,11 +13,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * شاشة AddFoods: مسؤولة عن عرض الأطعمة، البحث، والتنقل بين الشاشات.
+ */
 public class AddFoods extends AppCompatActivity {
+
     private TextView tvTile;
     private EditText etSearchFood;
     private TextView tvTdGoal;
-    private  TextView tvCalrories;
+    private TextView tvCalrories;
     private ProgressBar progressCalories;
     private TextView tvCAL;
     private TextView tvRecent;
@@ -35,17 +39,23 @@ public class AddFoods extends AppCompatActivity {
     private TextView tvExcercises;
     private TextView tvProgress;
 
+    /**
+     * تهيئة مكوّنات الشاشة وربطها بالإضافة إلى إعداد التنقل بين الصفحات.
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_foods);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // الربط مع عناصر الواجهة
         tvTile = findViewById(R.id.tvTile);
         etSearchFood = findViewById(R.id.etSearchFood);
         tvTdGoal = findViewById(R.id.tvTdGoal);
@@ -61,31 +71,24 @@ public class AddFoods extends AppCompatActivity {
         tvcalOrange = findViewById(R.id.tvcalOrange);
         tvBroccoli = findViewById(R.id.tvBroccoli);
         tvcalBroccoli = findViewById(R.id.tvcalBroccoli);
+
         tvHome = findViewById(R.id.tvHome);
         tvGoals = findViewById(R.id.tvGoals);
         tvFood = findViewById(R.id.tvFood);
         tvExcercises = findViewById(R.id.tvExcercises);
         tvProgress = findViewById(R.id.tvProgress);
-        tvHome.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, DashboardActivity.class);
-            startActivity(intent);
-        });
-        tvGoals.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, YourGoal.class);
-            startActivity(intent);
-        });
-        tvExcercises.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, Exercises.class);
-            startActivity(intent);
 
-        });
-        tvProgress.setOnClickListener(v -> {
-            Intent intent = new Intent(AddFoods.this, Progress.class);
-            startActivity(intent);
-        });
+        // التنقل بين الشاشات
+        tvHome.setOnClickListener(v ->
+                startActivity(new Intent(AddFoods.this, DashboardActivity.class)));
 
+        tvGoals.setOnClickListener(v ->
+                startActivity(new Intent(AddFoods.this, YourGoal.class)));
 
+        tvExcercises.setOnClickListener(v ->
+                startActivity(new Intent(AddFoods.this, Exercises.class)));
 
-
+        tvProgress.setOnClickListener(v ->
+                startActivity(new Intent(AddFoods.this, Progress.class)));
     }
 }

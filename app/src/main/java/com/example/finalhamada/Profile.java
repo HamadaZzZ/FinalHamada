@@ -7,6 +7,12 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Class: Profile
+ * Purpose (EN): Auto-generated documentation for class Profile.
+ * الهدف (AR): توثيق تلقائي للكلاس Profile.
+ * TODO: Add more detailed description about class functionality
+ */
 public class Profile extends AppCompatActivity {
 
     private ViewGroup main;
@@ -30,7 +36,18 @@ public class Profile extends AppCompatActivity {
     private TextView tvProfile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+/**
+ * Method: onCreate
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param savedInstanceState - description
+ */
+    /**
+ * دالة onCreate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 

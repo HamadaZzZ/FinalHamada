@@ -25,11 +25,38 @@ import com.example.finalhamada.data.MyFitTrackTable.FitTrackQuery;
         version = 1,
         exportSchema = false
 )
+/**
+ * Class: AppDataBase1
+ * Purpose (EN): Auto-generated documentation for class AppDataBase1.
+ * الهدف (AR): توثيق تلقائي للكلاس AppDataBase1.
+ * TODO: Add more detailed description about class functionality
+ */
 public abstract class AppDataBase1 extends RoomDatabase {
 
     // روابط الوصول إلى واجهات DAO
+/**
+ * Method: myUserQuery
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=MyUserQuery, sub_type=None) - description
+ */
     public abstract MyUserQuery myUserQuery();
+/**
+ * Method: myTaskQuery
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=MyTaskQuery, sub_type=None) - description
+ */
     public abstract MyTaskQuery myTaskQuery();
+/**
+ * Method: fitTrackQuery
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=FitTrackQuery, sub_type=None) - description
+ */
     public abstract FitTrackQuery fitTrackQuery();
 
     // كائن واحد من قاعدة البيانات (Singleton)
@@ -38,6 +65,16 @@ public abstract class AppDataBase1 extends RoomDatabase {
     /**
      * استدعاء قاعدة البيانات
      */
+/**
+ * Method: getDatabase
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param context - description
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=AppDataBase1, sub_type=None) - description
+ */
     public static AppDataBase1 getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppDataBase1.class) {

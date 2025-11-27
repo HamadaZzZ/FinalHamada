@@ -2,10 +2,9 @@ package com.example.finalhamada;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Progress extends AppCompatActivity {
@@ -27,6 +26,10 @@ public class Progress extends AppCompatActivity {
     private TextView tvAddExercise;
     private TextView tvProfile;
 
+    /**
+     * دالة onCreate:
+     * تقوم بتهيئة شاشة "Progress" وربط عناصر الواجهة وتحديد أحداث النقر للانتقال للشاشات الأخرى.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,24 +51,25 @@ public class Progress extends AppCompatActivity {
         tvAddFood = findViewById(R.id.tvAddFood);
         tvAddExercise = findViewById(R.id.tvAddExercise);
         tvProfile = findViewById(R.id.tvProfile);
+
         tvDashboard.setOnClickListener(v -> {
             Intent intent = new Intent(Progress.this, DashboardActivity.class);
             startActivity(intent);
         });
+
         tvAddFood.setOnClickListener(v -> {
             Intent intent = new Intent(Progress.this, AddFoods.class);
             startActivity(intent);
         });
+
         tvAddExercise.setOnClickListener(v -> {
             Intent intent = new Intent(Progress.this, Exercises.class);
             startActivity(intent);
         });
+
         tvProfile.setOnClickListener(v -> {
             Intent intent = new Intent(Progress.this, Profile.class);
             startActivity(intent);
         });
-
-
-
     }
 }

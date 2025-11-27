@@ -7,6 +7,10 @@ import androidx.room.PrimaryKey;
  * فئة لتخزين بيانات تتبّع النشاط الرياضي
  */
 @Entity
+/**
+ * Class: FitTrack
+ * TODO: Add more detailed description about class functionality
+ */
 public class FitTrack {
 
     /** رقم النشاط (المفتاح الأساسي) */
@@ -39,80 +43,263 @@ public class FitTrack {
 
 
     // Getters and Setters
-    public long getId() {
+/**
+ * Method: getId
+ * @return BasicType(dimensions=[], name=long) - description
+ */
+    /**
+ * دالة getId: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+/**
+ * Method: setId
+ *
+ * Parameters:
+ * @param id - description
+ */
+    /**
+ * دالة setId: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setId(long id) {
         this.id = id;
     }
 
-    public long getUserId() {
+/**
+ * Method: getUserId
+ * @return BasicType(dimensions=[], name=long) - description
+ */
+    /**
+ * دالة getUserId: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+/**
+ * Method: setUserId
+ * Parameters:
+ * @param userId - description
+ */
+    /**
+ * دالة setUserId: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public String getDate() {
+/**
+ * Method: getDate
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getDate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+/**
+ * Method: setDate
+ * Purpose (EN): Describe what this method does.
+ * Parameters:
+ * @param date - description
+ */
+    /**
+ * دالة setDate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setDate(String date) {
         this.date = date;
     }
 
-    public int getSteps() {
+/**
+ * Method: getSteps
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=int) - description
+ */
+    /**
+ * دالة getSteps: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public int getSteps() {
         return steps;
     }
 
-    public void setSteps(int steps) {
+/**
+ * Method: setSteps
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param steps - description
+ */
+    /**
+ * دالة setSteps: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setSteps(int steps) {
         this.steps = steps;
     }
 
-    public double getCalories() {
+/**
+ * Method: getCalories
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=double) - description
+ */
+    /**
+ * دالة getCalories: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public double getCalories() {
         return calories;
     }
 
-    public void setCalories(double calories) {
+/**
+ * Method: setCalories
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param calories - description
+ */
+    /**
+ * دالة setCalories: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setCalories(double calories) {
         this.calories = calories;
     }
 
-    public double getDistance() {
+/**
+ * Method: getDistance
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=double) - description
+ */
+    /**
+ * دالة getDistance: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public double getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+/**
+ * Method: setDistance
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param distance - description
+ */
+    /**
+ * دالة setDistance: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public long getDuration() {
+/**
+ * Method: getDuration
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=long) - description
+ */
+    /**
+ * دالة getDuration: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public long getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+/**
+ * Method: setDuration
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param duration - description
+ */
+    /**
+ * دالة setDuration: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setDuration(long duration) {
         this.duration = duration;
     }
 
-    public String getActivityType() {
+/**
+ * Method: getActivityType
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getActivityType: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getActivityType() {
         return activityType;
     }
 
-    public void setActivityType(String activityType) {
+/**
+ * Method: setActivityType
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param activityType - description
+ */
+    /**
+ * دالة setActivityType: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setActivityType(String activityType) {
         this.activityType = activityType;
     }
 
-    public String getNote() {
+/**
+ * Method: getNote
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getNote: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getNote() {
         return note;
     }
 
-    public void setNote(String note) {
+/**
+ * Method: setNote
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param note - description
+ */
+    /**
+ * دالة setNote: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setNote(String note) {
         this.note = note;
     }
 
     @Override
-    public String toString() {
+/**
+ * Method: toString
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة toString: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String toString() {
         return "FitTrack{" +
                 "id=" + id +
                 ", userId=" + userId +

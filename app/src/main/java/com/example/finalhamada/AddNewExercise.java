@@ -13,6 +13,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * Class: AddNewExercise
+ * Purpose (EN): Auto-generated documentation for class AddNewExercise.
+ * الهدف (AR): توثيق تلقائي للكلاس AddNewExercise.
+ * TODO: Add more detailed description about class functionality
+ */
 public class AddNewExercise extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvExerciseName;
@@ -25,7 +31,18 @@ public class AddNewExercise extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+/**
+ * Method: onCreate
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param savedInstanceState - description
+ */
+    /**
+ * دالة onCreate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_new_exercise);

@@ -8,6 +8,12 @@ import androidx.room.PrimaryKey;
  * تحتوي على جميع صفات المستخدم، وتُستخدم كجدول داخل قاعدة البيانات
  */
 @Entity
+/**
+ * Class: MyTask
+ * Purpose (EN): Auto-generated documentation for class MyTask.
+ * الهدف (AR): توثيق تلقائي للكلاس MyTask.
+ * TODO: Add more detailed description about class functionality
+ */
 public class MyTask {
 
     @PrimaryKey(autoGenerate = true)
@@ -71,122 +77,479 @@ public class MyTask {
     //       Getters & Setters
     // ===============================
 
-    public int getId() {
+/**
+ * Method: getId
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=int) - description
+ */
+    /**
+ * دالة getId: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public int getId() {
         return id;
     }
-    public void setId(int id) {
+/**
+ * Method: setId
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param id - description
+ */
+    /**
+ * دالة setId: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setId(int id) {
         this.id = id;
     }
 
-    public String getFullName() {
+/**
+ * Method: getFullName
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getFullName: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getFullName() {
         return fullName;
     }
-    public void setFullName(String fullName) {
+/**
+ * Method: setFullName
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param fullName - description
+ */
+    /**
+ * دالة setFullName: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
+/**
+ * Method: getEmail
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getEmail: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getEmail() {
         return email;
     }
-    public void setEmail(String email) {
+/**
+ * Method: setEmail
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param email - description
+ */
+    /**
+ * دالة setEmail: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword() {
+/**
+ * Method: getPassword
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getPassword: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
+/**
+ * Method: setPassword
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param password - description
+ */
+    /**
+ * دالة setPassword: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getPhone() {
+/**
+ * Method: getPhone
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getPhone: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getPhone() {
         return phone;
     }
-    public void setPhone(String phone) {
+/**
+ * Method: setPhone
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param phone - description
+ */
+    /**
+ * دالة setPhone: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getGender() {
+/**
+ * Method: getGender
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getGender: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getGender() {
         return gender;
     }
-    public void setGender(String gender) {
+/**
+ * Method: setGender
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param gender - description
+ */
+    /**
+ * دالة setGender: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public int getAge() {
+/**
+ * Method: getAge
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=int) - description
+ */
+    /**
+ * دالة getAge: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public int getAge() {
         return age;
     }
-    public void setAge(int age) {
+/**
+ * Method: setAge
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param age - description
+ */
+    /**
+ * دالة setAge: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setAge(int age) {
         this.age = age;
     }
 
-    public float getHeight() {
+/**
+ * Method: getHeight
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=float) - description
+ */
+    /**
+ * دالة getHeight: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public float getHeight() {
         return height;
     }
-    public void setHeight(float height) {
+/**
+ * Method: setHeight
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param height - description
+ */
+    /**
+ * دالة setHeight: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setHeight(float height) {
         this.height = height;
     }
 
-    public float getWeight() {
+/**
+ * Method: getWeight
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=float) - description
+ */
+    /**
+ * دالة getWeight: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public float getWeight() {
         return weight;
     }
-    public void setWeight(float weight) {
+/**
+ * Method: setWeight
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param weight - description
+ */
+    /**
+ * دالة setWeight: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setWeight(float weight) {
         this.weight = weight;
     }
 
-    public float getGoalWeight() {
+/**
+ * Method: getGoalWeight
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=float) - description
+ */
+    /**
+ * دالة getGoalWeight: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public float getGoalWeight() {
         return goalWeight;
     }
-    public void setGoalWeight(float goalWeight) {
+/**
+ * Method: setGoalWeight
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param goalWeight - description
+ */
+    /**
+ * دالة setGoalWeight: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setGoalWeight(float goalWeight) {
         this.goalWeight = goalWeight;
     }
 
-    public String getGoalType() {
+/**
+ * Method: getGoalType
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getGoalType: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getGoalType() {
         return goalType;
     }
-    public void setGoalType(String goalType) {
+/**
+ * Method: setGoalType
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param goalType - description
+ */
+    /**
+ * دالة setGoalType: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setGoalType(String goalType) {
         this.goalType = goalType;
     }
 
-    public String getActivityLevel() {
+/**
+ * Method: getActivityLevel
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getActivityLevel: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getActivityLevel() {
         return activityLevel;
     }
-    public void setActivityLevel(String activityLevel) {
+/**
+ * Method: setActivityLevel
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param activityLevel - description
+ */
+    /**
+ * دالة setActivityLevel: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setActivityLevel(String activityLevel) {
         this.activityLevel = activityLevel;
     }
 
-    public int getDailyCaloriesTarget() {
+/**
+ * Method: getDailyCaloriesTarget
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=int) - description
+ */
+    /**
+ * دالة getDailyCaloriesTarget: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public int getDailyCaloriesTarget() {
         return dailyCaloriesTarget;
     }
-    public void setDailyCaloriesTarget(int dailyCaloriesTarget) {
+/**
+ * Method: setDailyCaloriesTarget
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param dailyCaloriesTarget - description
+ */
+    /**
+ * دالة setDailyCaloriesTarget: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setDailyCaloriesTarget(int dailyCaloriesTarget) {
         this.dailyCaloriesTarget = dailyCaloriesTarget;
     }
 
-    public String getProfileImage() {
+/**
+ * Method: getProfileImage
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getProfileImage: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getProfileImage() {
         return profileImage;
     }
-    public void setProfileImage(String profileImage) {
+/**
+ * Method: setProfileImage
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param profileImage - description
+ */
+    /**
+ * دالة setProfileImage: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 
-    public String getCreatedAt() {
+/**
+ * Method: getCreatedAt
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getCreatedAt: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(String createdAt) {
+/**
+ * Method: setCreatedAt
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param createdAt - description
+ */
+    /**
+ * دالة setCreatedAt: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getLastLogin() {
+/**
+ * Method: getLastLogin
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة getLastLogin: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String getLastLogin() {
         return lastLogin;
     }
-    public void setLastLogin(String lastLogin) {
+/**
+ * Method: setLastLogin
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param lastLogin - description
+ */
+    /**
+ * دالة setLastLogin: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
 
-    public boolean isNotificationsEnabled() {
+/**
+ * Method: isNotificationsEnabled
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return BasicType(dimensions=[], name=boolean) - description
+ */
+    /**
+ * دالة isNotificationsEnabled: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public boolean isNotificationsEnabled() {
         return notificationsEnabled;
     }
-    public void setNotificationsEnabled(boolean notificationsEnabled) {
+/**
+ * Method: setNotificationsEnabled
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * Parameters:
+ * @param notificationsEnabled - description
+ */
+    /**
+ * دالة setNotificationsEnabled: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public void setNotificationsEnabled(boolean notificationsEnabled) {
         this.notificationsEnabled = notificationsEnabled;
     }
 
@@ -196,7 +559,17 @@ public class MyTask {
     // ===============================
 
     @Override
-    public String toString() {
+/**
+ * Method: toString
+ * Purpose (EN): Describe what this method does.
+ * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
+ *
+ * @return ReferenceType(arguments=None, dimensions=[], name=String, sub_type=None) - description
+ */
+    /**
+ * دالة toString: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
+ */
+public String toString() {
         return "MyUser{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
