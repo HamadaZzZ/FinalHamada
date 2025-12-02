@@ -3,63 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="10dp"
-    android:backgroundTint="#FFFFFF">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:padding="12dp">
 
-        <!-- صورة بروفايل دائرية -->
-        <ImageView
+        <!-- Placeholder دائري -->
+        <View
             android:id="@+id/imgProfile"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_person"
-            android:scaleType="centerCrop"
-            android:background="@drawable/circle_bg"
-            android:padding="6dp"
-            android:contentDescription="User Profile Picture" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_person" />
 
-        <!-- بيانات المستخدم -->
+        <!-- معلومات المستخدم -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Full Name"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#1B1B1B" />
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="email@example.com"
-                android:textSize="15sp"
-                android:textColor="#757575"
-                android:layout_marginTop="4dp" />
+                android:textSize="14sp"
+                android:textColor="#555555"
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:id="@+id/tvPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+123456789"
-                android:textSize="15sp"
-                android:textColor="#757575"
+                android:text="+1234567890"
+                android:textSize="14sp"
+                android:textColor="#555555"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
     </LinearLayout>
