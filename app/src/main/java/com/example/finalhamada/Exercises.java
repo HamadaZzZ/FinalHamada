@@ -2,69 +2,105 @@ package com.example.finalhamada;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.ImageView;
 
-/**
- * Class: Exercises
- * Purpose (EN): Auto-generated documentation for class Exercises.
- * الهدف (AR): توثيق تلقائي للكلاس Exercises.
- * TODO: Add more detailed description about class functionality
- */
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finalhamada.data.AppDataBase.AppDataBase1;
+import com.example.finalhamada.data.MyTaskTable.ExerciseAdapter;
+import com.example.finalhamada.data.MyTaskTable.UserExercise;
+import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery;
+
+import java.util.List;
+
 public class Exercises extends AppCompatActivity {
 
-    private ViewGroup main;
     private ImageView btnClose;
-    private TextView tvAddExercise;
-    private TextView tvCategories;
-    private TextView tvCardio;
-    private TextView tvStrength;
-    private TextView tvYoga;
-    private TextView tvCycling;
-    private TextView tvQuickAdd;
-    private TextView tvRunning;
-    private TextView tvN150Calories;
-    private TextView tvWeightlifting;
-    private TextView tvN200Calories;
     private Button btnAddNewExercise;
+    private RecyclerView rvExercises;
+    private ExerciseAdapter exerciseAdapter;
+    private List<UserExercise> exerciseList;
+
+    private AppDataBase1 db;
+    private UserExerciseQuery exerciseQuery;
 
     @Override
-/**
- * Method: onCreate
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param savedInstanceState - description
- */
-    /**
- * دالة onCreate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
- */
-protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
 
-        main = findViewById(R.id.main);
+        // ====== الربط مع الواجهة ======
         btnClose = findViewById(R.id.btnClose);
-        tvAddExercise = findViewById(R.id.tvAddExercise);
-        tvCategories = findViewById(R.id.tvCategories);
-        tvCardio = findViewById(R.id.tvCardio);
-        tvStrength = findViewById(R.id.tvStrength);
-        tvYoga = findViewById(R.id.tvYoga);
-        tvCycling = findViewById(R.id.tvCycling);
-        tvQuickAdd = findViewById(R.id.tvQuickAdd);
-        tvRunning = findViewById(R.id.tvRunning);
-        tvN150Calories = findViewById(R.id.tvN150Calories);
-        tvWeightlifting = findViewById(R.id.tvWeightlifting);
-        tvN200Calories = findViewById(R.id.tvN200Calories);
         btnAddNewExercise = findViewById(R.id.btnAddNewExercise);
+        rvExercises = findViewById(R.id.rvExercises);
 
+        // ====== ربط قاعدة البيانات ======
+        db = AppDataBase1.getDatabase(this);
+        exerciseQuery = db.userExerciseQuery();
+
+        // ====== جلب كل التمارين من قاعدة البيانات ======
+        exerciseList = exerciseQuery.getAllExercises();
+
+        // ====== إعداد RecyclerView ======
+        exerciseAdapter = new ExerciseAdapter(exerciseList, new ExerciseAdapter.OnItemClickListener() {
+            @Override
+            public void onEditClick(int position) {
+                UserExercise exercise = exerciseList.get(position);
+                // TODO: فتح شاشة تعديل التمرين
+                // يمكن إرسال بيانات التمرين للشاشة التالية عبر Intent
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                UserExercise exercise = exerciseList.get(position);
+                // حذف من قاعدة البيانات
+                exerciseQuery.delete(exercise);
+                // حذف من القائمة وتحديث RecyclerView
+                exerciseList.remove(position);
+                exerciseAdapter.notifyItemRemoved(position);
+            }
+        });
+
+        rvExercises.setLayoutManager(new LinearLayoutManager(this));
+        rvExercises.setAdapter(exerciseAdapter);
+
+        // ====== زر الإغلاق ======
+        btnClose.setOnClickListener(v -> finish());
+
+        // ====== زر إضافة تمرين جديد ======
         btnAddNewExercise.setOnClickListener(v -> {
             Intent intent = new Intent(Exercises.this, AddNewExercise.class);
             startActivity(intent);
-            finish();
         });
+
+        // ====== Quick Add ======
+        findViewById(R.id.tvRunning).setOnClickListener(v -> addQuickExercise("Running", 150));
+        findViewById(R.id.tvWeightlifting).setOnClickListener(v -> addQuickExercise("Weightlifting", 200));
+    }
+
+    // دالة لإضافة تمرين سريع مع حفظه في قاعدة البيانات
+    private void addQuickExercise(String name, int calories) {
+        UserExercise newExercise = new UserExercise(
+                name, "Quick Add", 0, 0, 0, 0, calories, "", R.drawable.ic_launcher_foreground
+        );
+        // حفظ في قاعدة البيانات
+        exerciseQuery.insert(newExercise);
+        // إعادة جلب كل التمارين لتحديث القائمة
+        exerciseList.clear();
+        exerciseList.addAll(exerciseQuery.getAllExercises());
+        exerciseAdapter.notifyDataSetChanged();
+        rvExercises.scrollToPosition(exerciseList.size() - 1);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // إعادة تحميل التمارين عند العودة للشاشة (مثلاً بعد إضافة تمرين جديد من شاشة أخرى)
+        exerciseList.clear();
+        exerciseList.addAll(exerciseQuery.getAllExercises());
+        exerciseAdapter.notifyDataSetChanged();
     }
 }

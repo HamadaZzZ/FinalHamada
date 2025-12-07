@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- السمة الأساسية للتطبيق (الوضع النهاري والليلي) -->
     <style name="Base.Theme.FinalHamada" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--
+            يمكنك تخصيص الألوان والخطوط هنا.
+            مثال:
+            <item name="colorPrimary">@color/purple_500</item>
+            <item name="colorPrimaryVariant">@color/purple_700</item>
+            <item name="colorOnPrimary">@color/white</item>
+        -->
     </style>
 
+    <!-- السمة النهائية التي يستخدمها التطبيق -->
     <style name="Theme.FinalHamada" parent="Base.Theme.FinalHamada" />
+
 </resources>

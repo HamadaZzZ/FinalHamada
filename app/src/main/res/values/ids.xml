@@ -9,4 +9,6 @@
     <item name="tvProgres" type="id" />
     <item name="tvcalBanana" type="id" />
     <item name="tvTile" type="id" />
+    <item name="tvDuration" type="id" />
+    <item name="tvExerciseName" type="id" />
 </resources>

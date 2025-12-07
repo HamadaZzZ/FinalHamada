@@ -1,14 +1,15 @@
 package com.example.finalhamada.data.AppDataBase;
 
+import android.content.Context;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import android.content.Context;
 
 import com.example.finalhamada.data.MyUserTable.MyUser;
 import com.example.finalhamada.data.MyUserTable.MyUserQuery;
-import com.example.finalhamada.data.MyTaskTable.MyTask;
-import com.example.finalhamada.data.MyTaskTable.MyTaskQuery;
+import com.example.finalhamada.data.MyTaskTable.UserExercise;
+import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery;
 import com.example.finalhamada.data.MyFitTrackTable.FitTrack;
 import com.example.finalhamada.data.MyFitTrackTable.FitTrackQuery;
 
@@ -19,44 +20,17 @@ import com.example.finalhamada.data.MyFitTrackTable.FitTrackQuery;
 @Database(
         entities = {
                 MyUser.class,
-                MyTask.class,
+                UserExercise.class,  // تم التغيير من MyTask إلى UserExercise
                 FitTrack.class
         },
-        version = 1,
+        version = 3, // زودنا النسخة لأنها تغيرت البنية
         exportSchema = false
 )
-/**
- * Class: AppDataBase1
- * Purpose (EN): Auto-generated documentation for class AppDataBase1.
- * الهدف (AR): توثيق تلقائي للكلاس AppDataBase1.
- * TODO: Add more detailed description about class functionality
- */
 public abstract class AppDataBase1 extends RoomDatabase {
 
     // روابط الوصول إلى واجهات DAO
-/**
- * Method: myUserQuery
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=MyUserQuery, sub_type=None) - description
- */
     public abstract MyUserQuery myUserQuery();
-/**
- * Method: myTaskQuery
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=MyTaskQuery, sub_type=None) - description
- */
-    public abstract MyTaskQuery myTaskQuery();
-/**
- * Method: fitTrackQuery
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=FitTrackQuery, sub_type=None) - description
- */
+    public abstract UserExerciseQuery userExerciseQuery();  // تم التغيير
     public abstract FitTrackQuery fitTrackQuery();
 
     // كائن واحد من قاعدة البيانات (Singleton)
@@ -65,16 +39,6 @@ public abstract class AppDataBase1 extends RoomDatabase {
     /**
      * استدعاء قاعدة البيانات
      */
-/**
- * Method: getDatabase
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param context - description
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=AppDataBase1, sub_type=None) - description
- */
     public static AppDataBase1 getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppDataBase1.class) {
@@ -84,8 +48,8 @@ public abstract class AppDataBase1 extends RoomDatabase {
                                     AppDataBase1.class,
                                     "FinalHamadaDB"
                             )
-                            .fallbackToDestructiveMigration() // لإعادة البناء عند تغيير البنية
-                            .allowMainThreadQueries() // (اختياري) للسماح بالاستعلام في الـ Main Thread
+                            .fallbackToDestructiveMigration() // إعادة البناء عند تغيير البنية
+                            .allowMainThreadQueries() // للسماح بالاستعلام في الـ Main Thread
                             .build();
                 }
             }

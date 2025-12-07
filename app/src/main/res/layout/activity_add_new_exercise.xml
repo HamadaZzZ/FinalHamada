@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6F7F8">
+
 
     <LinearLayout
         android:id="@+id/main"
@@ -37,7 +39,7 @@
                 android:layout_marginStart="12dp" />
         </LinearLayout>
 
-        <!-- ====== input box reusable style ====== -->
+        <!-- ====== اسم التمرين ====== -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +58,85 @@
             android:paddingStart="16dp"
             android:textSize="16sp" />
 
-        <!-- مدة -->
+        <!-- ====== نوع التمرين ====== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textColor="#0D171B"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <Spinner
+            android:id="@+id/spCategory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_bg"
+            android:paddingStart="16dp"
+            android:spinnerMode="dropdown" />
+
+        <!-- ====== عدد التكرارات (Reps) ====== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reps"
+            android:textColor="#0D171B"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etReps"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_bg"
+            android:hint="e.g., 12"
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textSize="16sp" />
+
+        <!-- ====== عدد الجولات (Sets) ====== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sets"
+            android:textColor="#0D171B"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etSets"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_bg"
+            android:hint="e.g., 3"
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textSize="16sp" />
+
+        <!-- ====== وزن (Weight) ====== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight (kg)"
+            android:textColor="#0D171B"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etWeight"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_bg"
+            android:hint="e.g., 20"
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textSize="16sp" />
+
+        <!-- ====== مدة التمرين (Duration) ====== -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +156,7 @@
             android:paddingStart="16dp"
             android:textSize="16sp" />
 
-        <!-- السعرات -->
+        <!-- ====== السعرات (Calories) ====== -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +176,44 @@
             android:paddingStart="16dp"
             android:textSize="16sp" />
 
-        <!-- زر الحفظ -->
+        <!-- ====== ملاحظة (Note) ====== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"
+            android:textColor="#0D171B"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etNote"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_bg"
+            android:hint="Optional note"
+            android:paddingStart="16dp"
+            android:textSize="16sp" />
+
+        <!-- ====== صورة التمرين (اختياري) ====== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exercise Image"
+            android:textColor="#0D171B"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <ImageView
+            android:id="@+id/ivExerciseImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_launcher_background"
+            android:contentDescription="Exercise Image" />
+
+        <!-- ====== زر الحفظ ====== -->
         <Button
             android:id="@+id/btnSaveExercise"
             android:layout_width="match_parent"
@@ -109,5 +226,6 @@
             android:layout_marginTop="32dp" />
 
     </LinearLayout>
+    ```
 
 </ScrollView>

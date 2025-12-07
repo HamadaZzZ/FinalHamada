@@ -1,333 +1,292 @@
-<?xml version="1.0" ?>
-<LinearLayout
-    xmlns:ns0="http://schemas.android.com/apk/res/android"
-    ns0:layout_width="match_parent"
-    ns0:layout_height="match_parent"
-    ns0:orientation="vertical"
-    ns0:background="#FFFFFF"
-    ns0:padding="16dp"
-    ns0:id="@+id/main">
-    
-    
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <!-- Top Bar -->
     <RelativeLayout
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content"
-        ns0:layout_marginBottom="8dp">
-        
-        
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
         <ImageView
-            ns0:id="@+id/btnClose"
-            ns0:src="@android:drawable/ic_menu_close_clear_cancel"
-            ns0:layout_alignParentStart="true"
-            ns0:layout_width="24dp"
-            ns0:layout_height="24dp"
-            ns0:contentDescription="Close"/>
-        
-        
+            android:id="@+id/btnClose"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:contentDescription="Close" />
+
         <TextView
-            ns0:text="Add
-            Exercise"
-            ns0:textStyle="bold"
-            ns0:textSize="20sp"
-            ns0:layout_centerHorizontal="true"
-            ns0:textColor="#000"
-            ns0:layout_width="wrap_content"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvAddExercise"/>
-        
-        
+            android:id="@+id/tvAddExercise"
+            android:text="Add Exercise"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
-    
-    
+
+    <!-- Categories Title -->
     <TextView
-        ns0:text="Categories"
-        ns0:textStyle="bold"
-        ns0:textSize="22sp"
-        ns0:textColor="#000"
-        ns0:layout_marginTop="8dp"
-        ns0:layout_marginBottom="8dp"
-        ns0:layout_width="wrap_content"
-        ns0:layout_height="wrap_content"
-        ns0:id="@+id/tvCategories"/>
-    
-    
+        android:id="@+id/tvCategories"
+        android:text="Categories"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Categories Grid -->
     <GridLayout
-        ns0:columnCount="2"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content">
-        
-        
+        android:columnCount="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Cardio -->
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:gravity="center"
-            ns0:background="#DFFFD9"
-            ns0:layout_margin="8dp"
-            ns0:padding="16dp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:layout_columnWeight="1"
-            ns0:backgroundTint="#DFFFD9"
-            ns0:elevation="2dp"
-            ns0:clipToOutline="true"
-            ns0:layout_gravity="fill">
-            
-            
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            android:padding="12dp"
+            android:background="#DFFFD9"
+            android:elevation="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1">
+
             <ImageView
-                ns0:src="@android:drawable/ic_menu_myplaces"
-                ns0:layout_width="40dp"
-                ns0:layout_height="40dp"/>
-            
-            
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+
             <TextView
-                ns0:text="Cardio"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:layout_marginTop="8dp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvCardio"/>
-            
-            
+                android:id="@+id/tvCardio"
+                android:text="Cardio"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
-        
+
+        <!-- Strength -->
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:gravity="center"
-            ns0:background="#DFFFD9"
-            ns0:layout_margin="8dp"
-            ns0:padding="16dp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:layout_columnWeight="1">
-            
-            
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            android:padding="12dp"
+            android:background="#DFFFD9"
+            android:elevation="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1">
+
             <ImageView
-                ns0:src="@android:drawable/ic_menu_manage"
-                ns0:layout_width="40dp"
-                ns0:layout_height="40dp"/>
-            
-            
+                android:src="@android:drawable/ic_menu_manage"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+
             <TextView
-                ns0:text="Strength"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:layout_marginTop="8dp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvStrength"/>
-            
-            
+                android:id="@+id/tvStrength"
+                android:text="Strength"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
-        
+
+        <!-- Yoga -->
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:gravity="center"
-            ns0:background="#DFFFD9"
-            ns0:layout_margin="8dp"
-            ns0:padding="16dp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:layout_columnWeight="1">
-            
-            
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            android:padding="12dp"
+            android:background="#DFFFD9"
+            android:elevation="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1">
+
             <ImageView
-                ns0:src="@android:drawable/ic_menu_gallery"
-                ns0:layout_width="40dp"
-                ns0:layout_height="40dp"/>
-            
-            
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+
             <TextView
-                ns0:text="Yoga"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:layout_marginTop="8dp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvYoga"/>
-            
-            
+                android:id="@+id/tvYoga"
+                android:text="Yoga"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
-        
+
+        <!-- Cycling -->
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:gravity="center"
-            ns0:background="#DFFFD9"
-            ns0:layout_margin="8dp"
-            ns0:padding="16dp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:layout_columnWeight="1">
-            
-            
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            android:padding="12dp"
+            android:background="#DFFFD9"
+            android:elevation="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1">
+
             <ImageView
-                ns0:src="@android:drawable/ic_menu_compass"
-                ns0:layout_width="40dp"
-                ns0:layout_height="40dp"/>
-            
-            
+                android:src="@android:drawable/ic_menu_compass"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+
             <TextView
-                ns0:text="Cycling"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:layout_marginTop="8dp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvCycling"/>
-            
-            
+                android:id="@+id/tvCycling"
+                android:text="Cycling"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
-        
+
     </GridLayout>
-    
-    
+
+    <!-- Quick Add -->
     <TextView
-        ns0:text="Quick
-        Add"
-        ns0:textStyle="bold"
-        ns0:textSize="22sp"
-        ns0:textColor="#000"
-        ns0:layout_marginTop="16dp"
-        ns0:layout_marginBottom="8dp"
-        ns0:layout_width="wrap_content"
-        ns0:layout_height="wrap_content"
-        ns0:id="@+id/tvQuickAdd"/>
-    
-    
+        android:id="@+id/tvQuickAdd"
+        android:text="Quick Add"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Quick Add Items -->
     <LinearLayout
-        ns0:orientation="horizontal"
-        ns0:background="#DFFFD9"
-        ns0:gravity="center_vertical"
-        ns0:padding="12dp"
-        ns0:layout_marginBottom="8dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content"
-        ns0:elevation="2dp">
-        
-        
+        android:orientation="horizontal"
+        android:background="#DFFFD9"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp">
+
         <ImageView
-            ns0:src="@android:drawable/ic_media_play"
-            ns0:layout_width="40dp"
-            ns0:layout_height="40dp"/>
-        
-        
+            android:src="@android:drawable/ic_media_play"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:layout_marginStart="8dp"
-            ns0:layout_weight="1"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content">
-            
-            
+            android:orientation="vertical"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
             <TextView
-                ns0:text="Running"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvRunning"/>
-            
-            
+                android:id="@+id/tvRunning"
+                android:text="Running"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
-                ns0:text="150
-                calories"
-                ns0:textColor="#555"
-                ns0:textSize="14sp"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvN150Calories"/>
-            
-            
+                android:id="@+id/tvN150Calories"
+                android:text="150 calories"
+                android:textColor="#555"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
-        
+
         <ImageView
-            ns0:src="@android:drawable/ic_input_add"
-            ns0:layout_width="32dp"
-            ns0:layout_height="32dp"/>
-        
-        
+            android:src="@android:drawable/ic_input_add"
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
     </LinearLayout>
-    
-    
+
     <LinearLayout
-        ns0:orientation="horizontal"
-        ns0:background="#DFFFD9"
-        ns0:gravity="center_vertical"
-        ns0:padding="12dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content"
-        ns0:elevation="2dp">
-        
-        
+        android:orientation="horizontal"
+        android:background="#DFFFD9"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp">
+
         <ImageView
-            ns0:src="@android:drawable/ic_menu_agenda"
-            ns0:layout_width="40dp"
-            ns0:layout_height="40dp"/>
-        
-        
+            android:src="@android:drawable/ic_menu_agenda"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:layout_marginStart="8dp"
-            ns0:layout_weight="1"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content">
-            
-            
+            android:orientation="vertical"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
             <TextView
-                ns0:text="Weightlifting"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvWeightlifting"/>
-            
-            
+                android:id="@+id/tvWeightlifting"
+                android:text="Weightlifting"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
-                ns0:text="200
-                calories"
-                ns0:textColor="#555"
-                ns0:textSize="14sp"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvN200Calories"/>
-            
-            
+                android:id="@+id/tvN200Calories"
+                android:text="200 calories"
+                android:textColor="#555"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
-        
+
         <ImageView
-            ns0:src="@android:drawable/ic_input_add"
-            ns0:layout_width="32dp"
-            ns0:layout_height="32dp"/>
-        
-        
+            android:src="@android:drawable/ic_input_add"
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
     </LinearLayout>
-    
-    
+
+    <!-- RecyclerView for added exercises -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExercises"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+
+    <!-- Add New Exercise Button -->
     <Button
-        ns0:text="Add
-        New
-        Exercise
-        +"
-        ns0:backgroundTint="#00E000"
-        ns0:textColor="#FFFFFF"
-        ns0:textStyle="bold"
-        ns0:layout_marginTop="16dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content"
-        ns0:padding="12dp"
-        ns0:layout_gravity="bottom"
-        ns0:id="@+id/btnAddNewExercise"/>
-    
-    
+        android:id="@+id/btnAddNewExercise"
+        android:text="Add New Exercise +"
+        android:backgroundTint="#00E000"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp" />
+
 </LinearLayout>

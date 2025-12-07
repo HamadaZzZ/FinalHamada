@@ -1,7 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.FinalHamada" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- السمة الأساسية للتطبيق (الوضع الليلي) -->
+    <style name="Theme.FinalHamada" parent="Base.Theme.FinalHamada">
+        <!--
+            يمكنك تخصيص ألوان الوضع الليلي هنا لتكون مختلفة عن الوضع النهاري.
+            مثال:
+            <item name="colorPrimary">@color/purple_200</item>
+            <item name="colorPrimaryVariant">@color/purple_700</item>
+            <item name="colorOnPrimary">@color/black</item>
+        -->
     </style>
 </resources>
