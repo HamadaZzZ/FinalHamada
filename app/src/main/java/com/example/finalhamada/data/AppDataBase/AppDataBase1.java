@@ -22,7 +22,7 @@ import com.example.finalhamada.data.MyFitTrackTable.FitTrackQuery;
                 MyTask.class,
                 FitTrack.class
         },
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 /**
