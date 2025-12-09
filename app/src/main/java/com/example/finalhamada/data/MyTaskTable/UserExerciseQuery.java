@@ -35,4 +35,8 @@ public interface UserExerciseQuery {
     @Query("DELETE FROM user_exercises")
     void deleteAllExercises();
 
+    // ====== Get exercises by category ======
+    @Query("SELECT * FROM user_exercises WHERE category = :category")
+    List<UserExercise> getExercisesByCategory(String category);
+
 }

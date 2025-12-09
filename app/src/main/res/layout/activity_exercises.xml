@@ -53,6 +53,7 @@
 
         <!-- Cardio -->
         <LinearLayout
+            android:id="@+id/linearCardio"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_margin="6dp"
@@ -76,11 +77,14 @@
                 android:textColor="#000"
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"/>
         </LinearLayout>
 
         <!-- Strength -->
         <LinearLayout
+            android:id="@+id/linearStrength"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_margin="6dp"
@@ -104,11 +108,14 @@
                 android:textColor="#000"
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"/>
         </LinearLayout>
 
         <!-- Yoga -->
         <LinearLayout
+            android:id="@+id/linearYoga"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_margin="6dp"
@@ -132,11 +139,14 @@
                 android:textColor="#000"
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"/>
         </LinearLayout>
 
         <!-- Cycling -->
         <LinearLayout
+            android:id="@+id/linearCycling"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_margin="6dp"
@@ -160,7 +170,9 @@
                 android:textColor="#000"
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"/>
         </LinearLayout>
 
     </GridLayout>

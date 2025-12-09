@@ -1,231 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F7F8">
-
+    android:padding="20dp"
+    android:background="#FFFFFF">
 
     <LinearLayout
-        android:id="@+id/main"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:divider="@android:color/transparent"
+        android:showDividers="none">
 
-        <!-- ====== الهيدر ====== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_back" />
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add New Exercise"
-                android:textColor="#0D171B"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginStart="12dp" />
-        </LinearLayout>
-
-        <!-- ====== اسم التمرين ====== -->
+        <!-- العنوان -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Exercise Name"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp"/>
-
-        <EditText
-            android:id="@+id/etExerciseName"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="e.g., Morning Run"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            android:text="Add New Exercise"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:padding="12dp" />
 
-        <!-- ====== نوع التمرين ====== -->
+        <!-- صورة التمرين -->
+        <ImageView
+            android:id="@+id/ivExerciseImage"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_info"
+            android:contentDescription="Exercise Image" />
+
+        <!-- ==================== INPUTS ==================== -->
+
+        <!-- Exercise Name -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Exercise Name"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etExerciseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Category -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:paddingBottom="5dp" />
 
         <Spinner
             android:id="@+id/spCategory"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:paddingStart="16dp"
-            android:spinnerMode="dropdown" />
-
-        <!-- ====== عدد التكرارات (Reps) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reps"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginBottom="22dp" />
 
-        <EditText
-            android:id="@+id/etReps"
+        <!-- Reps -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="e.g., 12"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
-
-        <!-- ====== عدد الجولات (Sets) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sets"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:hint="Reps"
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/etSets"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etReps"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Sets -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="e.g., 3"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
-
-        <!-- ====== وزن (Weight) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weight (kg)"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:hint="Sets"
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/etWeight"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSets"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Weight -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="e.g., 20"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
-
-        <!-- ====== مدة التمرين (Duration) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Duration (minutes)"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:hint="Weight (kg)"
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/etDuration"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWeight"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Duration -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="e.g., 30"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
-
-        <!-- ====== السعرات (Calories) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calories Burned"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:hint="Duration (min)"
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/etCalories"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDuration"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Calories -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="e.g., 250"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
-
-        <!-- ====== ملاحظة (Note) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Note"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:hint="Calories"
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/etNote"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCalories"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Note -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_bg"
-            android:hint="Optional note"
-            android:paddingStart="16dp"
-            android:textSize="16sp" />
-
-        <!-- ====== صورة التمرين (اختياري) ====== -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Exercise Image"
-            android:textColor="#0D171B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            android:hint="Note"
+            android:layout_marginBottom="22dp">
 
-        <ImageView
-            android:id="@+id/ivExerciseImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_launcher_background"
-            android:contentDescription="Exercise Image" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNote"
+                android:maxLines="4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <!-- ====== زر الحفظ ====== -->
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- زر الحفظ -->
         <Button
             android:id="@+id/btnSaveExercise"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:text="Save Exercise"
-            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="#2979FF"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:backgroundTint="#13A4EC"
-            android:layout_marginTop="32dp" />
+            android:padding="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp" />
 
     </LinearLayout>
-    ```
 
 </ScrollView>

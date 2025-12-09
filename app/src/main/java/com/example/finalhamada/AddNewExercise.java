@@ -1,7 +1,6 @@
 package com.example.finalhamada;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,14 +31,14 @@ public class AddNewExercise extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_exercise);
 
-        // Padding للـ system bars
+        // =================== نظام الحواف ===================
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // ربط الـ Views
+        // =================== ربط الـ Views ===================
         tvTitle = findViewById(R.id.tvTitle);
         btnSaveExercise = findViewById(R.id.btnSaveExercise);
         etExerciseName = findViewById(R.id.etExerciseName);
@@ -52,33 +51,60 @@ public class AddNewExercise extends AppCompatActivity {
         spCategory = findViewById(R.id.spCategory);
         ivExerciseImage = findViewById(R.id.ivExerciseImage);
 
-        // إعداد Spinner للقيم
+        // =================== Spinner الفئات ===================
         String[] categories = {"Cardio", "Strength", "Yoga", "Cycling"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(adapter);
 
-        // زر الحفظ
+        // =================== زر الحفظ ===================
         btnSaveExercise.setOnClickListener(v -> {
-            // قراءة القيم من الـ EditTexts و Spinner
-            String name = etExerciseName.getText().toString();
+
+            // قراءة البيانات
+            String name = etExerciseName.getText().toString().trim();
             String category = spCategory.getSelectedItem().toString();
-            int reps = etReps.getText().toString().isEmpty() ? 0 : Integer.parseInt(etReps.getText().toString());
-            int sets = etSets.getText().toString().isEmpty() ? 0 : Integer.parseInt(etSets.getText().toString());
-            int weight = etWeight.getText().toString().isEmpty() ? 0 : Integer.parseInt(etWeight.getText().toString());
-            int duration = etDuration.getText().toString().isEmpty() ? 0 : Integer.parseInt(etDuration.getText().toString());
-            int calories = etCalories.getText().toString().isEmpty() ? 0 : Integer.parseInt(etCalories.getText().toString());
-            String note = etNote.getText().toString();
+            int reps = parseOrZero(etReps.getText().toString());
+            int sets = parseOrZero(etSets.getText().toString());
+            int weight = parseOrZero(etWeight.getText().toString());
+            int duration = parseOrZero(etDuration.getText().toString());
+            int calories = parseOrZero(etCalories.getText().toString());
+            String note = etNote.getText().toString().trim();
 
-            // ====== حفظ التمرين في قاعدة البيانات ======
+            // التأكد من عدم ترك الاسم فاضي
+            if (name.isEmpty()) {
+                etExerciseName.setError("Name is required");
+                return;
+            }
+
+            // ============ حفظ التمرين في قاعدة البيانات ============
             AppDataBase1 db = AppDataBase1.getDatabase(AddNewExercise.this);
-            db.userExerciseQuery().insert(new UserExercise(
-                    name, category, reps, sets, weight, duration, calories, note, R.drawable.ic_launcher_foreground
-            ));
+            db.userExerciseQuery().insert(
+                    new UserExercise(
+                            name,
+                            category,
+                            reps,
+                            sets,
+                            weight,
+                            duration,
+                            calories,
+                            note,
+                            R.drawable.ic_info // الصورة الجديدة
+                    )
+            );
 
-            // العودة لشاشة التمارين
+            // إغلاق الشاشة بعد الحفظ
             finish();
         });
+    }
+
+    // دالة تساعدنا نقرأ أرقام بدون كراش
+    private int parseOrZero(String value) {
+        if (value == null || value.trim().isEmpty()) return 0;
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }
