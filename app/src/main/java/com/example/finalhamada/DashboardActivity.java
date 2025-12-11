@@ -3,9 +3,7 @@ package com.example.finalhamada;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,28 +16,36 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 /**
- * DashboardActivity:
- * EN: Main dashboard screen containing user progress, navigation drawer, and quick actions.
- * AR: شاشة الـ Dashboard الرئيسية التي تحتوي على التقدم اليومي والقائمة الجانبية والإجراءات السريعة.
+ * شاشة DashboardActivity
+ * ----------------------------------------------
+ * الشاشة الرئيسية للتطبيق تحتوي على:
+ * - التقدم اليومي للمستخدم (سعرات، ماء، تمارين)
+ * - القائمة الجانبية (Navigation Drawer)
+ * - أزرار سريعة للوصول لشاشات أخرى (إضافة طعام، تمرين، عرض التقدم، الملف الشخصي)
  */
 public class DashboardActivity extends AppCompatActivity {
 
+    /** DrawerLayout للقائمة الجانبية */
     private DrawerLayout drawerLayout;
+
+    /** NavigationView للقائمة الجانبية */
     private NavigationView navigationView;
+
+    /** شريط الأدوات */
     private Toolbar toolbar;
 
+    /** عناصر النصوص في الشاشة */
     private TextView tvTitle, tvDailyS, tvCalories, tvkcal, tvWater, tvGlasses, tvMins,
             tvWorkout, tvActions, tvAddFood, tvAddExercise, tvViewProgress, tvProfile;
 
+    /** صور وأيقونات في الشاشة */
     private ImageView imageView, imageView1, imageView2, imageView3;
+
+    /** ProgressBars لعرض التقدم */
     private ProgressBar progressBar, progressBar2, progressBar3;
 
     /**
-     * onCreate():
-     * EN: Initializes dashboard UI, sets up Navigation Drawer and quick actions.
-     * AR: تهيئة واجهة الـ Dashboard وضبط القائمة الجانبية والأزرار السريعة.
-     *
-     * @param savedInstanceState حالة النشاط السابقة إن وجدت.
+     * تهيئة عناصر الشاشة وضبط Navigation Drawer والأزرار السريعة
      */
     @SuppressLint("MissingInflatedId")
     @Override
@@ -47,7 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard1);
 
-        // Edge-to-edge padding
+        /** Edge-to-Edge padding */
         final View mainLayout = findViewById(R.id.main);
         if (mainLayout != null) {
             mainLayout.setOnApplyWindowInsetsListener((v, insets) -> {
@@ -61,29 +67,26 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-        // Toolbar + Navigation Drawer
+        /** Toolbar + Navigation Drawer */
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
         );
-
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Navigation item click
+        /** التعامل مع ضغط عناصر القائمة الجانبية */
         navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
             return true;
         });
 
-        // Linking Dashboard UI components
+        /** ربط عناصر الواجهة بالكود */
         tvTitle = findViewById(R.id.tvTitle);
         tvDailyS = findViewById(R.id.tvDailyS);
         tvCalories = findViewById(R.id.tvCalories);
@@ -96,39 +99,33 @@ public class DashboardActivity extends AppCompatActivity {
         progressBar3 = findViewById(R.id.progressBar3);
         tvWorkout = findViewById(R.id.tvWorkout);
         tvActions = findViewById(R.id.tvActions);
-
         imageView = findViewById(R.id.imageView);
         imageView1 = findViewById(R.id.imageView1);
         imageView2 = findViewById(R.id.ImageView2);
         imageView3 = findViewById(R.id.ImageView3);
-
         tvAddFood = findViewById(R.id.tvAddFood);
         tvAddExercise = findViewById(R.id.tvAddExercise);
         tvViewProgress = findViewById(R.id.tvViewProgress);
         tvProfile = findViewById(R.id.tvProfile);
 
-        // Quick Actions
+        /** ضبط الأزرار السريعة للانتقال للشاشات الأخرى */
         tvAddFood.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, AddFoods.class))
         );
-
         tvAddExercise.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, Exercises.class))
         );
-
         tvViewProgress.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, Progress.class))
         );
-
         tvProfile.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, Profile.class))
         );
     }
 
     /**
-     * onBackPressed():
-     * EN: Closes the drawer first, then performs normal back action.
-     * AR: إغلاق القائمة الجانبية أولاً، ثم تنفيذ عملية الرجوع العادية.
+     * عند الضغط على زر العودة:
+     * يغلق القائمة الجانبية أولًا، ثم ينفذ الرجوع العادي
      */
     @SuppressLint("GestureBackNavigation")
     @Override

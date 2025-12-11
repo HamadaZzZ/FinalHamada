@@ -17,24 +17,50 @@ import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery;
 
 import java.util.List;
 
+/**
+ * شاشة Exercises
+ * ----------------------------------------------
+ * مسؤولة عن:
+ * - عرض جميع التمارين المخزنة في قاعدة البيانات
+ * - إضافة تمرين جديد
+ * - حذف أو تعديل التمارين
+ * - عرض التمارين الجاهزة حسب الفئة (Cardio, Strength, Yoga, Cycling)
+ * - إضافة تمارين سريعة (Quick Add)
+ */
 public class Exercises extends AppCompatActivity {
 
+    /** زر إغلاق الشاشة */
     private ImageView btnClose;
+
+    /** أزرار الفئات */
     private LinearLayout linearCardio, linearStrength, linearYoga, linearCycling;
+
+    /** زر إضافة تمرين جديد */
     private Button btnAddNewExercise;
+
+    /** RecyclerView لعرض التمارين */
     private RecyclerView rvExercises;
+
+    /** Adapter للتمارين */
     private ExerciseAdapter exerciseAdapter;
+
+    /** قائمة التمارين */
     private List<UserExercise> exerciseList;
 
+    /** قاعدة البيانات و DAO */
     private AppDataBase1 db;
     private UserExerciseQuery exerciseQuery;
 
+    /**
+     * onCreate: ربط عناصر الواجهة، إعداد RecyclerView،
+     * ضبط أزرار الفئات وزر الإغلاق وزر إضافة التمرين
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
 
-        // ====== الربط مع الواجهة ======
+        /** الربط مع الواجهة */
         btnClose = findViewById(R.id.btnClose);
         btnAddNewExercise = findViewById(R.id.btnAddNewExercise);
         rvExercises = findViewById(R.id.rvExercises);
@@ -43,18 +69,17 @@ public class Exercises extends AppCompatActivity {
         linearYoga = findViewById(R.id.linearYoga);
         linearCycling = findViewById(R.id.linearCycling);
 
-        // ====== ربط قاعدة البيانات ======
+        /** ربط قاعدة البيانات */
         db = AppDataBase1.getDatabase(this);
         exerciseQuery = db.userExerciseQuery();
 
-        // ====== جلب كل التمارين من قاعدة البيانات ======
+        /** جلب كل التمارين */
         exerciseList = exerciseQuery.getAllExercises();
 
-        // ====== إعداد RecyclerView ======
+        /** إعداد RecyclerView مع Adapter */
         exerciseAdapter = new ExerciseAdapter(exerciseList, new ExerciseAdapter.OnItemClickListener() {
             @Override
             public void onEditClick(int position) {
-                UserExercise exercise = exerciseList.get(position);
                 // TODO: فتح شاشة تعديل التمرين
             }
 
@@ -66,31 +91,29 @@ public class Exercises extends AppCompatActivity {
                 exerciseAdapter.notifyItemRemoved(position);
             }
         });
-
         rvExercises.setLayoutManager(new LinearLayoutManager(this));
         rvExercises.setAdapter(exerciseAdapter);
 
-        // ====== أزرار الفئات ======
+        /** أزرار الفئات */
         linearCardio.setOnClickListener(v -> showReadyExercises("Cardio"));
         linearStrength.setOnClickListener(v -> showReadyExercises("Strength"));
         linearYoga.setOnClickListener(v -> showReadyExercises("Yoga"));
         linearCycling.setOnClickListener(v -> showReadyExercises("Cycling"));
 
-        // ====== زر الإغلاق ======
+        /** زر الإغلاق */
         btnClose.setOnClickListener(v -> finish());
 
-        // ====== زر إضافة تمرين جديد ======
+        /** زر إضافة تمرين جديد */
         btnAddNewExercise.setOnClickListener(v -> {
-            Intent intent = new Intent(Exercises.this, AddNewExercise.class);
-            startActivity(intent);
+            startActivity(new Intent(Exercises.this, AddNewExercise.class));
         });
 
-        // ====== Quick Add ======
+        /** Quick Add تمارين سريعة */
         findViewById(R.id.tvRunning).setOnClickListener(v -> addQuickExercise("Running", 150));
         findViewById(R.id.tvWeightlifting).setOnClickListener(v -> addQuickExercise("Weightlifting", 200));
     }
 
-    // دالة لإضافة تمرين سريع وحفظه في قاعدة البيانات
+    /** إضافة تمرين سريع وحفظه في قاعدة البيانات */
     private void addQuickExercise(String name, int calories) {
         UserExercise newExercise = new UserExercise(
                 name, "Quick Add", 0, 0, 0, 0, calories, "", R.drawable.ic_launcher_foreground
@@ -102,7 +125,7 @@ public class Exercises extends AppCompatActivity {
         rvExercises.scrollToPosition(exerciseList.size() - 1);
     }
 
-    // دالة لعرض التمارين الجاهزة حسب الفئة
+    /** عرض التمارين الجاهزة حسب الفئة */
     private void showReadyExercises(String category) {
         exerciseList.clear();
 
@@ -133,6 +156,7 @@ public class Exercises extends AppCompatActivity {
         rvExercises.scrollToPosition(0);
     }
 
+    /** تحديث قائمة التمارين عند العودة للشاشة */
     @Override
     protected void onResume() {
         super.onResume();

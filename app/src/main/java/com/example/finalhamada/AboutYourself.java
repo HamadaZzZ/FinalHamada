@@ -15,59 +15,65 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 /**
- * AboutYourself Activity
- * ----------------------------------------------
- * EN:
- * This screen collects basic personal information from the user
- * such as age, height, weight, and gender. It is the first step
- * toward building a personalized health or fitness profile.
- *
- * AR:
- * هذه الشاشة تجمع المعلومات الأساسية من المستخدم
- * مثل العمر والطول والوزن والجنس. وهي الخطوة الأولى
- * في إنشاء ملف شخصي صحي أو رياضي مخصص.
+ * شاشة AboutYourself
+ * تجمع المعلومات الأساسية عن المستخدم
+ * (العمر، الطول، الوزن، الجنس)
  */
 public class AboutYourself extends AppCompatActivity {
 
+    /** نص يوضح خطوة التسجيل الحالية */
     private TextView tvstepText;
+
+    /** عنوان الشاشة */
     private TextView tvheading;
+
+    /** إدخال عمر المستخدم */
     private EditText etAge;
+
+    /** إدخال طول المستخدم */
     private EditText etHeight;
+
+    /** إدخال وزن المستخدم */
     private EditText etWeight;
+
+    /** نص عنوان اختيار الجنس */
     private TextView tvgender;
+
+    /** مجموعة أزرار اختيار الجنس */
     private RadioGroup genderGroup;
+
+    /** شريط يوضح تقدم المستخدم */
     private ProgressBar progressBar;
+
+    /** خيار الجنس ذكر */
     private RadioButton radioMale;
+
+    /** خيار الجنس أنثى */
     private RadioButton radioFemale;
+
+    /** خيار جنس آخر */
     private RadioButton radioOther;
+
+    /** زر الانتقال للشاشة التالية */
     private Button nextButton;
 
     /**
-     * onCreate()
-     * ----------------------------------------------
-     * EN:
-     * Initializes the UI components of the screen, applies
-     * edge-to-edge layout styling, and sets the action for the
-     * "Next" button to navigate to the YourGoal activity.
-     *
-     * AR:
-     * تهيئة عناصر الشاشة، وتطبيق واجهة Edge-to-Edge،
-     * وتحديد وظيفة زر "التالي" للانتقال إلى شاشة الأهداف YourGoal.
-     *
-     * @param savedInstanceState الحالة السابقة للنشاط (إن وُجدت)
+     * تهيئة الشاشة وربط عناصر الواجهة
+     * والتعامل مع زر "التالي"
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_yourself);
 
+        /** تطبيق عرض Edge-to-Edge */
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // UI References
+        /** ربط عناصر الواجهة مع الكود */
         tvstepText = findViewById(R.id.tvstepText);
         tvheading = findViewById(R.id.tvheading);
         etAge = findViewById(R.id.etAge);
@@ -81,7 +87,7 @@ public class AboutYourself extends AppCompatActivity {
         radioOther = findViewById(R.id.radioOther);
         nextButton = findViewById(R.id.nextButton);
 
-        // Handle "Next" button click
+        /** عند الضغط على زر التالي يتم الانتقال لشاشة الأهداف */
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(AboutYourself.this, YourGoal.class);
             startActivity(intent);

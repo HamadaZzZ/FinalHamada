@@ -7,13 +7,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * شاشة Progress
+ * ----------------------------------------------
+ * مسؤولة عن:
+ * - عرض تقدم المستخدم الأسبوعي والشهري
+ * - عرض اتجاه الوزن (Weight Trend) والسعرات المستهلكة
+ * - عرض الرسوم البيانية المتعلقة بالتقدم
+ * - التنقل بين شاشات التطبيق الرئيسية (Dashboard, Add Food, Add Exercise, Profile)
+ */
 public class Progress extends AppCompatActivity {
 
+    /** العنصر الرئيسي للشاشة */
     private ViewGroup main;
+
+    /** زر القائمة أو القائمة الجانبية */
     private ImageView btnMenu;
+
+    /** عنوان الصفحة */
     private TextView tvProgress;
+
+    /** Tabs للتبديل بين الوزن والسعرات */
     private TextView tabWeight;
     private TextView tabCalories;
+
+    /** معلومات التقدم */
     private TextView tvWeightTrend;
     private TextView tvWeight;
     private TextView tvLast30Days2;
@@ -21,20 +39,23 @@ public class Progress extends AppCompatActivity {
     private TextView tvWeeklySummary;
     private TextView tvYoureDoingGreat;
     private TextView tvYouveLost15LbsThisWeekKeepItUp;
+
+    /** أزرار التنقل بين الشاشات */
     private TextView tvDashboard;
     private TextView tvAddFood;
     private TextView tvAddExercise;
     private TextView tvProfile;
 
     /**
-     * دالة onCreate:
-     * تقوم بتهيئة شاشة "Progress" وربط عناصر الواجهة وتحديد أحداث النقر للانتقال للشاشات الأخرى.
+     * تهيئة عناصر الشاشة وربطها بالكود
+     * وضبط أحداث النقر للتنقل بين الشاشات الأخرى
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
 
+        /** ربط عناصر الواجهة */
         main = findViewById(R.id.main);
         btnMenu = findViewById(R.id.btnMenu);
         tvProgress = findViewById(R.id.tvProgress);
@@ -52,24 +73,10 @@ public class Progress extends AppCompatActivity {
         tvAddExercise = findViewById(R.id.tvAddExercise);
         tvProfile = findViewById(R.id.tvProfile);
 
-        tvDashboard.setOnClickListener(v -> {
-            Intent intent = new Intent(Progress.this, DashboardActivity.class);
-            startActivity(intent);
-        });
-
-        tvAddFood.setOnClickListener(v -> {
-            Intent intent = new Intent(Progress.this, AddFoods.class);
-            startActivity(intent);
-        });
-
-        tvAddExercise.setOnClickListener(v -> {
-            Intent intent = new Intent(Progress.this, Exercises.class);
-            startActivity(intent);
-        });
-
-        tvProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(Progress.this, Profile.class);
-            startActivity(intent);
-        });
+        /** التنقل بين الشاشات */
+        tvDashboard.setOnClickListener(v -> startActivity(new Intent(Progress.this, DashboardActivity.class)));
+        tvAddFood.setOnClickListener(v -> startActivity(new Intent(Progress.this, AddFoods.class)));
+        tvAddExercise.setOnClickListener(v -> startActivity(new Intent(Progress.this, Exercises.class)));
+        tvProfile.setOnClickListener(v -> startActivity(new Intent(Progress.this, Profile.class)));
     }
 }

@@ -4,23 +4,49 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * UserExercise:
+ * ----------------------------------------------
+ * يمثل تمرين للمستخدم يتم حفظه في قاعدة البيانات.
+ * يحتوي على جميع بيانات التمرين مثل:
+ * - الاسم
+ * - الفئة
+ * - عدد التكرارات والمجموعات
+ * - الوزن المستخدم
+ * - مدة التمرين
+ * - السعرات المحروقة
+ * - ملاحظات إضافية
+ * - الصورة الممثلة للتمرين
+ */
 @Entity(tableName = "user_exercises")
 public class UserExercise {
 
+    /** معرف فريد لكل تمرين */
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String name;
-    private String category;
-    private int reps;
-    private int sets;
-    private int weight;
-    private int duration;
-    private int calories;
-    private String note;
-    private int imageRes;
+    private String name;        // اسم التمرين
+    private String category;    // فئة التمرين (Cardio, Strength, ...)
+    private int reps;           // عدد التكرارات
+    private int sets;           // عدد المجموعات
+    private int weight;         // الوزن المستخدم
+    private int duration;       // مدة التمرين بالدقائق
+    private int calories;       // السعرات الحرارية المحروقة
+    private String note;        // ملاحظات إضافية
+    private int imageRes;       // صورة التمرين (Resource ID)
 
-    // ====== Constructor ======
+    /**
+     * Constructor لإنشاء تمرين جديد
+     * @param name اسم التمرين
+     * @param category فئة التمرين
+     * @param reps عدد التكرارات
+     * @param sets عدد المجموعات
+     * @param weight الوزن المستخدم
+     * @param duration مدة التمرين
+     * @param calories السعرات المحروقة
+     * @param note ملاحظات إضافية
+     * @param imageRes صورة التمرين
+     */
     public UserExercise(String name, String category, int reps, int sets, int weight,
                         int duration, int calories, String note, int imageRes) {
         this.name = name;
@@ -35,6 +61,7 @@ public class UserExercise {
     }
 
     // ====== Getters & Setters ======
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -65,7 +92,12 @@ public class UserExercise {
     public int getImageRes() { return imageRes; }
     public void setImageRes(int imageRes) { this.imageRes = imageRes; }
 
-    // ====== toString() ======
+    /**
+     * toString():
+     * ----------------------------------------------
+     * EN: Returns a string representation of the exercise.
+     * AR: يعيد تمثيل النصي للتمرين لكل الاستخدامات مثل الطباعة أو السجلات.
+     */
     @NonNull
     @Override
     public String toString() {
@@ -82,5 +114,4 @@ public class UserExercise {
                 ", imageRes=" + imageRes +
                 '}';
     }
-
 }

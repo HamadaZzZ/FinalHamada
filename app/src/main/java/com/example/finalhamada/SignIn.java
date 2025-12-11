@@ -17,61 +17,61 @@ import com.example.finalhamada.data.AppDataBase.AppDataBase1;
 import com.example.finalhamada.data.MyUserTable.MyUser;
 import com.example.finalhamada.data.MyUserTable.MyUserQuery;
 
+/**
+ * شاشة تسجيل الدخول (SignIn)
+ * ----------------------------------------------
+ * مسؤولة عن:
+ * - التحقق من البريد وكلمة المرور
+ * - تسجيل دخول المستخدم إذا كان موجود في قاعدة البيانات
+ * - الانتقال إلى شاشة AboutYourself بعد تسجيل الدخول
+ * - الانتقال إلى شاشة التسجيل (SignUp) عند الضغط على Register
+ */
 public class SignIn extends AppCompatActivity {
 
+    /** حقول البريد وكلمة المرور */
     private EditText etEmail, etPassword;
+
+    /** زر تسجيل الدخول */
     private Button btnLogin;
+
+    /** نص الانتقال لشاشة التسجيل */
     private TextView tvRegister, tvaccount;
+
+    /** DAO المستخدم للتعامل مع قاعدة البيانات */
     private MyUserQuery dao;
 
     /**
-     * onCreate()
-     * --------------------------
-     * EN: Initializes the SignIn screen, prepares UI elements,
-     * connects to the database, and sets actions for login and register.
-     *
-     * AR: تهيئة شاشة تسجيل الدخول، تجهيز العناصر،
-     * ربط قاعدة البيانات، وتحديد أفعال زر التسجيل وتسجيل الدخول.
+     * تهيئة عناصر الواجهة وربطها بالكود
+     * وضبط أفعال أزرار تسجيل الدخول والتسجيل
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        /** Edge-to-edge padding */
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // UI references
+        /** ربط عناصر الواجهة */
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
         tvaccount = findViewById(R.id.tvaccount);
 
-        // Database DAO
+        /** ربط DAO المستخدم */
         dao = AppDataBase1.getDatabase(this).myUserQuery();
 
-        /**
-         * EN: Open registration page when clicking "Register".
-         * AR: فتح صفحة إنشاء حساب عند الضغط على Register.
-         */
-        tvRegister.setOnClickListener(v -> {
-            startActivity(new Intent(SignIn.this, SignUp.class));
-        });
+        /** الانتقال لشاشة التسجيل */
+        tvRegister.setOnClickListener(v -> startActivity(new Intent(SignIn.this, SignUp.class)));
 
-        /**
-         * EN: Try signing in when login button is clicked:
-         * validate input → check user in DB → go to next page or show error.
-         *
-         * AR: عند الضغط على زر تسجيل الدخول:
-         * التحقق من المدخلات → فحص المستخدم في قاعدة البيانات → الانتقال أو عرض خطأ.
-         */
+        /** محاولة تسجيل الدخول */
         btnLogin.setOnClickListener(v -> {
             if (validateAndLogin()) {
-
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
@@ -89,15 +89,11 @@ public class SignIn extends AppCompatActivity {
     }
 
     /**
-     * validateAndLogin()
-     * --------------------------
-     * EN: Validates email and password before login.
-     * Email must be valid, password must be 6+ characters.
+     * التحقق من صحة البريد وكلمة المرور قبل تسجيل الدخول
+     * - البريد يجب أن يكون صالحاً
+     * - كلمة المرور 6 أحرف على الأقل
      *
-     * AR: يتحقق من صحة البريد وكلمة المرور قبل تسجيل الدخول.
-     * البريد يجب أن يكون صحيحًا، وكلمة المرور 6 أحرف فأكثر.
-     *
-     * @return true إذا المدخلات صحيحة، false إذا فيها خطأ.
+     * @return true إذا المدخلات صحيحة، false إذا فيها خطأ
      */
     private boolean validateAndLogin() {
         String email = etEmail.getText().toString().trim();

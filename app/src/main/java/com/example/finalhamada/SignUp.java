@@ -8,42 +8,51 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalhamada.data.AppDataBase.AppDataBase1;
 import com.example.finalhamada.data.MyUserTable.MyUser;
 import com.example.finalhamada.data.MyUserTable.MyUserQuery;
 
+/**
+ * شاشة SignUp (إنشاء حساب جديد)
+ * ----------------------------------------------
+ * مسؤولة عن:
+ * - إدخال بيانات المستخدم (الاسم، البريد، كلمة المرور)
+ * - التحقق من صحة البيانات
+ * - التحقق من وجود البريد مسبقًا في قاعدة البيانات
+ * - إنشاء مستخدم جديد وحفظه في قاعدة البيانات
+ * - الانتقال إلى شاشة AboutYourself بعد إنشاء الحساب
+ */
 public class SignUp extends AppCompatActivity {
 
+    /** عنوان الصفحة */
     private TextView tvCreateAccount;
+
+    /** حقول الإدخال */
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etConfirmPassword;
+
+    /** زر التسجيل */
     private Button btnRegister;
 
+    /** DAO المستخدم للتعامل مع قاعدة البيانات */
     MyUserQuery dao;
 
     /**
-     * onCreate()
-     * ----------------------------
-     * EN: Initializes the SignUp screen, connects UI elements,
-     * loads the database DAO, and sets the register button action.
-     *
-     * AR: تهيئة شاشة إنشاء الحساب، ربط عناصر الواجهة،
-     * تجهيز DAO لقاعدة البيانات، وتحديد ما يحدث عند الضغط على زر التسجيل.
+     * تهيئة عناصر الشاشة وربطها بالكود
+     * وضبط أفعال زر التسجيل
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        /** ربط DAO */
         dao = AppDataBase1.getDatabase(this).myUserQuery();
 
-        // Link UI elements
+        /** ربط عناصر الواجهة */
         tvCreateAccount = findViewById(R.id.tvCreateAccount);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
@@ -51,10 +60,7 @@ public class SignUp extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
 
-        /**
-         * EN: When register button is clicked, validate input and continue if valid.
-         * AR: عند الضغط على زر التسجيل، يتم فحص البيانات ومتابعة العملية إذا كانت صحيحة.
-         */
+        /** عند الضغط على زر التسجيل */
         btnRegister.setOnClickListener(v -> {
             if (validateAndReadData()) {
                 Intent intent = new Intent(SignUp.this, AboutYourself.class);
@@ -65,25 +71,15 @@ public class SignUp extends AppCompatActivity {
     }
 
     /**
-     * validateAndReadData()
-     * ----------------------------
-     * EN:
-     * Validates user input:
-     * - Name must not be empty.
-     * - Email must be valid.
-     * - Password must be 6+ characters.
-     * - Passwords must match.
-     * Checks if email already exists, then creates a new user.
+     * التحقق من صحة البيانات المدخلة وإنشاء حساب جديد
+     * - الاسم يجب أن يكون غير فارغ
+     * - البريد يجب أن يكون صحيح
+     * - كلمة المرور 6 أحرف فأكثر
+     * - تطابق كلمة المرور مع تأكيدها
+     * - التأكد من عدم وجود البريد مسبقًا في قاعدة البيانات
+     * - إنشاء المستخدم الجديد وحفظه في قاعدة البيانات
      *
-     * AR:
-     * يتحقق من البيانات المدخلة:
-     * - الاسم غير فارغ.
-     * - البريد بصيغة صحيحة.
-     * - كلمة المرور 6 أحرف أو أكثر.
-     * - تطابق كلمة المرور مع التأكيد.
-     * يفحص إذا كان البريد موجود مسبقًا ثم ينشئ مستخدم جديد.
-     *
-     * @return true إذا البيانات صحيحة وتم إنشاء الحساب، false إذا فيها خطأ.
+     * @return true إذا البيانات صحيحة وتم إنشاء الحساب، false إذا فيها خطأ
      */
     public boolean validateAndReadData() {
         String name = etName.getText().toString().trim();
@@ -110,17 +106,16 @@ public class SignUp extends AppCompatActivity {
             isValid = false;
         }
 
-        // Stop if any input is invalid
         if (!isValid) return false;
 
-        // Check if email already exists in DB
+        /** التحقق من وجود البريد مسبقًا */
         MyUser existingUser = dao.getUserByEmail(email);
         if (existingUser != null) {
             Toast.makeText(this, "Email already exists ❌", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        // Create new user
+        /** إنشاء مستخدم جديد وحفظه */
         MyUser user = new MyUser();
         user.setFullName(name);
         user.setEmail(email);

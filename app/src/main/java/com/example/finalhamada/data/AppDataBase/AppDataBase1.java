@@ -14,30 +14,37 @@ import com.example.finalhamada.data.MyFitTrackTable.FitTrack;
 import com.example.finalhamada.data.MyFitTrackTable.FitTrackQuery;
 
 /**
- * قاعدة البيانات الرئيسية للتطبيق
- * تحتوي على جميع الجداول (Entities) وجميع الـ DAO interfaces
+ * قاعدة البيانات الرئيسية للتطبيق باستخدام Room
+ * تجمع كل الـ Entities وتوفر الوصول إلى الـ DAO
  */
 @Database(
         entities = {
                 MyUser.class,
-                UserExercise.class,  // تم التغيير من MyTask إلى UserExercise
+                UserExercise.class,
                 FitTrack.class
         },
-        version = 3, // زودنا النسخة لأنها تغيرت البنية
+        version = 3,
         exportSchema = false
 )
 public abstract class AppDataBase1 extends RoomDatabase {
 
-    // روابط الوصول إلى واجهات DAO
+    /** DAO للتعامل مع جدول المستخدم */
     public abstract MyUserQuery myUserQuery();
-    public abstract UserExerciseQuery userExerciseQuery();  // تم التغيير
+
+    /** DAO للتعامل مع جدول التمارين */
+    public abstract UserExerciseQuery userExerciseQuery();
+
+    /** DAO للتعامل مع جدول تتبع اللياقة */
     public abstract FitTrackQuery fitTrackQuery();
 
-    // كائن واحد من قاعدة البيانات (Singleton)
+    /** نسخة واحدة من قاعدة البيانات (Singleton) */
     private static volatile AppDataBase1 INSTANCE;
 
     /**
-     * استدعاء قاعدة البيانات
+     * إنشاء أو إرجاع نسخة قاعدة البيانات
+     *
+     * @param context سياق التطبيق
+     * @return كائن AppDataBase1
      */
     public static AppDataBase1 getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -48,8 +55,12 @@ public abstract class AppDataBase1 extends RoomDatabase {
                                     AppDataBase1.class,
                                     "FinalHamadaDB"
                             )
-                            .fallbackToDestructiveMigration() // إعادة البناء عند تغيير البنية
-                            .allowMainThreadQueries() // للسماح بالاستعلام في الـ Main Thread
+                            /** يعيد بناء القاعدة عند تغيير البنية */
+                            .fallbackToDestructiveMigration()
+
+                            /** يسمح بالاستعلام على الـ Main Thread */
+                            .allowMainThreadQueries()
+
                             .build();
                 }
             }

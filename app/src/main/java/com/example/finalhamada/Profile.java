@@ -2,55 +2,74 @@ package com.example.finalhamada;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * Class: Profile
- * Purpose (EN): Auto-generated documentation for class Profile.
- * الهدف (AR): توثيق تلقائي للكلاس Profile.
- * TODO: Add more detailed description about class functionality
+ * شاشة Profile
+ * ----------------------------------------------
+ * مسؤولة عن:
+ * - عرض معلومات المستخدم الشخصية (الاسم، الطول، الوزن، مؤشر BMI)
+ * - تعديل الملف الشخصي
+ * - تسجيل الخروج
+ * - التنقل بين شاشات التطبيق الرئيسية (Dashboard, Add Food, Add Exercise, Progress, Profile)
  */
 public class Profile extends AppCompatActivity {
 
+    /** العنصر الرئيسي للشاشة */
     private ViewGroup main;
+
+    /** عنوان الصفحة */
     private TextView tvTitle;
+
+    /** زر الإعدادات */
     private ImageView btnSettings;
+
+    /** صورة الملف الشخصي */
     private ImageView imgProfile;
+
+    /** اسم المستخدم */
     private TextView tvName;
+
+    /** العنوان الفرعي */
     private TextView tvSubtitle;
+
+    /** نص الطول */
     private TextView tvN57;
     private TextView tvHeight;
+
+    /** نص الوزن */
     private TextView tvN135Lbs;
     private TextView tvWeight;
+
+    /** مؤشر BMI */
     private TextView tvN225;
     private TextView tvBmi;
+
+    /** زر تعديل الملف الشخصي */
     private Button btnEditProfile;
+
+    /** زر تسجيل الخروج */
     private Button btnLogout;
+
+    /** أزرار التنقل بين الشاشات */
     private TextView tvDashboard;
     private TextView tvAddFood;
     private TextView tvAddExercise;
     private TextView tvProgress;
     private TextView tvProfile;
 
-    @Override
-/**
- * Method: onCreate
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param savedInstanceState - description
- */
     /**
- * دالة onCreate: تقوم بتنفيذ الغرض الخاص بها كما هو موضح داخل الكود.
- */
-protected void onCreate(Bundle savedInstanceState) {
+     * تهيئة عناصر الواجهة وربطها بالكود
+     * وضبط أزرار تعديل الملف الشخصي وتسجيل الخروج
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        /** ربط عناصر الواجهة */
         main = findViewById(R.id.main);
         tvTitle = findViewById(R.id.tvTitle);
         btnSettings = findViewById(R.id.btnSettings);
@@ -71,11 +90,13 @@ protected void onCreate(Bundle savedInstanceState) {
         tvProgress = findViewById(R.id.tvProgress);
         tvProfile = findViewById(R.id.tvProfile);
 
+        /** زر تعديل الملف الشخصي */
         btnEditProfile.setOnClickListener(v -> {
             Intent intent = new Intent(Profile.this, Profile.class);
             startActivity(intent);
         });
 
+        /** زر تسجيل الخروج */
         btnLogout.setOnClickListener(v -> {
             Intent intent = new Intent(Profile.this, SplashScreen.class);
             startActivity(intent);
