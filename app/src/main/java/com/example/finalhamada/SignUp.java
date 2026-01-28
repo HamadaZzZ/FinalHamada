@@ -9,9 +9,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.finalhamada.data.AppDataBase.AppDataBase1;
-import com.example.finalhamada.data.MyUserTable.MyUser;
-import com.example.finalhamada.data.MyUserTable.MyUserQuery;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * شاشة SignUp (إنشاء حساب جديد)
@@ -19,8 +21,8 @@ import com.example.finalhamada.data.MyUserTable.MyUserQuery;
  * مسؤولة عن:
  * - إدخال بيانات المستخدم (الاسم، البريد، كلمة المرور)
  * - التحقق من صحة البيانات
- * - التحقق من وجود البريد مسبقًا في قاعدة البيانات
- * - إنشاء مستخدم جديد وحفظه في قاعدة البيانات
+ * - إنشاء مستخدم جديد باستخدام Firebase Authentication
+ * - حفظ بيانات المستخدم في Firestore
  * - الانتقال إلى شاشة AboutYourself بعد إنشاء الحساب
  */
 public class SignUp extends AppCompatActivity {
@@ -37,22 +39,18 @@ public class SignUp extends AppCompatActivity {
     /** زر التسجيل */
     private Button btnRegister;
 
-    /** DAO المستخدم للتعامل مع قاعدة البيانات */
-    MyUserQuery dao;
+    /** FirebaseAuth لإنشاء مستخدم جديد */
+    private FirebaseAuth auth;
 
-    /**
-     * تهيئة عناصر الشاشة وربطها بالكود
-     * وضبط أفعال زر التسجيل
-     */
+    /** FirebaseFirestore لحفظ بيانات المستخدم */
+    private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        /** ربط DAO */
-        dao = AppDataBase1.getDatabase(this).myUserQuery();
-
-        /** ربط عناصر الواجهة */
+        // ربط عناصر الواجهة
         tvCreateAccount = findViewById(R.id.tvCreateAccount);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
@@ -60,28 +58,58 @@ public class SignUp extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
 
-        /** عند الضغط على زر التسجيل */
+        // تهيئة Firebase
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // عند الضغط على زر التسجيل
         btnRegister.setOnClickListener(v -> {
             if (validateAndReadData()) {
-                Intent intent = new Intent(SignUp.this, AboutYourself.class);
-                startActivity(intent);
-                finish();
+                String name = etName.getText().toString().trim();
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+
+                // إنشاء مستخدم جديد في Firebase Authentication
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+
+                                // بعد تسجيل المستخدم، حفظ بياناته الأساسية في Firestore
+                                Map<String, Object> userData = new HashMap<>();
+                                userData.put("name", name);
+                                userData.put("email", email);
+                                userData.put("createdAt", System.currentTimeMillis());
+
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid()) // UID لكل مستخدم
+                                        .set(userData)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(SignUp.this, "Account Created Successfully ✔", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(SignUp.this, AboutYourself.class));
+                                            finish();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(SignUp.this, "Error saving data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        });
+
+                            } else {
+                                Toast.makeText(SignUp.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
             }
         });
     }
 
     /**
-     * التحقق من صحة البيانات المدخلة وإنشاء حساب جديد
+     * التحقق من صحة البيانات المدخلة قبل إنشاء الحساب
      * - الاسم يجب أن يكون غير فارغ
      * - البريد يجب أن يكون صحيح
      * - كلمة المرور 6 أحرف فأكثر
      * - تطابق كلمة المرور مع تأكيدها
-     * - التأكد من عدم وجود البريد مسبقًا في قاعدة البيانات
-     * - إنشاء المستخدم الجديد وحفظه في قاعدة البيانات
      *
-     * @return true إذا البيانات صحيحة وتم إنشاء الحساب، false إذا فيها خطأ
+     * @return true إذا البيانات صحيحة، false إذا فيها خطأ
      */
-    public boolean validateAndReadData() {
+    private boolean validateAndReadData() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -106,27 +134,6 @@ public class SignUp extends AppCompatActivity {
             isValid = false;
         }
 
-        if (!isValid) return false;
-
-        /** التحقق من وجود البريد مسبقًا */
-        MyUser existingUser = dao.getUserByEmail(email);
-        if (existingUser != null) {
-            Toast.makeText(this, "Email already exists ❌", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        /** إنشاء مستخدم جديد وحفظه */
-        MyUser user = new MyUser();
-        user.setFullName(name);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setNotificationsEnabled(true);
-        user.setCreatedAt(String.valueOf(System.currentTimeMillis()));
-
-        dao.insertUser(user);
-
-        Toast.makeText(this, "Account Created Successfully ✔", Toast.LENGTH_SHORT).show();
-
-        return true;
+        return isValid;
     }
 }

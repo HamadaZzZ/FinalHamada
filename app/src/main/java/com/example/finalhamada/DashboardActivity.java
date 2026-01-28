@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView;
  * الشاشة الرئيسية للتطبيق تحتوي على:
  * - التقدم اليومي للمستخدم (سعرات، ماء، تمارين)
  * - القائمة الجانبية (Navigation Drawer)
- * - أزرار سريعة للوصول لشاشات أخرى (إضافة طعام، تمرين، عرض التقدم، الملف الشخصي)
+ * - أزرار سريعة للوصول لشاشات أخرى
  */
 public class DashboardActivity extends AppCompatActivity {
 
@@ -45,7 +45,8 @@ public class DashboardActivity extends AppCompatActivity {
     private ProgressBar progressBar, progressBar2, progressBar3;
 
     /**
-     * تهيئة عناصر الشاشة وضبط Navigation Drawer والأزرار السريعة
+     * تهيئة عناصر الشاشة وضبط Navigation Drawer
+     * وربط عناصر القائمة الجانبية مثل Settings
      */
     @SuppressLint("MissingInflatedId")
     @Override
@@ -70,8 +71,10 @@ public class DashboardActivity extends AppCompatActivity {
         /** Toolbar + Navigation Drawer */
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open,
@@ -80,8 +83,21 @@ public class DashboardActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        /** التعامل مع ضغط عناصر القائمة الجانبية */
+        /**
+         * التعامل مع ضغط عناصر القائمة الجانبية
+         * عند الضغط على Settings يتم فتح SettingsActivity
+         */
         navigationView.setNavigationItemSelectedListener(item -> {
+
+            int id = item.getItemId();
+
+            if (id == R.id.nav_settings) {
+                startActivity(new Intent(
+                        DashboardActivity.this,
+                        SettingsActivity.class
+                ));
+            }
+
             drawerLayout.closeDrawers();
             return true;
         });
@@ -99,18 +115,20 @@ public class DashboardActivity extends AppCompatActivity {
         progressBar3 = findViewById(R.id.progressBar3);
         tvWorkout = findViewById(R.id.tvWorkout);
         tvActions = findViewById(R.id.tvActions);
+
         imageView = findViewById(R.id.imageView);
         imageView1 = findViewById(R.id.imageView1);
-        imageView2 = findViewById(R.id.ImageView2);
-        imageView3 = findViewById(R.id.ImageView3);
+        imageView2 = findViewById(R.id.imageView2);
+        imageView3 = findViewById(R.id.imageView3);
+
         tvAddFood = findViewById(R.id.tvAddFood);
         tvAddExercise = findViewById(R.id.tvAddExercise);
         tvViewProgress = findViewById(R.id.tvViewProgress);
         tvProfile = findViewById(R.id.tvProfile);
 
-        /** ضبط الأزرار السريعة للانتقال للشاشات الأخرى */
+        /** أزرار الانتقال السريع */
         tvAddFood.setOnClickListener(v ->
-                startActivity(new Intent(DashboardActivity.this, AddFoods.class))
+                startActivity(new Intent(DashboardActivity.this, FoodsActivtiy.class))
         );
         tvAddExercise.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, Exercises.class))
@@ -124,8 +142,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     /**
-     * عند الضغط على زر العودة:
-     * يغلق القائمة الجانبية أولًا، ثم ينفذ الرجوع العادي
+     * عند الضغط على زر الرجوع:
+     * إذا كانت القائمة الجانبية مفتوحة يتم إغلاقها أولًا
      */
     @SuppressLint("GestureBackNavigation")
     @Override

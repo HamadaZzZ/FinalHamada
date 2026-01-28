@@ -1,55 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalHamada">
-        <activity
-            android:name=".AddNewExercise"
-            android:exported="false" />
-        <activity
-            android:name=".AddFoods"
-            android:exported="false" />
-        <activity
-            android:name=".Profile"
-            android:exported="false" />
-        <activity
-            android:name=".Progress"
-            android:exported="false" />
-        <activity
-            android:name=".Exercises"
-            android:exported="false" />
-        <activity
-            android:name=".YourGoal"
-            android:exported="false" />
-        <activity
-            android:name=".AboutYourself"
-            android:exported="false" />
-        <activity
-            android:name=".DashboardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUp"
-            android:exported="false" />
-        <activity
-            android:name=".SignIn"
-            android:exported="false" />
+
+        <!-- Splash -->
         <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Auth -->
+        <activity android:name=".SignIn" android:exported="false" />
+        <activity android:name=".SignUp" android:exported="false" />
+
+        <!-- Onboarding -->
+        <activity android:name=".AboutYourself" android:exported="true" />
+        <activity android:name=".YourGoal" android:exported="true" />
+
+        <!-- Main -->
+        <activity android:name=".DashboardActivity" android:exported="false" />
+        <activity android:name=".Profile" android:exported="false" />
+        <activity android:name=".Progress" android:exported="false" />
+        <activity android:name=".Exercises" android:exported="false" />
+        <activity android:name=".AddNewExercise" android:exported="false" />
+        <activity android:name=".AddFoods" android:exported="false" />
+        <activity android:name=".FoodsActivtiy" android:exported="false" />
+        <activity android:name=".SettingsActivity" android:exported="false" />
+
     </application>
 
 </manifest>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">    <!-- Account Category -->
+    <PreferenceCategory
+        app:title="Account"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="change_password"
+            app:title="Change Password"
+            app:summary="Update your account password"
+            app:icon="@drawable/ic_lock_outline" />
+
+        <Preference
+            app:key="logout"
+            app:title="Logout"
+            app:summary="Sign out from your account"
+            app:icon="@drawable/ic_logout" />
+
+    </PreferenceCategory>
+
+    <!-- App Preferences Category -->
+    <PreferenceCategory
+        app:title="Preferences"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:key="dark_mode"
+            app:title="Dark Mode"
+            app:summaryOn="Dark theme is enabled"
+            app:summaryOff="Light theme is enabled"
+            app:icon="@drawable/ic_dark_mode"
+            app:defaultValue="false" />
+
+        <ListPreference
+            app:key="units"
+            app:title="Measurement Units"
+            app:summary="%s"
+            app:icon="@drawable/ic_units"
+            app:entries="@array/unit_entries"
+            app:entryValues="@array/unit_values"
+            app:defaultValue="metric" />
+
+    </PreferenceCategory>
+
+    <!-- About Category -->
+    <PreferenceCategory
+        app:title="About \\\ Support"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="privacy_policy"
+            app:title="Privacy Policy"
+            app:icon="@drawable/ic_privacy"/>
+
+        <Preference
+            app:key="contact_us"
+            app:title="Contact Us"
+            app:summary="Send us your feedback or get help"
+            app:icon="@drawable/ic_contact_support"/>
+
+        <Preference
+            app:key="app_version"
+            app:title="App Version"
+            app:summary="1.0.0"
+            app:icon="@drawable/ic_info"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

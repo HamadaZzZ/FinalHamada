@@ -6,6 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+// Import the new Food classes
+import com.example.finalhamada.data.MyTaskTable.UserFood;
+import com.example.finalhamada.data.MyTaskTable.UserFoodQuery;
+
 import com.example.finalhamada.data.MyUserTable.MyUser;
 import com.example.finalhamada.data.MyUserTable.MyUserQuery;
 import com.example.finalhamada.data.MyTaskTable.UserExercise;
@@ -21,9 +25,10 @@ import com.example.finalhamada.data.MyFitTrackTable.FitTrackQuery;
         entities = {
                 MyUser.class,
                 UserExercise.class,
-                FitTrack.class
+                FitTrack.class,
+                UserFood.class // 1. تمت إضافة جدول الطعام هنا
         },
-        version = 3,
+        version = 8, // 2. تم رفع رقم الإصدار (مهم جداً)
         exportSchema = false
 )
 public abstract class AppDataBase1 extends RoomDatabase {
@@ -36,6 +41,9 @@ public abstract class AppDataBase1 extends RoomDatabase {
 
     /** DAO للتعامل مع جدول تتبع اللياقة */
     public abstract FitTrackQuery fitTrackQuery();
+
+    /** DAO للتعامل مع جدول الطعام الجديد */
+    public abstract UserFoodQuery userFoodQuery(); // 3. تمت إضافة الـ DAO الخاص بالطعام
 
     /** نسخة واحدة من قاعدة البيانات (Singleton) */
     private static volatile AppDataBase1 INSTANCE;
@@ -58,7 +66,7 @@ public abstract class AppDataBase1 extends RoomDatabase {
                             /** يعيد بناء القاعدة عند تغيير البنية */
                             .fallbackToDestructiveMigration()
 
-                            /** يسمح بالاستعلام على الـ Main Thread */
+                            /** يسمح بالاستعلام على الـ Main Thread (للتطوير فقط) */
                             .allowMainThreadQueries()
 
                             .build();

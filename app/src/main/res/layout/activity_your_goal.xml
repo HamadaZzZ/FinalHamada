@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F6F7F8"
-    android:padding="20dp"
-    android:id="@+id/main">
+    android:padding="20dp">
 
     <!-- سهم الرجوع -->
     <ImageButton
@@ -36,28 +36,27 @@
         android:textColor="#4C809A"
         android:textSize="14sp" />
 
-    <!-- مجموعة الأزرار -->
+    <!-- RadioGroup يتحكم باختيار واحد فقط -->
     <RadioGroup
         android:id="@+id/radioGroupGoals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- خيار 1 -->
+        <!-- Lose Weight -->
         <LinearLayout
             android:id="@+id/LLloseWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="12dp"
-                android:padding="8dp"
                 android:src="@android:drawable/arrow_down_float" />
 
             <TextView
@@ -76,20 +75,21 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- خيار 2 -->
+        <!-- Maintain Weight -->
         <LinearLayout
+            android:id="@+id/LLmaintainWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:layout_marginBottom="12dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_marginEnd="12dp"/>
+                android:layout_marginEnd="12dp"
+                android:src="@android:drawable/arrow_down_float" />
 
             <TextView
                 android:id="@+id/tvmainWeight"
@@ -105,11 +105,12 @@
                 android:id="@+id/rbMaintain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"/>
+                android:checked="true" />
         </LinearLayout>
 
-        <!-- خيار 3 -->
+        <!-- Gain Weight -->
         <LinearLayout
+            android:id="@+id/LLgainWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -119,9 +120,8 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@android:drawable/arrow_up_float"
-                android:padding="8dp"
-                android:layout_marginEnd="12dp"/>
+                android:layout_marginEnd="12dp"
+                android:src="@android:drawable/arrow_up_float" />
 
             <TextView
                 android:id="@+id/tvGainWeight"
@@ -136,7 +136,7 @@
             <RadioButton
                 android:id="@+id/rbGain"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </RadioGroup>
@@ -153,4 +153,5 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="12dp"
         android:padding="16dp" />
+
 </LinearLayout>

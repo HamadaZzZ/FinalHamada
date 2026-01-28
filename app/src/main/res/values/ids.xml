@@ -11,4 +11,9 @@
     <item name="tvTile" type="id" />
     <item name="tvDuration" type="id" />
     <item name="tvExerciseName" type="id" />
+    <item name="food_item_layout" type="id" />
+    <item name="category_header_layout" type="id" />
+    <item name="image_view_arrow" type="id" />
+    <item name="text_view_category_name" type="id" />
+    <item name="button_expand_arrow" type="id" />
 </resources>
