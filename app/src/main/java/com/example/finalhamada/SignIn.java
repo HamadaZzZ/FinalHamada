@@ -2,6 +2,7 @@ package com.example.finalhamada;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,8 @@ public class SignIn extends AppCompatActivity {
                                 finish();
                             } else {
                                 Toast.makeText(SignIn.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Log.e("Ahmad", task.getException().getMessage());
+                                task.getException().printStackTrace();
                             }
                         });
             }
