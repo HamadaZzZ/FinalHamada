@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.finalhamada.data.AppDataBase.AppDataBase1;
+
 /**
  * شاشة Profile
  * ----------------------------------------------
@@ -89,6 +91,8 @@ public class Profile extends AppCompatActivity {
         tvAddExercise = findViewById(R.id.tvAddExercise);
         tvProgress = findViewById(R.id.tvProgress);
         tvProfile = findViewById(R.id.tvProfile);
+
+        AppDataBase1.getDatabase(this);
 
         /** زر تعديل الملف الشخصي */
         btnEditProfile.setOnClickListener(v -> {

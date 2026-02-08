@@ -1,271 +1,138 @@
-<?xml version="1.0" ?>
-<LinearLayout
-    xmlns:ns0="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    ns0:orientation="vertical"
-    ns0:background="#FFFFFF"
-    ns0:layout_width="match_parent"
-    ns0:layout_height="match_parent"
-    ns0:id="@+id/main">
-    
-    
-    <LinearLayout
-        ns0:orientation="horizontal"
-        ns0:padding="16dp"
-        ns0:gravity="center_vertical"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content">
-        
-        
-        <ImageView
-            ns0:id="@+id/btnMenu"
-            ns0:layout_width="24dp"
-            ns0:layout_height="24dp"/>
-        
-        
-        <TextView
-            ns0:text="Progress"
-            ns0:textSize="20sp"
-            ns0:textStyle="bold"
-            ns0:layout_gravity="center"
-            ns0:layout_weight="1"
-            ns0:gravity="center"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            tools:ignore="DuplicateIds" />
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F8FA"
+    tools:context=".Progress">
 
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        ns0:orientation="horizontal"
-        ns0:gravity="center"
-        ns0:layout_marginBottom="8dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content">
-
-
-        <TextView
-            ns0:id="@+id/tabWeight"
-            ns0:text="Weight"
-            ns0:textSize="16sp"
-            ns0:textStyle="bold"
-            ns0:layout_marginEnd="20dp"
-            ns0:layout_width="wrap_content"
-            ns0:layout_height="wrap_content"/>
-
-
-        <TextView
-            ns0:id="@+id/tabCalories"
-            ns0:text="Calories"
-            ns0:textSize="16sp"
-            ns0:textStyle="bold"
-            ns0:textColor="#A0A0A0"
-            ns0:layout_width="wrap_content"
-            ns0:layout_height="wrap_content"/>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        ns0:orientation="vertical"
-        ns0:paddingStart="24dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content">
-
-
-        <TextView
-            ns0:text="Weight
-            Trend"
-            ns0:textColor="#555"
-            ns0:textSize="14sp"
-            ns0:layout_marginTop="8dp"
-            ns0:layout_width="wrap_content"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvWeightTrend"/>
-
-
-        <TextView
-            ns0:id="@+id/tvWeight"
-            ns0:text="155
-            lbs"
-            ns0:textSize="32sp"
-            ns0:textStyle="bold"
-            ns0:textColor="#000"
-            ns0:layout_width="wrap_content"
-            ns0:layout_height="wrap_content"/>
-
-
-        <TextView
-            ns0:text="Last
-            30
-            Days
-            -2%"
-            ns0:textColor="#009900"
-            ns0:textSize="14sp"
-            ns0:layout_marginBottom="8dp"
-            ns0:layout_width="wrap_content"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvLast30Days2"/>
-
-
-    </LinearLayout>
-
-
+    <!-- زر الرجوع للداشبورد -->
     <ImageView
-        ns0:id="@+id/imgChart"
-        ns0:layout_marginHorizontal="16dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="200dp"
-        ns0:scaleType="fitXY"/>
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_back"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- العنوان -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Your Progress"
+        android:textColor="#1A237E"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        ns0:orientation="horizontal"
-        ns0:background="#F8F8F8"
-        ns0:padding="16dp"
-        ns0:layout_margin="16dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content"
-        ns0:gravity="center_vertical"
-        ns0:layout_marginTop="8dp"
-        ns0:elevation="2dp"
-        ns0:clipToOutline="true"
-        ns0:backgroundTint="#FFFFFF"
-        ns0:backgroundTintMode="src_in"
-        ns0:layout_gravity="center">
-
+    <!-- بطاقة عرض الرسم البياني -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/chart_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            ns0:orientation="vertical"
-            ns0:layout_weight="1"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content">
-
-
-            <TextView
-                ns0:text="Weekly
-                Summary"
-                ns0:textColor="#888"
-                ns0:textSize="14sp"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvWeeklySummary"/>
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
-                ns0:text="You're
-                doing
-                great!"
-                ns0:textStyle="bold"
-                ns0:textSize="16sp"
-                ns0:textColor="#000"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvYoureDoingGreat"/>
-
+                android:id="@+id/tvChartTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight Trend"
+                android:textColor="#37474F"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                ns0:text="You've
-                lost
-                1.5
-                lbs
-                this
-                week.
-                Keep
-                it
-                up!"
-                ns0:textColor="#555"
-                ns0:textSize="14sp"
-                ns0:layout_width="wrap_content"
-                ns0:layout_height="wrap_content"
-                ns0:id="@+id/tvYouveLost15LbsThisWeekKeepItUp"/>
+                android:id="@+id/tvChartSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last 30 Days"
+                android:textColor="#78909C"
+                android:textSize="14sp" />
 
-
+            <ImageView
+                android:id="@+id/imgChart"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher_background"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
+    <!-- بطاقة ملخص الإنجازات -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/summary_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            ns0:layout_width="80dp"
-            ns0:layout_height="80dp"
-            ns0:scaleType="centerCrop"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/btn_star_big_on"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#FFC107"
+                tools:ignore="ContentDescription" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvSummaryTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Great Job!"
+                android:textColor="#1A237E"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivIcon" />
 
+            <TextView
+                android:id="@+id/tvSummaryBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="You've successfully lost 1.5 lbs this month. Keep up the amazing work!"
+                android:textColor="#455A64"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/tvSummaryTitle"
+                app:layout_constraintEnd_toEndOf="@id/tvSummaryTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvSummaryTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
-        ns0:orientation="horizontal"
-        ns0:background="#FFFFFF"
-        ns0:gravity="center"
-        ns0:weightSum="5"
-        ns0:padding="8dp"
-        ns0:layout_width="match_parent"
-        ns0:layout_height="wrap_content">
-
-
-        <TextView
-            ns0:text="🏠
-            Dashboard"
-            ns0:gravity="center"
-            ns0:layout_weight="1"
-            ns0:textSize="12sp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvDashboard"/>
-
-
-        <TextView
-            ns0:text="➕
-            Add
-            Food"
-            ns0:gravity="center"
-            ns0:layout_weight="1"
-            ns0:textSize="12sp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvAddFood"/>
-
-
-        <TextView
-            ns0:text="🏋
-            Add
-            Exercise"
-            ns0:gravity="center"
-            ns0:layout_weight="1"
-            ns0:textSize="12sp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvAddExercise"/>
-        
-        
-        <TextView
-            ns0:text="📈
-            Progress"
-            ns0:textStyle="bold"
-            ns0:textColor="#007AFF"
-            ns0:gravity="center"
-            ns0:layout_weight="1"
-            ns0:textSize="12sp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvProgress"/>
-        
-        
-        <TextView
-            ns0:text="👤
-            Profile"
-            ns0:gravity="center"
-            ns0:layout_weight="1"
-            ns0:textSize="12sp"
-            ns0:layout_width="0dp"
-            ns0:layout_height="wrap_content"
-            ns0:id="@+id/tvProfile"/>
-        
-        
-    </LinearLayout>
-    
-    
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

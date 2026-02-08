@@ -31,7 +31,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onAddFoodClicked(UserFood food);
         void onDeleteFoodClicked(UserFood food);
         void onCategoryHeaderClicked(int position);
-    }.
+    }
 
     public FoodAdapter(List<Object> displayItems,
                        AdapterInteractionListener listener,

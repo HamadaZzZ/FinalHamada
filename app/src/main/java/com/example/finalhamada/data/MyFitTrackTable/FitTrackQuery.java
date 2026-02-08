@@ -1,100 +1,62 @@
 package com.example.finalhamada.data.MyFitTrackTable;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+import androidx.room.Delete;
 
 import java.util.List;
 
 /**
- * واجهة للوصول إلى بيانات FitTrack
+ * FitTrackQuery (DAO)
+ * ----------------------------------------------
+ * واجهة الوصول لقاعدة البيانات الخاصة بالمستخدمين.
+ * تتيح العمليات التالية على جدول users:
+ * - إدخال مستخدم جديد
+ * - جلب بيانات المستخدمين
+ * - تحديث بيانات المستخدم
+ * - حذف المستخدم
+ * - تحديث الاسم
  */
 @Dao
 public interface FitTrackQuery {
 
-    /** إدخال سجل جديد */
     @Insert
-/**
- * Method: insertFitTrack
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param fitTrack - description
- */
-    void insertFitTrack(FitTrack fitTrack);
+    void insertUser(FitTrack user);
 
-    /** تحديث سجل موجود */
     @Update
-/**
- * Method: updateFitTrack
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param fitTrack - description
- */
-    void updateFitTrack(FitTrack fitTrack);
+    void updateUser(FitTrack user);
 
-    /** حذف سجل */
     @Delete
-/**
- * Method: deleteFitTrack
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param fitTrack - description
- */
-    void deleteFitTrack(FitTrack fitTrack);
+    void deleteUser(FitTrack user);
 
-    /** حذف كل السجلات */
-    @Query("DELETE FROM FitTrack")
-/**
- * Method: deleteAll
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- */
-    void deleteAll();
+    @Query("SELECT * FROM users")
+    List<FitTrack> getAllUsers();
 
-    /** جلب كل السجلات */
-    @Query("SELECT * FROM FitTrack")
-/**
- * Method: getAllFitTracks
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * @return ReferenceType(arguments=[TypeArgument(pattern_type=None, type=ReferenceType(arguments=None, dimensions=[], name=FitTrack, sub_type=None))], dimensions=[], name=List, sub_type=None) - description
- */
-    List<FitTrack> getAllFitTracks();
+    @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
+    FitTrack getUserByEmail(String email);
 
-    /** جلب كل السجلات لمستخدم معيّن */
-    @Query("SELECT * FROM FitTrack WHERE userId = :userId")
-/**
- * Method: getFitTracksByUserId
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param userId - description
- *
- * @return ReferenceType(arguments=[TypeArgument(pattern_type=None, type=ReferenceType(arguments=None, dimensions=[], name=FitTrack, sub_type=None))], dimensions=[], name=List, sub_type=None) - description
- */
-    List<FitTrack> getFitTracksByUserId(long userId);
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1")
+    FitTrack getUserByEmailAndPassword(String email, String password);
 
-    /** جلب سجل واحد حسب المعرّف */
-    @Query("SELECT * FROM FitTrack WHERE id = :id")
-/**
- * Method: getFitTrackById
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param id - description
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=FitTrack, sub_type=None) - description
- */
-    FitTrack getFitTrackById(long id);
+    // ===========================
+    // وظائف خاصة بالاسم (name)
+    // ===========================
+
+    /**
+     * تحديث اسم مستخدم بواسطة الايميل
+     * @param email البريد الإلكتروني للمستخدم
+     * @param name الاسم الجديد
+     */
+    @Query("UPDATE users SET username = :name WHERE email = :email")
+    void updateUserNameByEmail(String email, String name);
+
+    /**
+     * جلب اسم المستخدم بواسطة الايميل
+     * @param email البريد الإلكتروني
+     * @return الاسم الحالي للمستخدم
+     */
+    @Query("SELECT username FROM users WHERE email = :email LIMIT 1")
+    String getUserNameByEmail(String email);
 }

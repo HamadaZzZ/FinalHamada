@@ -2,18 +2,22 @@ package com.example.finalhamada;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.finalhamada.data.MyFitTrackTable.FitTrack;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * شاشة SignUp (إنشاء حساب جديد)
@@ -22,28 +26,26 @@ import java.util.Map;
  * - إدخال بيانات المستخدم (الاسم، البريد، كلمة المرور)
  * - التحقق من صحة البيانات
  * - إنشاء مستخدم جديد باستخدام Firebase Authentication
- * - حفظ بيانات المستخدم في Firestore
+ * - حفظ بيانات المستخدم في Realtime Database
  * - الانتقال إلى شاشة AboutYourself بعد إنشاء الحساب
  */
 public class SignUp extends AppCompatActivity {
 
-    /** عنوان الصفحة */
-    private TextView tvCreateAccount;
+    // لطباعة الأخطاء في Logcat
+    private static final String TAG = "SignUpActivity";
 
-    /** حقول الإدخال */
+    // حقول الإدخال
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etConfirmPassword;
 
-    /** زر التسجيل */
+    // زر التسجيل
     private Button btnRegister;
 
-    /** FirebaseAuth لإنشاء مستخدم جديد */
+    // خدمات Firebase
     private FirebaseAuth auth;
-
-    /** FirebaseFirestore لحفظ بيانات المستخدم */
-    private FirebaseFirestore db;
+    private DatabaseReference realtime_db; // لحفظ البيانات في Realtime Database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,6 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // ربط عناصر الواجهة
-        tvCreateAccount = findViewById(R.id.tvCreateAccount);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -60,7 +61,8 @@ public class SignUp extends AppCompatActivity {
 
         // تهيئة Firebase
         auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        // مؤشر لقاعدة البيانات Realtime Database
+        realtime_db = FirebaseDatabase.getInstance().getReference();
 
         // عند الضغط على زر التسجيل
         btnRegister.setOnClickListener(v -> {
@@ -73,25 +75,17 @@ public class SignUp extends AppCompatActivity {
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+                                FirebaseUser firebaseUser = auth.getCurrentUser();
+                                if (firebaseUser != null) {
+                                    // إنشاء كائن FitTrack لحفظه
+                                    FitTrack userProfileData = new FitTrack();
+                                    userProfileData.setName(name);
+                                    // يمكنك إضافة أي بيانات أخرى تود حفظها هنا
+                                    // userProfileData.setAge(...);
 
-                                // بعد تسجيل المستخدم، حفظ بياناته الأساسية في Firestore
-                                Map<String, Object> userData = new HashMap<>();
-                                userData.put("name", name);
-                                userData.put("email", email);
-                                userData.put("createdAt", System.currentTimeMillis());
-
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid()) // UID لكل مستخدم
-                                        .set(userData)
-                                        .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(SignUp.this, "Account Created Successfully ✔", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(SignUp.this, AboutYourself.class));
-                                            finish();
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(SignUp.this, "Error saving data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                        });
-
+                                    // حفظ بيانات المستخدم في Realtime Database
+                                    saveUser(firebaseUser.getUid(), userProfileData);
+                                }
                             } else {
                                 Toast.makeText(SignUp.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -101,13 +95,36 @@ public class SignUp extends AppCompatActivity {
     }
 
     /**
+     * حفظ بيانات المستخدم في Firebase Realtime Database
+     * @param uid المعرف الفريد للمستخدم من Firebase Auth
+     * @param trackData كائن FitTrack الذي يحتوي على البيانات
+     */
+    public void saveUser(String uid, FitTrack trackData) {
+        // مؤشر لجدول المستخدمين، واستخدام UID كمفتاح فريد
+        realtime_db.child("users").child(uid).setValue(trackData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(SignUp.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "تم حفظ المستخدم بنجاح: " + uid);
+
+                        // الانتقال إلى الشاشة التالية بعد النجاح
+                        startActivity(new Intent(SignUp.this, AboutYourself.class));
+                        finish(); // إغلاق شاشة التسجيل
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // معالجة الأخطاء
+                        Log.e(TAG, "خطأ في حفظ المستخدم: " + e.getMessage(), e);
+                        Toast.makeText(SignUp.this, "Failed to add User data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    /**
      * التحقق من صحة البيانات المدخلة قبل إنشاء الحساب
-     * - الاسم يجب أن يكون غير فارغ
-     * - البريد يجب أن يكون صحيح
-     * - كلمة المرور 6 أحرف فأكثر
-     * - تطابق كلمة المرور مع تأكيدها
-     *
-     * @return true إذا البيانات صحيحة، false إذا فيها خطأ
      */
     private boolean validateAndReadData() {
         String name = etName.getText().toString().trim();
@@ -119,18 +136,22 @@ public class SignUp extends AppCompatActivity {
 
         if (name.isEmpty()) {
             etName.setError("Name is required");
+            etName.requestFocus();
             isValid = false;
         }
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Enter a valid email");
+            etEmail.requestFocus();
             isValid = false;
         }
         if (password.length() < 6) {
             etPassword.setError("Password must be at least 6 characters");
+            etPassword.requestFocus();
             isValid = false;
         }
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Passwords don't match");
+            etConfirmPassword.requestFocus();
             isValid = false;
         }
 

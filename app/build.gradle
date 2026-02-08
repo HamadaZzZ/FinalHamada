@@ -13,7 +13,6 @@ android {
         targetSdk 36
         versionCode 8
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,21 +34,29 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.ai.client.generativeai:generativeai:0.9.0'
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation("com.google.guava:guava:31.0.1-android")
-    implementation("org.reactivestreams:reactive-streams:1.0.4")
 
-    // Room (لو مستخدم قاعدة بيانات محلية)
+    // Gemini AI
+    implementation 'com.google.ai.client.generativeai:generativeai:0.9.0'
+
+    // Gson & Guava
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation "com.google.guava:guava:31.0.1-android"
+    implementation "org.reactivestreams:reactive-streams:1.0.4"
+
+    // Room
     implementation 'androidx.room:room-runtime:2.5.2'
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
 
-    // Firebase (Java)
-    implementation 'com.google.firebase:firebase-auth:22.1.1'
-    implementation 'com.google.firebase:firebase-firestore:24.7.1'
-    implementation 'com.google.firebase:firebase-storage:20.2.0'
+    // Firebase BOM - هذا يحل مشاكل النسخ
+    implementation platform('com.google.firebase:firebase-bom:32.2.0')
 
-    // AndroidX Preferences (لحل errors تبع root_preferences.xml)
+    // Firebase بدون نسخ محددة، BOM بيضبطها
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-database'
+
+    // AndroidX Preferences
     implementation 'androidx.preference:preference:1.2.0'
 
     // اختياري - Testing
