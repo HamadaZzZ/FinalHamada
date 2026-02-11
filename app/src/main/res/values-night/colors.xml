@@ -1,0 +1,14 @@
+<resources>
+    <!-- الخلفيات والنصوص الليلية -->
+    <color name="background">#121212</color>
+    <color name="cardBackground">#1E1E1E</color>
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#AAAAAA</color>
+
+    <!-- الأيقونات الليلية -->
+    <color name="iconColor">#FFFFFF</color>
+
+    <!-- الألوان المطلوبة -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

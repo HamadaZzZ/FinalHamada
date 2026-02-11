@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">    <!-- Account Category -->
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">    <!-- Account Category -->
     <PreferenceCategory
         app:title="Account"
         app:iconSpaceReserved="false">
@@ -27,7 +28,6 @@
             app:key="dark_mode"
             app:title="Dark Mode"
             app:summaryOn="Dark theme is enabled"
-            app:summaryOff="Light theme is enabled"
             app:icon="@drawable/ic_dark_mode"
             app:defaultValue="false" />
 

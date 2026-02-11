@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,18 +15,18 @@ import com.example.finalhamada.data.AppDataBase.AppDataBase1;
 import com.example.finalhamada.data.MyTaskTable.ExerciseAdapter;
 import com.example.finalhamada.data.MyTaskTable.UserExercise;
 import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
- * شاشة Exercises
- * ----------------------------------------------
- * مسؤولة عن:
- * - عرض جميع التمارين المخزنة في قاعدة البيانات
- * - إضافة تمرين جديد
- * - حذف أو تعديل التمارين
- * - عرض التمارين الجاهزة حسب الفئة (Cardio, Strength, Yoga, Cycling)
- * - إضافة تمارين سريعة (Quick Add)
+ * ============================================================
+ * Exercises Activity
+ * ============================================================
+ * شاشة عرض التمارين، إضافة وتمرير التمارين السريعة،
+ * مع حفظ التمارين محليًا في Room و Firebase Realtime Database
  */
 public class Exercises extends AppCompatActivity {
 
@@ -51,16 +52,21 @@ public class Exercises extends AppCompatActivity {
     private AppDataBase1 db;
     private UserExerciseQuery exerciseQuery;
 
+    /** Firebase Realtime Database */
+    private DatabaseReference dbRef;
+
     /**
-     * onCreate: ربط عناصر الواجهة، إعداد RecyclerView،
-     * ضبط أزرار الفئات وزر الإغلاق وزر إضافة التمرين
+     * onCreate
+     * --------------------------------------------------
+     * ربط عناصر الواجهة، إعداد RecyclerView، أزرار الفئات،
+     * زر الإغلاق، زر إضافة التمرين، Quick Add، وتهيئة Firebase
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
 
-        /** الربط مع الواجهة */
+        /** ربط عناصر الواجهة */
         btnClose = findViewById(R.id.btnClose);
         btnAddNewExercise = findViewById(R.id.btnAddNewExercise);
         rvExercises = findViewById(R.id.rvExercises);
@@ -72,6 +78,9 @@ public class Exercises extends AppCompatActivity {
         /** ربط قاعدة البيانات */
         db = AppDataBase1.getDatabase(this);
         exerciseQuery = db.userExerciseQuery();
+
+        /** تهيئة Firebase Realtime Database */
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
         /** جلب كل التمارين */
         exerciseList = exerciseQuery.getAllExercises();
@@ -109,23 +118,41 @@ public class Exercises extends AppCompatActivity {
         });
 
         /** Quick Add تمارين سريعة */
-        findViewById(R.id.tvRunning).setOnClickListener(v -> addQuickExercise("Running", 150));
-        findViewById(R.id.tvWeightlifting).setOnClickListener(v -> addQuickExercise("Weightlifting", 200));
+        findViewById(R.id.tvRunning).setOnClickListener(v -> addQuickExercise("Running", "Quick Add", 150));
+        findViewById(R.id.tvWeightlifting).setOnClickListener(v -> addQuickExercise("Weightlifting", "Quick Add", 200));
     }
 
-    /** إضافة تمرين سريع وحفظه في قاعدة البيانات */
-    private void addQuickExercise(String name, int calories) {
+    /**
+     * إضافة تمرين سريع وحفظه في Room و Firebase
+     *
+     * @param name اسم التمرين
+     * @param category الفئة
+     * @param calories السعرات المحروقة
+     */
+    private void addQuickExercise(String name, String category, int calories) {
         UserExercise newExercise = new UserExercise(
-                name, "Quick Add", 0, 0, 0, 0, calories, "", R.drawable.ic_launcher_foreground
+                name, category, 0, 0, 0, 0, calories, "", R.drawable.ic_launcher_foreground
         );
+
+        // حفظ في Room
         exerciseQuery.insert(newExercise);
+
+        // حفظ في Firebase
+        saveExerciseToFirebase(newExercise);
+
+        // تحديث العرض
         exerciseList.clear();
         exerciseList.addAll(exerciseQuery.getAllExercises());
         exerciseAdapter.notifyDataSetChanged();
         rvExercises.scrollToPosition(exerciseList.size() - 1);
+        Toast.makeText(this, name + " added successfully", Toast.LENGTH_SHORT).show();
     }
 
-    /** عرض التمارين الجاهزة حسب الفئة */
+    /**
+     * عرض التمارين الجاهزة حسب الفئة
+     *
+     * @param category اسم الفئة
+     */
     private void showReadyExercises(String category) {
         exerciseList.clear();
 
@@ -154,6 +181,39 @@ public class Exercises extends AppCompatActivity {
 
         exerciseAdapter.notifyDataSetChanged();
         rvExercises.scrollToPosition(0);
+    }
+
+    /**
+     * حفظ التمرين في Firebase Realtime Database
+     *
+     * @param exercise كائن التمرين
+     */
+    private void saveExerciseToFirebase(UserExercise exercise) {
+        HashMap<String, Object> exerciseData = new HashMap<>();
+        exerciseData.put("name", exercise.getName());
+        exerciseData.put("category", exercise.getCategory());
+        exerciseData.put("reps", exercise.getReps());
+        exerciseData.put("sets", exercise.getSets());
+        exerciseData.put("weight", exercise.getWeight());
+        exerciseData.put("duration", exercise.getDuration());
+        exerciseData.put("calories", exercise.getCalories());
+        exerciseData.put("note", exercise.getNote());
+        exerciseData.put("imageRes", exercise.getImageRes());
+
+        // uid افتراضي، يمكن لاحقًا استخدام FirebaseAuth لكل مستخدم
+        String uid = "default";
+
+        dbRef.child("users")
+                .child(uid)
+                .child("exercises")
+                .push()
+                .updateChildren(exerciseData)
+                .addOnSuccessListener(aVoid -> {
+                    // نجاح الحفظ على Firebase
+                })
+                .addOnFailureListener(e -> Toast.makeText(this,
+                        "Failed to save to Firebase: " + e.getMessage(),
+                        Toast.LENGTH_LONG).show());
     }
 
     /** تحديث قائمة التمارين عند العودة للشاشة */

@@ -1,16 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- السمة الأساسية للتطبيق (الوضع النهاري والليلي) -->
-    <style name="Base.Theme.FinalHamada" parent="Theme.Material3.DayNight.NoActionBar">
-        <!--
-            يمكنك تخصيص الألوان والخطوط هنا.
-            مثال:
-            <item name="colorPrimary">@color/purple_500</item>
-            <item name="colorPrimaryVariant">@color/purple_700</item>
-            <item name="colorOnPrimary">@color/white</item>
-        -->
-    </style>
 
-    <!-- السمة النهائية التي يستخدمها التطبيق -->
-    <style name="Theme.FinalHamada" parent="Base.Theme.FinalHamada" />
+    <!-- السمة النهائية للتطبيق -->
+    <style name="Theme.FinalHamada" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary / Accent colors -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+
+        <!-- Backgrounds -->
+        <item name="android:colorBackground">@color/background</item>
+
+        <!-- Texts -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+    </style>
 
 </resources>

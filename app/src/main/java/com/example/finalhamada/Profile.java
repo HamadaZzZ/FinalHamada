@@ -2,108 +2,119 @@ package com.example.finalhamada;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.finalhamada.data.AppDataBase.AppDataBase1;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 /**
- * شاشة Profile
- * ----------------------------------------------
- * مسؤولة عن:
- * - عرض معلومات المستخدم الشخصية (الاسم، الطول، الوزن، مؤشر BMI)
- * - تعديل الملف الشخصي
- * - تسجيل الخروج
- * - التنقل بين شاشات التطبيق الرئيسية (Dashboard, Add Food, Add Exercise, Progress, Profile)
+ * ============================================================
+ * ProfileActivity
+ * ============================================================
+ *
+ * شاشة الملف الشخصي للمستخدم:
+ * - عرض بياناته الحقيقية من Firebase Realtime Database
+ * - ربط كل TextView بالقيم الحقيقية (Height, Weight, Age)
+ * - زر Edit Profile للذهاب إلى شاشة تعديل البيانات
+ * - زر Logout لتسجيل الخروج
+ *
+ * استخدام Realtime Database:
+ * - HashMap لتحويل البيانات تلقائيًا إلى JSON
+ * - updateChildren لتحديث أي بيانات بدون حذف بيانات أخرى
  */
 public class Profile extends AppCompatActivity {
 
-    /** العنصر الرئيسي للشاشة */
-    private ViewGroup main;
-
-    /** عنوان الصفحة */
-    private TextView tvTitle;
-
-    /** زر الإعدادات */
-    private ImageView btnSettings;
-
-    /** صورة الملف الشخصي */
+    private TextView tvName, tvSubtitle, tvHeightValue, tvWeightValue, tvAgeValue;
     private ImageView imgProfile;
+    private Button btnEditProfile, btnLogout;
 
-    /** اسم المستخدم */
-    private TextView tvName;
+    private FirebaseAuth auth;
+    private DatabaseReference dbRef;
 
-    /** العنوان الفرعي */
-    private TextView tvSubtitle;
-
-    /** نص الطول */
-    private TextView tvN57;
-    private TextView tvHeight;
-
-    /** نص الوزن */
-    private TextView tvN135Lbs;
-    private TextView tvWeight;
-
-    /** مؤشر BMI */
-    private TextView tvN225;
-    private TextView tvBmi;
-
-    /** زر تعديل الملف الشخصي */
-    private Button btnEditProfile;
-
-    /** زر تسجيل الخروج */
-    private Button btnLogout;
-
-    /** أزرار التنقل بين الشاشات */
-    private TextView tvDashboard;
-    private TextView tvAddFood;
-    private TextView tvAddExercise;
-    private TextView tvProgress;
-    private TextView tvProfile;
-
-    /**
-     * تهيئة عناصر الواجهة وربطها بالكود
-     * وضبط أزرار تعديل الملف الشخصي وتسجيل الخروج
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        /** ربط عناصر الواجهة */
-        main = findViewById(R.id.main);
-        tvTitle = findViewById(R.id.tvTitle);
-        btnSettings = findViewById(R.id.btnSettings);
-        imgProfile = findViewById(R.id.imgProfile);
+        // ====== Bind UI ======
         tvName = findViewById(R.id.tvName);
         tvSubtitle = findViewById(R.id.tvSubtitle);
-        tvN57 = findViewById(R.id.tvN57);
-        tvHeight = findViewById(R.id.tvHeight);
-        tvN135Lbs = findViewById(R.id.tvN135Lbs);
-        tvWeight = findViewById(R.id.tvWeight);
-        tvN225 = findViewById(R.id.tvN225);
-        tvBmi = findViewById(R.id.tvBmi);
+        tvHeightValue = findViewById(R.id.tvHeightValue);
+        tvWeightValue = findViewById(R.id.tvWeightValue);
+        tvAgeValue = findViewById(R.id.tvAgeValue);
+        imgProfile = findViewById(R.id.imgProfile);
         btnEditProfile = findViewById(R.id.btnEditProfile);
         btnLogout = findViewById(R.id.btnLogout);
-        tvDashboard = findViewById(R.id.tvDashboard);
-        tvAddFood = findViewById(R.id.tvAddFood);
-        tvAddExercise = findViewById(R.id.tvAddExercise);
-        tvProgress = findViewById(R.id.tvProgress);
-        tvProfile = findViewById(R.id.tvProfile);
 
-        AppDataBase1.getDatabase(this);
+        // ====== Firebase ======
+        auth = FirebaseAuth.getInstance();
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
-        /** زر تعديل الملف الشخصي */
+        loadUserData();
+
         btnEditProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(Profile.this, Profile.class);
-            startActivity(intent);
+            startActivity(new Intent(Profile.this, AboutYourself.class));
         });
 
-        /** زر تسجيل الخروج */
         btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(Profile.this, SplashScreen.class);
-            startActivity(intent);
+            auth.signOut();
+            startActivity(new Intent(Profile.this, SignIn.class));
+            finish();
         });
+    }
+
+    /**
+     * loadUserData
+     * ---------------------------------------------
+     * قراءة البيانات من Firebase Realtime Database وعرضها على الشاشة.
+     *
+     * @implNote - DataSnapshot يمثل "صورة" للبيانات الموجودة في المسار.
+     * snapshot هو حاوية للبيانات اللي جايه من Firebase Realtime Database.
+     * exists() هي دالة (function) تتحقق مما إذا كانت هذه البيانات موجودة فعلاً في هذا المسار.
+     * إذا كانت موجودة، يمكننا قراءة القيم بأمان.
+     * - مثال:
+     * DataSnapshot snapshot = dbRef.child("users").child(uid).child("profile").get();
+     * if (snapshot.exists()) {
+     * Long age = snapshot.child("age").getValue(Long.class);
+     * }
+     */
+    private void loadUserData() {
+        String uid = auth.getCurrentUser().getUid();
+
+        dbRef.child("users").child(uid).child("profile")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        // تحقق إذا كانت البيانات موجودة قبل القراءة
+                        if (snapshot.exists()) {
+                            String name = snapshot.child("name").getValue(String.class);
+                            String subtitle = snapshot.child("gender").getValue(String.class);
+                            Double height = snapshot.child("height").getValue(Double.class);
+                            Double weight = snapshot.child("weight").getValue(Double.class);
+                            Long age = snapshot.child("age").getValue(Long.class);
+
+                            tvName.setText(name != null ? name : "User Name");
+                            tvSubtitle.setText(subtitle != null ? subtitle : "Fitness Enthusiast");
+                            tvHeightValue.setText(height != null ? height + " cm" : "--");
+                            tvWeightValue.setText(weight != null ? weight + " kg" : "--");
+                            tvAgeValue.setText(age != null ? age.toString() : "--");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // حدث خطأ أثناء قراءة البيانات
+                    }
+                });
     }
 }
