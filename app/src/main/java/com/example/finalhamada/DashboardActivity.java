@@ -16,12 +16,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 /**
- * شاشة DashboardActivity
- * ----------------------------------------------
- * الشاشة الرئيسية للتطبيق تحتوي على:
- * - التقدم اليومي للمستخدم (سعرات، ماء، تمارين)
- * - القائمة الجانبية (Navigation Drawer)
- * - أزرار سريعة للوصول لشاشات أخرى
+ * ============================================================
+ * DashboardActivity
+ * ============================================================
+ * الشاشة الرئيسية للتطبيق بعد تسجيل الدخول.
+ *
+ * الوظائف الرئيسية:
+ * 1️⃣ عرض التقدم اليومي للمستخدم (سعرات حرارية، ماء، تمارين)
+ * 2️⃣ عرض ProgressBars لقياس الإنجاز اليومي
+ * 3️⃣ قائمة جانبية Navigation Drawer للوصول للإعدادات
+ * 4️⃣ أزرار سريعة للوصول لشاشات Foods, Exercises, Progress, Profile
+ *
+ * ملاحظات:
+ * - تم تفعيل Edge-to-Edge Layout لتجنب قص المحتوى خلف شريط النظام.
+ * - يتم التحكم بزر الرجوع لإغلاق القائمة الجانبية إذا كانت مفتوحة.
+ * ============================================================
  */
 public class DashboardActivity extends AppCompatActivity {
 
@@ -31,7 +40,7 @@ public class DashboardActivity extends AppCompatActivity {
     /** NavigationView للقائمة الجانبية */
     private NavigationView navigationView;
 
-    /** شريط الأدوات */
+    /** Toolbar أعلى الشاشة */
     private Toolbar toolbar;
 
     /** عناصر النصوص في الشاشة */
@@ -41,12 +50,19 @@ public class DashboardActivity extends AppCompatActivity {
     /** صور وأيقونات في الشاشة */
     private ImageView imageView, imageView1, imageView2, imageView3;
 
-    /** ProgressBars لعرض التقدم */
+    /** ProgressBars لعرض التقدم اليومي */
     private ProgressBar progressBar, progressBar2, progressBar3;
 
     /**
-     * تهيئة عناصر الشاشة وضبط Navigation Drawer
-     * وربط عناصر القائمة الجانبية مثل Settings
+     * onCreate
+     * --------------------------------------------------
+     * تُستدعى عند إنشاء الشاشة
+     * تقوم بـ:
+     * 1️⃣ ربط عناصر الواجهة (TextViews, ImageViews, ProgressBars)
+     * 2️⃣ تفعيل Edge-to-Edge padding
+     * 3️⃣ إعداد Toolbar و Navigation Drawer
+     * 4️⃣ ربط عناصر القائمة الجانبية مثل Settings
+     * 5️⃣ إعداد أزرار الوصول السريع للشاشات الأخرى
      */
     @SuppressLint("MissingInflatedId")
     @Override
@@ -54,7 +70,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard1);
 
-        /** Edge-to-Edge padding */
+        // ====== Edge-to-Edge padding ======
         final View mainLayout = findViewById(R.id.main);
         if (mainLayout != null) {
             mainLayout.setOnApplyWindowInsetsListener((v, insets) -> {
@@ -68,7 +84,7 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-        /** Toolbar + Navigation Drawer */
+        // ====== Toolbar + Navigation Drawer ======
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -88,21 +104,15 @@ public class DashboardActivity extends AppCompatActivity {
          * عند الضغط على Settings يتم فتح SettingsActivity
          */
         navigationView.setNavigationItemSelectedListener(item -> {
-
             int id = item.getItemId();
-
             if (id == R.id.nav_settings) {
-                startActivity(new Intent(
-                        DashboardActivity.this,
-                        SettingsActivity.class
-                ));
+                startActivity(new Intent(DashboardActivity.this, SettingsActivity.class));
             }
-
             drawerLayout.closeDrawers();
             return true;
         });
 
-        /** ربط عناصر الواجهة بالكود */
+        // ====== ربط عناصر الواجهة ======
         tvTitle = findViewById(R.id.tvTitle);
         tvDailyS = findViewById(R.id.tvDailyS);
         tvCalories = findViewById(R.id.tvCalories);
@@ -126,7 +136,7 @@ public class DashboardActivity extends AppCompatActivity {
         tvViewProgress = findViewById(R.id.tvViewProgress);
         tvProfile = findViewById(R.id.tvProfile);
 
-        /** أزرار الانتقال السريع */
+        // ====== أزرار الوصول السريع ======
         tvAddFood.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, FoodsActivtiy.class))
         );
@@ -142,8 +152,11 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     /**
+     * onBackPressed
+     * --------------------------------------------------
      * عند الضغط على زر الرجوع:
-     * إذا كانت القائمة الجانبية مفتوحة يتم إغلاقها أولًا
+     * 1️⃣ إذا كانت القائمة الجانبية مفتوحة يتم إغلاقها
+     * 2️⃣ خلاف ذلك يتم تنفيذ السلوك الافتراضي للرجوع
      */
     @SuppressLint("GestureBackNavigation")
     @Override

@@ -14,43 +14,69 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 /**
+ * ============================================================
  * YourGoal Activity
+ * ============================================================
+ * شاشة "هدفك" حيث يختار المستخدم هدفه الرئيسي:
+ * - خسارة وزن
+ * - الحفاظ على الوزن
+ * - زيادة الوزن
  *
- * EN: Displays the "Your Goal" screen with three options for the user to choose from.
- *     Ensures only one option is selected at a time, handles LinearLayout clicks, and
- *     navigates to Dashboard.
+ * الوظائف الرئيسية:
+ * 1️⃣ عرض ثلاثة خيارات باستخدام RadioButtons و LinearLayouts
+ * 2️⃣ السماح باختيار خيار واحد فقط (RadioGroup)
+ * 3️⃣ الضغط على أي LinearLayout يقوم بتحديد الراديو المقابل
+ * 4️⃣ زر Continue للانتقال إلى Dashboard
  *
- * AR: شاشة "هدفك" تعرض ثلاثة خيارات للمستخدم لاختيار هدفه الرئيسي.
- *     تضمن اختيار خيار واحد فقط، وتتعامل مع الضغط على أي خيار للتحديد والانتقال للـ Dashboard.
+ * ملاحظات:
+ * - تم استخدام Edge-to-Edge layout لتجنب قص النصوص خلف شريط النظام.
+ * - LinearLayouts قابلة للنقر لتسهيل اختيار الهدف دون الضغط المباشر على RadioButton.
+ * ============================================================
  */
 public class YourGoal extends AppCompatActivity {
 
-    // ====== UI Components ======
-    private TextView tvYourGoal;
-    private TextView tvaim;
-    private TextView tvLoseWeight;
-    private RadioButton rbLose;
-    private TextView tvmainWeight;
-    private RadioButton rbMaintain;
-    private TextView tvGainWeight;
-    private RadioButton rbGain;
-    private Button btnContinue;
+    // ==========================
+    // عناصر واجهة المستخدم (UI)
+    // ==========================
+    private TextView tvYourGoal;        // نص عنوان "هدفك"
+    private TextView tvaim;             // نص وصف الهدف
 
-    private LinearLayout LLloseWeight;
-    private LinearLayout LLmaintainWeight;
-    private LinearLayout LLgainWeight;
+    private RadioButton rbLose;          // خيار خسارة الوزن
+    private RadioButton rbMaintain;      // خيار الحفاظ على الوزن
+    private RadioButton rbGain;          // خيار زيادة الوزن
 
-    private RadioGroup radioGroup;
+    private TextView tvLoseWeight;       // نص "Lose Weight"
+    private TextView tvmainWeight;       // نص "Maintain Weight"
+    private TextView tvGainWeight;       // نص "Gain Weight"
 
+    private LinearLayout LLloseWeight;   // LinearLayout لخسارة الوزن
+    private LinearLayout LLmaintainWeight;// LinearLayout للحفاظ على الوزن
+    private LinearLayout LLgainWeight;   // LinearLayout لزيادة الوزن
+
+    private Button btnContinue;          // زر الاستمرار
+
+    private RadioGroup radioGroup;       // مجموعة RadioButtons لضمان اختيار واحد فقط
+
+    /**
+     * onCreate
+     * --------------------------------------------------
+     * تُستدعى عند إنشاء الشاشة
+     * تقوم بـ:
+     * 1️⃣ ربط عناصر الواجهة مع الكود
+     * 2️⃣ تفعيل Edge-to-Edge padding
+     * 3️⃣ ربط LinearLayouts مع RadioButtons لتسهيل الاختيار
+     * 4️⃣ إعداد زر Continue للانتقال إلى Dashboard
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_goal);
 
-        // ====== Edge-to-edge padding ======
+        // ====== Edge-to-edge layout ======
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top,
+                    systemBars.right, systemBars.bottom);
             return insets;
         });
 
@@ -71,7 +97,6 @@ public class YourGoal extends AppCompatActivity {
         LLgainWeight = findViewById(R.id.LLgainWeight);
 
         btnContinue = findViewById(R.id.btnContinue);
-
         radioGroup = findViewById(R.id.radioGroupGoals);
 
         // ====== Make LinearLayouts clickable and update RadioGroup ======
@@ -81,6 +106,11 @@ public class YourGoal extends AppCompatActivity {
 
         // ====== Continue button ======
         btnContinue.setOnClickListener(v -> {
+            /**
+             * الانتقال إلى DashboardActivity
+             * --------------------------------------------------
+             * بعد اختيار الهدف، المستخدم ينتقل للشاشة التالية.
+             */
             Intent intent = new Intent(YourGoal.this, DashboardActivity.class);
             startActivity(intent);
             finish();
