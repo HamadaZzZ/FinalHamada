@@ -1,177 +1,128 @@
-package com.example.finalhamada;
+package com.example.finalhamada; // تعريف الحزمة التي ينتمي لها هذا الكلاس داخل المشروع
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.content.Intent; // Intent يستخدم للانتقال بين الشاشات
+import android.os.Bundle; // Bundle يخزن بيانات حالة الشاشة
+import android.widget.Button; // زر في واجهة المستخدم
+import android.widget.ImageView; // عنصر عرض صورة
+import android.widget.LinearLayout; // حاوية Layout يمكن الضغط عليها
+import android.widget.Toast; // رسالة قصيرة تظهر للمستخدم
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي لأي Activity
+import androidx.recyclerview.widget.LinearLayoutManager; // لتحديد شكل عرض العناصر في RecyclerView (عمودي)
+import androidx.recyclerview.widget.RecyclerView; // لعرض قائمة عناصر قابلة للتمرير
 
-import com.example.finalhamada.data.AppDataBase.AppDataBase1;
-import com.example.finalhamada.data.MyTaskTable.ExerciseAdapter;
-import com.example.finalhamada.data.MyTaskTable.UserExercise;
-import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.finalhamada.data.AppDataBase.AppDataBase1; // قاعدة بيانات Room المحلية
+import com.example.finalhamada.data.MyTaskTable.ExerciseAdapter; // Adapter لربط البيانات بالـ RecyclerView
+import com.example.finalhamada.data.MyTaskTable.UserExercise; // Model يمثل التمرين
+import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery; // DAO للتعامل مع جدول التمارين
+import com.google.firebase.database.DatabaseReference; // مرجع داخل Firebase
+import com.google.firebase.database.FirebaseDatabase; // نقطة الدخول إلى Firebase Database
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashMap; // لتجميع البيانات Key -> Value قبل إرسالها لـ Firebase
+import java.util.List; // تمثل قائمة من العناصر
 
-/**
- * ============================================================
- * Exercises Activity
- * ============================================================
- * شاشة عرض التمارين، إضافة وتمرير التمارين السريعة،
- * مع حفظ التمارين محليًا في Room و Firebase Realtime Database
- */
-public class Exercises extends AppCompatActivity {
+public class Exercises extends AppCompatActivity { // تعريف Activity باسم Exercises
 
-    /** زر إغلاق الشاشة */
-    private ImageView btnClose;
+    private ImageView btnClose; // زر إغلاق الشاشة
+    private LinearLayout linearCardio, linearStrength, linearYoga, linearCycling; // أزرار الفئات
+    private Button btnAddNewExercise; // زر إضافة تمرين جديد
+    private RecyclerView rvExercises; // RecyclerView لعرض التمارين
+    private ExerciseAdapter exerciseAdapter; // Adapter لربط البيانات بالعرض
+    private List<UserExercise> exerciseList; // قائمة تحتوي التمارين
+    private AppDataBase1 db; // كائن قاعدة البيانات
+    private UserExerciseQuery exerciseQuery; // DAO للتعامل مع جدول التمارين
+    private DatabaseReference dbRef; // مرجع Firebase
 
-    /** أزرار الفئات */
-    private LinearLayout linearCardio, linearStrength, linearYoga, linearCycling;
-
-    /** زر إضافة تمرين جديد */
-    private Button btnAddNewExercise;
-
-    /** RecyclerView لعرض التمارين */
-    private RecyclerView rvExercises;
-
-    /** Adapter للتمارين */
-    private ExerciseAdapter exerciseAdapter;
-
-    /** قائمة التمارين */
-    private List<UserExercise> exerciseList;
-
-    /** قاعدة البيانات و DAO */
-    private AppDataBase1 db;
-    private UserExerciseQuery exerciseQuery;
-
-    /** Firebase Realtime Database */
-    private DatabaseReference dbRef;
-
-    /**
-     * onCreate
-     * --------------------------------------------------
-     * ربط عناصر الواجهة، إعداد RecyclerView، أزرار الفئات،
-     * زر الإغلاق، زر إضافة التمرين، Quick Add، وتهيئة Firebase
-     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercises);
+    protected void onCreate(Bundle savedInstanceState) { // دالة تُستدعى عند إنشاء الشاشة
+        super.onCreate(savedInstanceState); // استدعاء دالة الأب
+        setContentView(R.layout.activity_exercises); // ربط ملف XML بهذه الشاشة
 
-        /** ربط عناصر الواجهة */
-        btnClose = findViewById(R.id.btnClose);
-        btnAddNewExercise = findViewById(R.id.btnAddNewExercise);
-        rvExercises = findViewById(R.id.rvExercises);
-        linearCardio = findViewById(R.id.linearCardio);
-        linearStrength = findViewById(R.id.linearStrength);
-        linearYoga = findViewById(R.id.linearYoga);
-        linearCycling = findViewById(R.id.linearCycling);
+        btnClose = findViewById(R.id.btnClose); // ربط زر الإغلاق
+        btnAddNewExercise = findViewById(R.id.btnAddNewExercise); // ربط زر إضافة تمرين
+        rvExercises = findViewById(R.id.rvExercises); // ربط RecyclerView
+        linearCardio = findViewById(R.id.linearCardio); // ربط زر Cardio
+        linearStrength = findViewById(R.id.linearStrength); // ربط زر Strength
+        linearYoga = findViewById(R.id.linearYoga); // ربط زر Yoga
+        linearCycling = findViewById(R.id.linearCycling); // ربط زر Cycling
 
-        /** ربط قاعدة البيانات */
-        db = AppDataBase1.getDatabase(this);
-        exerciseQuery = db.userExerciseQuery();
+        db = AppDataBase1.getDatabase(this); // جلب instance من قاعدة بيانات Room (Singleton)
+        exerciseQuery = db.userExerciseQuery(); // الحصول على DAO للتعامل مع التمارين
 
-        /** تهيئة Firebase Realtime Database */
-        dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef = FirebaseDatabase.getInstance().getReference(); // جلب مرجع الجذر من Firebase
 
-        /** جلب كل التمارين */
-        exerciseList = exerciseQuery.getAllExercises();
+        exerciseList = exerciseQuery.getAllExercises(); // جلب جميع التمارين المخزنة محليًا في Room
 
-        /** إعداد RecyclerView مع Adapter */
-        exerciseAdapter = new ExerciseAdapter(exerciseList, new ExerciseAdapter.OnItemClickListener() {
+        exerciseAdapter = new ExerciseAdapter(exerciseList, new ExerciseAdapter.OnItemClickListener() { // إنشاء Adapter مع Listener
             @Override
-            public void onEditClick(int position) {
+            public void onEditClick(int position) { // عند الضغط على تعديل
                 // TODO: فتح شاشة تعديل التمرين
             }
 
             @Override
-            public void onDeleteClick(int position) {
-                UserExercise exercise = exerciseList.get(position);
-                exerciseQuery.delete(exercise);
-                exerciseList.remove(position);
-                exerciseAdapter.notifyItemRemoved(position);
+            public void onDeleteClick(int position) { // عند الضغط على حذف
+                UserExercise exercise = exerciseList.get(position); // جلب التمرين حسب الموقع
+                exerciseQuery.delete(exercise); // حذف التمرين من Room
+                exerciseList.remove(position); // إزالة العنصر من القائمة
+                exerciseAdapter.notifyItemRemoved(position); // تحديث RecyclerView لإزالة العنصر بصريًا
             }
         });
-        rvExercises.setLayoutManager(new LinearLayoutManager(this));
-        rvExercises.setAdapter(exerciseAdapter);
 
-        /** أزرار الفئات */
-        linearCardio.setOnClickListener(v -> showReadyExercises("Cardio"));
-        linearStrength.setOnClickListener(v -> showReadyExercises("Strength"));
-        linearYoga.setOnClickListener(v -> showReadyExercises("Yoga"));
-        linearCycling.setOnClickListener(v -> showReadyExercises("Cycling"));
+        rvExercises.setLayoutManager(new LinearLayoutManager(this)); // تحديد طريقة عرض العناصر عموديًا
+        rvExercises.setAdapter(exerciseAdapter); // ربط RecyclerView بالـ Adapter
 
-        /** زر الإغلاق */
-        btnClose.setOnClickListener(v -> finish());
+        linearCardio.setOnClickListener(v -> showReadyExercises("Cardio")); // عند الضغط عرض تمارين Cardio
+        linearStrength.setOnClickListener(v -> showReadyExercises("Strength")); // عرض Strength
+        linearYoga.setOnClickListener(v -> showReadyExercises("Yoga")); // عرض Yoga
+        linearCycling.setOnClickListener(v -> showReadyExercises("Cycling")); // عرض Cycling
 
-        /** زر إضافة تمرين جديد */
-        btnAddNewExercise.setOnClickListener(v -> {
-            startActivity(new Intent(Exercises.this, AddNewExercise.class));
+        btnClose.setOnClickListener(v -> finish()); // إغلاق الشاشة عند الضغط
+
+        btnAddNewExercise.setOnClickListener(v -> { // عند الضغط على إضافة تمرين جديد
+            startActivity(new Intent(Exercises.this, AddNewExercise.class)); // فتح شاشة AddNewExercise
         });
 
-        /** Quick Add تمارين سريعة */
-        findViewById(R.id.tvRunning).setOnClickListener(v -> addQuickExercise("Running", "Quick Add", 150));
-        findViewById(R.id.tvWeightlifting).setOnClickListener(v -> addQuickExercise("Weightlifting", "Quick Add", 200));
+        findViewById(R.id.tvRunning).setOnClickListener(v -> addQuickExercise("Running", "Quick Add", 150)); // Quick Add Running
+        findViewById(R.id.tvWeightlifting).setOnClickListener(v -> addQuickExercise("Weightlifting", "Quick Add", 200)); // Quick Add Weightlifting
     }
 
-    /**
-     * إضافة تمرين سريع وحفظه في Room و Firebase
-     *
-     * @param name اسم التمرين
-     * @param category الفئة
-     * @param calories السعرات المحروقة
-     */
-    private void addQuickExercise(String name, String category, int calories) {
-        UserExercise newExercise = new UserExercise(
+    private void addQuickExercise(String name, String category, int calories) { // دالة إضافة تمرين سريع
+        UserExercise newExercise = new UserExercise( // إنشاء تمرين جديد
                 name, category, 0, 0, 0, 0, calories, "", R.drawable.ic_launcher_foreground
         );
 
-        // حفظ في Room
-        exerciseQuery.insert(newExercise);
+        exerciseQuery.insert(newExercise); // حفظ التمرين في Room
+        saveExerciseToFirebase(newExercise); // حفظ التمرين في Firebase
 
-        // حفظ في Firebase
-        saveExerciseToFirebase(newExercise);
-
-        // تحديث العرض
-        exerciseList.clear();
-        exerciseList.addAll(exerciseQuery.getAllExercises());
-        exerciseAdapter.notifyDataSetChanged();
-        rvExercises.scrollToPosition(exerciseList.size() - 1);
-        Toast.makeText(this, name + " added successfully", Toast.LENGTH_SHORT).show();
+        exerciseList.clear(); // مسح القائمة الحالية
+        exerciseList.addAll(exerciseQuery.getAllExercises()); // إعادة تحميل كل التمارين
+        exerciseAdapter.notifyDataSetChanged(); // تحديث RecyclerView بالكامل
+        rvExercises.scrollToPosition(exerciseList.size() - 1); // التمرير لآخر عنصر
+        Toast.makeText(this, name + " added successfully", Toast.LENGTH_SHORT).show(); // رسالة نجاح
     }
 
-    /**
-     * عرض التمارين الجاهزة حسب الفئة
-     *
-     * @param category اسم الفئة
-     */
-    private void showReadyExercises(String category) {
-        exerciseList.clear();
+    private void showReadyExercises(String category) { // عرض تمارين جاهزة حسب الفئة
+        exerciseList.clear(); // مسح القائمة الحالية
 
-        switch (category) {
+        switch (category) { // التحقق من الفئة المختارة
             case "Cardio":
-                exerciseList.add(new UserExercise("Running", "Cardio", 0,0,0,30,200,"Warm up first", R.drawable.ic_launcher_foreground));
+                exerciseList.add(new UserExercise("Running", "Cardio", 0,0,0,30,200,"Warm up first", R.drawable.ic_launcher_foreground)); // إضافة تمرين
                 exerciseList.add(new UserExercise("Jump Rope", "Cardio", 0,0,0,20,150,"Use proper rope", R.drawable.ic_launcher_foreground));
                 exerciseList.add(new UserExercise("Cycling", "Cardio", 0,0,0,40,300,"Moderate pace", R.drawable.ic_launcher_foreground));
                 break;
+
             case "Strength":
                 exerciseList.add(new UserExercise("Bench Press", "Strength", 12,3,50,0,250,"Focus on form", R.drawable.ic_launcher_foreground));
                 exerciseList.add(new UserExercise("Squats", "Strength", 15,4,60,0,300,"Keep back straight", R.drawable.ic_launcher_foreground));
                 exerciseList.add(new UserExercise("Deadlift", "Strength", 10,3,70,0,350,"Warm up first", R.drawable.ic_launcher_foreground));
                 break;
+
             case "Yoga":
                 exerciseList.add(new UserExercise("Sun Salutation", "Yoga", 0,0,0,30,100,"Relax and breathe", R.drawable.ic_launcher_foreground));
                 exerciseList.add(new UserExercise("Tree Pose", "Yoga", 0,0,0,20,50,"Balance carefully", R.drawable.ic_launcher_foreground));
                 exerciseList.add(new UserExercise("Warrior II", "Yoga", 0,0,0,25,80,"Focus on posture", R.drawable.ic_launcher_foreground));
                 break;
+
             case "Cycling":
                 exerciseList.add(new UserExercise("Stationary Bike", "Cycling", 0,0,0,45,400,"Keep steady pace", R.drawable.ic_launcher_foreground));
                 exerciseList.add(new UserExercise("Outdoor Cycling", "Cycling", 0,0,0,60,500,"Wear helmet", R.drawable.ic_launcher_foreground));
@@ -179,49 +130,43 @@ public class Exercises extends AppCompatActivity {
                 break;
         }
 
-        exerciseAdapter.notifyDataSetChanged();
-        rvExercises.scrollToPosition(0);
+        exerciseAdapter.notifyDataSetChanged(); // تحديث العرض بعد إضافة العناصر
+        rvExercises.scrollToPosition(0); // التمرير لأول عنصر
     }
 
-    /**
-     * حفظ التمرين في Firebase Realtime Database
-     *
-     * @param exercise كائن التمرين
-     */
-    private void saveExerciseToFirebase(UserExercise exercise) {
-        HashMap<String, Object> exerciseData = new HashMap<>();
-        exerciseData.put("name", exercise.getName());
-        exerciseData.put("category", exercise.getCategory());
-        exerciseData.put("reps", exercise.getReps());
-        exerciseData.put("sets", exercise.getSets());
-        exerciseData.put("weight", exercise.getWeight());
-        exerciseData.put("duration", exercise.getDuration());
-        exerciseData.put("calories", exercise.getCalories());
-        exerciseData.put("note", exercise.getNote());
-        exerciseData.put("imageRes", exercise.getImageRes());
+    private void saveExerciseToFirebase(UserExercise exercise) { // حفظ التمرين في Firebase
+        HashMap<String, Object> exerciseData = new HashMap<>(); // إنشاء HashMap لتجميع البيانات
 
-        // uid افتراضي، يمكن لاحقًا استخدام FirebaseAuth لكل مستخدم
-        String uid = "default";
+        exerciseData.put("name", exercise.getName()); // إضافة الاسم
+        exerciseData.put("category", exercise.getCategory()); // إضافة الفئة
+        exerciseData.put("reps", exercise.getReps()); // إضافة التكرارات
+        exerciseData.put("sets", exercise.getSets()); // إضافة المجموعات
+        exerciseData.put("weight", exercise.getWeight()); // إضافة الوزن
+        exerciseData.put("duration", exercise.getDuration()); // إضافة المدة
+        exerciseData.put("calories", exercise.getCalories()); // إضافة السعرات
+        exerciseData.put("note", exercise.getNote()); // إضافة الملاحظة
+        exerciseData.put("imageRes", exercise.getImageRes()); // إضافة الصورة
 
-        dbRef.child("users")
-                .child(uid)
-                .child("exercises")
-                .push()
-                .updateChildren(exerciseData)
+        String uid = "default"; // UID افتراضي (يفضل استخدام FirebaseAuth لاحقًا)
+
+        dbRef.child("users") // الدخول إلى users
+                .child(uid) // الدخول إلى المستخدم
+                .child("exercises") // الدخول إلى exercises
+                .push() // إنشاء ID عشوائي فريد
+                .updateChildren(exerciseData) // تحديث البيانات بدون حذف الأخرى
                 .addOnSuccessListener(aVoid -> {
-                    // نجاح الحفظ على Firebase
+                    // نجاح الحفظ
                 })
                 .addOnFailureListener(e -> Toast.makeText(this,
                         "Failed to save to Firebase: " + e.getMessage(),
-                        Toast.LENGTH_LONG).show());
+                        Toast.LENGTH_LONG).show()); // عرض رسالة خطأ
     }
 
-    /** تحديث قائمة التمارين عند العودة للشاشة */
     @Override
-    protected void onResume() {
-        super.onResume();
-        exerciseList.clear();
-        exerciseList.addAll(exerciseQuery.getAllExercises());
-        exerciseAdapter.notifyDataSetChanged();
+    protected void onResume() { // تُستدعى عند العودة للشاشة
+        super.onResume(); // استدعاء دالة الأب
+        exerciseList.clear(); // مسح القائمة
+        exerciseList.addAll(exerciseQuery.getAllExercises()); // إعادة تحميل البيانات من Room
+        exerciseAdapter.notifyDataSetChanged(); // تحديث العرض
     }
 }

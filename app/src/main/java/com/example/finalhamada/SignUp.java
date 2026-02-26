@@ -1,48 +1,52 @@
+/**
+ * الحزمة الأساسية التي تحتوي هذا الكلاس.
+ */
 package com.example.finalhamada;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.content.Intent; // Intent: يستخدم للانتقال بين الـ Activities.
+import android.os.Bundle; // Bundle: يحمل بيانات حالة الشاشة.
+import android.util.Log; // Log: لطباعة رسائل Debug في Logcat.
+import android.util.Patterns; // Patterns: يحتوي Regex جاهز للتحقق من صحة الإيميل.
+import android.widget.Button; // Button: زر في الواجهة.
+import android.widget.EditText; // EditText: حقل إدخال نص.
+import android.widget.Toast; // Toast: رسالة قصيرة تظهر للمستخدم.
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull; // @NonNull: تأكيد أن القيمة لا يمكن أن تكون null.
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي لأي Activity.
 
 import com.example.finalhamada.data.MyFitTrackTable.FitTrack;
+// FitTrack: كلاس Model يمثل بيانات المستخدم التي سيتم تخزينها في قاعدة البيانات.
+
 import com.google.firebase.auth.FirebaseAuth;
+// FirebaseAuth: مسؤول عن إنشاء الحسابات وتسجيل الدخول.
+
 import com.google.firebase.auth.FirebaseUser;
+// FirebaseUser: يمثل المستخدم الحالي بعد تسجيله.
+
 import com.google.firebase.database.DatabaseReference;
+// DatabaseReference: مرجع يشير إلى موقع معين داخل Realtime Database.
+
 import com.google.firebase.database.FirebaseDatabase;
+// FirebaseDatabase: نقطة الدخول للتعامل مع Realtime Database.
 
 /**
  * ============================================================
  * SignUp Activity
  * ============================================================
  * شاشة إنشاء حساب جديد باستخدام:
- * - Firebase Authentication
- * - Firebase Realtime Database
+ * - Firebase Authentication (للمصادقة)
+ * - Firebase Realtime Database (لتخزين بيانات المستخدم)
  *
- * الوظائف الرئيسية:
- * 1️⃣ إدخال بيانات المستخدم (الاسم - البريد - كلمة المرور)
- * 2️⃣ التحقق من صحة البيانات المدخلة
- * 3️⃣ إنشاء حساب جديد في Firebase Authentication
- * 4️⃣ حفظ بيانات المستخدم في Realtime Database
- * 5️⃣ الانتقال إلى شاشة AboutYourself بعد نجاح التسجيل
- *
- * ملاحظات:
- * - Authentication مسؤول عن المصادقة فقط
- * - Realtime Database مسؤول عن تخزين بيانات المستخدم
+ * الفكرة الأساسية:
+ * 1- إنشاء الحساب في Authentication
+ * 2- أخذ UID الخاص بالمستخدم
+ * 3- تخزين بيانات إضافية في Realtime Database تحت نفس UID
  * ============================================================
  */
 public class SignUp extends AppCompatActivity {
 
     /**
-     * TAG
-     * --------------------------------------------------
-     * يستخدم لعرض رسائل Debug داخل Logcat
+     * TAG يستخدم في Logcat لتمييز رسائل هذا الكلاس.
      */
     private static final String TAG = "SignUpActivity";
 
@@ -50,11 +54,20 @@ public class SignUp extends AppCompatActivity {
     // عناصر واجهة المستخدم (UI)
     // ==========================
 
-    private EditText etName;              // إدخال الاسم
-    private EditText etEmail;             // إدخال البريد الإلكتروني
-    private EditText etPassword;          // إدخال كلمة المرور
-    private EditText etConfirmPassword;   // تأكيد كلمة المرور
-    private Button btnRegister;           // زر إنشاء الحساب
+    /** إدخال اسم المستخدم */
+    private EditText etName;
+
+    /** إدخال البريد الإلكتروني */
+    private EditText etEmail;
+
+    /** إدخال كلمة المرور */
+    private EditText etPassword;
+
+    /** تأكيد كلمة المرور */
+    private EditText etConfirmPassword;
+
+    /** زر إنشاء الحساب */
+    private Button btnRegister;
 
     // ==========================
     // خدمات Firebase
@@ -62,48 +75,56 @@ public class SignUp extends AppCompatActivity {
 
     /**
      * FirebaseAuth:
-     * مسؤول عن إنشاء الحسابات والمصادقة
+     * مسؤول عن إنشاء الحساب في Firebase Authentication.
      */
     private FirebaseAuth auth;
 
     /**
      * DatabaseReference:
-     * مرجع لقاعدة Realtime Database
+     * مرجع لقاعدة Realtime Database.
+     * سنستخدمه لحفظ بيانات المستخدم.
      */
     private DatabaseReference realtime_db;
 
     /**
-     * onCreate
-     * --------------------------------------------------
-     * تُستدعى عند إنشاء الشاشة
-     * يتم فيها:
-     * - ربط عناصر الواجهة
+     * onCreate:
+     * يتم استدعاؤها عند إنشاء الشاشة.
+     * - ربط XML
      * - تهيئة Firebase
-     * - إعداد زر التسجيل
+     * - إعداد ClickListener
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // ربط ملف XML مع هذه الشاشة
         setContentView(R.layout.activity_sign_up);
 
-        // ربط عناصر XML
+        // ربط عناصر الواجهة
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
 
-        // تهيئة Firebase Authentication
+        /**
+         * تهيئة Firebase Authentication.
+         * getInstance() يرجع نسخة واحدة مشتركة (Singleton).
+         */
         auth = FirebaseAuth.getInstance();
 
-        // تهيئة Realtime Database
+        /**
+         * تهيئة Firebase Realtime Database.
+         * getReference() يرجع مرجع للجذر (Root) في قاعدة البيانات.
+         */
         realtime_db = FirebaseDatabase.getInstance().getReference();
 
         /**
-         * عند الضغط على Register:
-         * 1️⃣ التحقق من البيانات
-         * 2️⃣ إنشاء الحساب
-         * 3️⃣ حفظ بيانات المستخدم
+         * ClickListener لزر Register.
+         * عند الضغط:
+         * 1- يتم التحقق من صحة البيانات (Validation)
+         * 2- إنشاء الحساب في Firebase Authentication
+         * 3- حفظ البيانات في Realtime Database
          */
         btnRegister.setOnClickListener(v -> {
 
@@ -114,29 +135,45 @@ public class SignUp extends AppCompatActivity {
                 String password = etPassword.getText().toString().trim();
 
                 /**
-                 * createUserWithEmailAndPassword
-                 * --------------------------------------------------
-                 * ينشئ حساب جديد في Firebase
+                 * createUserWithEmailAndPassword:
+                 * ---------------------------------
+                 * - ينشئ حساب جديد في Firebase Authentication.
+                 * - العملية غير متزامنة (Asynchronous).
+                 * - تعيد Task<AuthResult>.
                  */
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
 
                             if (task.isSuccessful()) {
 
+                                /**
+                                 * عند نجاح إنشاء الحساب:
+                                 * نحصل على المستخدم الحالي.
+                                 */
                                 FirebaseUser firebaseUser = auth.getCurrentUser();
 
                                 if (firebaseUser != null) {
 
-                                    // إنشاء كائن بيانات المستخدم
+                                    /**
+                                     * إنشاء كائن Model يحتوي بيانات المستخدم.
+                                     * FitTrack هو كلاس يمثل جدول المستخدم.
+                                     */
                                     FitTrack userProfileData = new FitTrack();
                                     userProfileData.setName(name);
 
-                                    // حفظ البيانات في Realtime Database
+                                    /**
+                                     * حفظ البيانات في Realtime Database
+                                     * باستخدام UID كمفتاح رئيسي.
+                                     */
                                     saveUser(firebaseUser.getUid(), userProfileData);
                                 }
 
                             } else {
 
+                                /**
+                                 * في حال فشل إنشاء الحساب:
+                                 * getException() يعيد سبب الخطأ.
+                                 */
                                 Toast.makeText(SignUp.this,
                                         "Registration failed: "
                                                 + task.getException().getMessage(),
@@ -151,20 +188,26 @@ public class SignUp extends AppCompatActivity {
     }
 
     /**
-     * saveUser
-     * --------------------------------------------------
-     * يحفظ بيانات المستخدم داخل:
-     * Realtime Database → users → UID
+     * saveUser:
+     * ---------------------------------
+     * يحفظ بيانات المستخدم في Realtime Database بالشكل التالي:
      *
-     * @param uid المعرف الفريد للمستخدم
-     * @param trackData بيانات المستخدم
+     * users
+     *   └── uid
+     *         └── name: "..."
+     *
+     * @param uid المعرف الفريد للمستخدم من FirebaseAuth
+     * @param trackData كائن يحتوي بيانات المستخدم
      */
     public void saveUser(String uid, FitTrack trackData) {
 
-        realtime_db.child("users")
-                .child(uid)
-                .setValue(trackData)
+        realtime_db.child("users")   // الدخول إلى عقدة users
+                .child(uid)          // إنشاء child باسم UID
+                .setValue(trackData) // تخزين البيانات داخلها
 
+                /**
+                 * عند نجاح الحفظ.
+                 */
                 .addOnSuccessListener(aVoid -> {
 
                     Toast.makeText(SignUp.this,
@@ -178,6 +221,9 @@ public class SignUp extends AppCompatActivity {
                     finish();
                 })
 
+                /**
+                 * عند فشل الحفظ.
+                 */
                 .addOnFailureListener(e -> {
 
                     Log.e(TAG, "Database Error: "
@@ -191,15 +237,16 @@ public class SignUp extends AppCompatActivity {
     }
 
     /**
-     * validateAndReadData
-     * --------------------------------------------------
+     * validateAndReadData:
+     * ---------------------------------
      * تتحقق من:
      * - الاسم غير فارغ
-     * - البريد صحيح
-     * - كلمة المرور 6 أحرف على الأقل
-     * - تطابق كلمة المرور
+     * - الإيميل صحيح باستخدام Patterns
+     * - كلمة المرور ≥ 6 أحرف
+     * - تطابق كلمة المرور مع التأكيد
      *
-     * @return true إذا البيانات صحيحة
+     * @return true إذا البيانات صحيحة،
+     *         false إذا يوجد خطأ.
      */
     private boolean validateAndReadData() {
 
@@ -210,12 +257,18 @@ public class SignUp extends AppCompatActivity {
 
         boolean isValid = true;
 
+        /**
+         * التحقق من الاسم.
+         */
         if (name.isEmpty()) {
             etName.setError("Name is required");
             etName.requestFocus();
             isValid = false;
         }
 
+        /**
+         * التحقق من صحة البريد الإلكتروني باستخدام Regex جاهز.
+         */
         if (email.isEmpty() ||
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Enter a valid email");
@@ -223,12 +276,19 @@ public class SignUp extends AppCompatActivity {
             isValid = false;
         }
 
+        /**
+         * التحقق من طول كلمة المرور.
+         * Firebase يتطلب 6 أحرف على الأقل.
+         */
         if (password.length() < 6) {
             etPassword.setError("Password must be at least 6 characters");
             etPassword.requestFocus();
             isValid = false;
         }
 
+        /**
+         * التحقق من تطابق كلمة المرور مع التأكيد.
+         */
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Passwords don't match");
             etConfirmPassword.requestFocus();
