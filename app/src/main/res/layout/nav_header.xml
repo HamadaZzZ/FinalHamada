@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/purple_500"
+    android:background="#1E88E5"
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="160dp"
@@ -13,15 +13,14 @@
         android:layout_height="64dp"
         android:src="@drawable/ic_person"
         android:contentDescription="Profile Image"
-        android:scaleType="centerCrop"
-        android:background="@drawable/circle_background" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_title"
-        android:textColor="@color/white"
+        android:text="User Name"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         android:paddingTop="8dp" />
 
@@ -29,6 +28,6 @@
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle"
-        android:textColor="@color/white" />
+        android:text="email@example.com"
+        android:textColor="@android:color/white" />
 </LinearLayout>
