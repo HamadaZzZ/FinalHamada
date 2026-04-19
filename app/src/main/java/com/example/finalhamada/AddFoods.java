@@ -1,84 +1,51 @@
-/**
- * تعريف الحزمة التي يوجد بداخلها هذا الكلاس.
- * كل كلاس داخل هذا المسار ينتمي لنفس الـ package.
- */
 package com.example.finalhamada;
 
-import android.os.Bundle;
-// Bundle: يُستخدم لنقل بيانات حالة الـ Activity عند إنشائها.
+import android.os.Bundle; // كلاس Bundle يستخدم لتمرير البيانات وحفظ حالة الشاشة عند إنشائها.
+import android.widget.Button; // تمثيل لزر الضغط في واجهة المستخدم.
+import android.widget.Toast; // أداة لعرض رسائل نصية منبثقة قصيرة أسفل الشاشة.
 
-import android.widget.Button;
-// Button: عنصر زر في واجهة المستخدم.
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي الذي يجب أن ترث منه أي شاشة لضمان التوافقية.
 
-import android.widget.Toast;
-// Toast: رسالة قصيرة تظهر للمستخدم لفترة مؤقتة.
+import com.example.finalhamada.data.AppDataBase.AppDataBase1; // كلاس قاعدة البيانات المحلية (Room).
+import com.example.finalhamada.data.MyTaskTable.UserFood; // كلاس النموذج (Model) لتمثيل وجبة الطعام.
 
-import androidx.appcompat.app.AppCompatActivity;
-// AppCompatActivity: الكلاس الأساسي لأي شاشة (Activity).
+import com.google.android.material.textfield.TextInputEditText; // حقل إدخال نص متطور من مكتبة Material Design.
+import com.google.firebase.database.DatabaseReference; // مرجع للوصول لمكان محدد في قاعدة البيانات السحابية.
+import com.google.firebase.database.FirebaseDatabase; // الوصول لقاعدة بيانات Firebase Realtime السحابية.
 
-import com.example.finalhamada.data.AppDataBase.AppDataBase1;
-// AppDataBase1: كلاس يمثل قاعدة بيانات Room المحلية في التطبيق.
-
-import com.example.finalhamada.data.MyTaskTable.UserFood;
-// UserFood: Model يمثل كائن الطعام الذي سيدخل إلى قاعدة البيانات.
-
-import com.google.android.material.textfield.TextInputEditText;
-// TextInputEditText: حقل إدخال من مكتبة Material Design.
-
-import com.google.firebase.database.DatabaseReference;
-// DatabaseReference: مرجع يشير لمسار معين داخل Firebase Realtime Database.
-
-import com.google.firebase.database.FirebaseDatabase;
-// FirebaseDatabase: نقطة الدخول إلى Firebase Realtime Database.
-
-import java.text.SimpleDateFormat;
-// SimpleDateFormat: لتنسيق التاريخ كنص.
-
-import java.util.Date;
-// Date: يمثل التاريخ والوقت الحالي.
-
-import java.util.HashMap;
-// HashMap: بنية بيانات (Key → Value) لتجميع البيانات قبل إرسالها لـ Firebase.
-
-import java.util.Locale;
-// Locale: لتحديد لغة/تنسيق النظام عند تنسيق التاريخ.
+import java.text.SimpleDateFormat; // كلاس لتنسيق التاريخ والوقت كنص (مثلاً: 2023-10-25).
+import java.util.Date; // كلاس يمثل التاريخ والوقت الحالي للنظام.
+import java.util.HashMap; // بنية بيانات (مفتاح -> قيمة) لتسهيل إرسال البيانات للـ Firebase.
+import java.util.Locale; // كلاس لتحديد اللغة أو المنطقة الجغرافية عند تنسيق النصوص.
 
 /**
- * ============================================================
- * AddFoods Activity
- * ============================================================
- * شاشة إضافة طعام جديد وحفظه:
- * - في قاعدة بيانات محلية (Room)
- * - وفي Firebase Realtime Database
- * ============================================================
+ * AddFoods Activity: شاشة إضافة وجبة طعام جديدة.
+ * ---------------------------------------------------------
+ * تتيح هذه الشاشة للمستخدم إدخال تفاصيل وجبة تناولها (الاسم، السعرات، البروتين، الكربوهيدرات، الدهون)
+ * ثم تقوم بحفظ هذه البيانات في مكانين:
+ * 1. قاعدة البيانات المحلية (Room) للعمل بدون إنترنت.
+ * 2. قاعدة البيانات السحابية (Firebase) للمزامنة والنسخ الاحتياطي.
  */
 public class AddFoods extends AppCompatActivity {
 
-    /** حقول إدخال بيانات الطعام */
-    private TextInputEditText etFoodName, etCalories, etProtein, etCarbs, etFat;
-    // متغيرات تمثل عناصر إدخال النص من الواجهة.
+    // === عناصر واجهة المستخدم (UI Elements) ===
+    private TextInputEditText etFoodName, etCalories, etProtein, etCarbs, etFat; // حقول إدخال بيانات الوجبة
+    private Button btnSaveFood; // زر حفظ الوجبة
 
-    /** زر حفظ الطعام */
-    private Button btnSaveFood;
-    // زر عند الضغط عليه يتم تنفيذ عملية الحفظ.
-
-    /** مرجع Firebase Realtime Database */
-    private DatabaseReference dbRef;
-    // يستخدم للوصول إلى مسار معين داخل قاعدة البيانات السحابية.
+    // === كائنات خدمات Firebase السحابية ===
+    private DatabaseReference dbRef; // مرجع للتعامل مع قاعدة البيانات السحابية
 
     /**
-     * onCreate:
-     * يتم استدعاؤها أول مرة عند إنشاء الشاشة.
+     * دالة onCreate: يتم استدعاؤها عند بدء إنشاء الشاشة.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // استدعاء onCreate من الكلاس الأب (ضروري لتهيئة الشاشة).
-
+        
+        // ربط ملف التصميم activity_add_foods.xml بهذا الكود البرمجي
         setContentView(R.layout.activity_add_foods);
-        // ربط ملف XML بهذه الشاشة.
 
-        // ربط عناصر الواجهة بالمتغيرات
+        // --- ربط المتغيرات بالمعرفات (IDs) الموجودة في ملف الـ XML ---
         etFoodName = findViewById(R.id.editTextFoodName);
         etCalories = findViewById(R.id.editTextCalories);
         etProtein = findViewById(R.id.editTextProtein);
@@ -86,140 +53,96 @@ public class AddFoods extends AppCompatActivity {
         etFat = findViewById(R.id.editTextFat);
         btnSaveFood = findViewById(R.id.buttonSaveFood);
 
-        // تهيئة Firebase Realtime Database
+        // تهيئة الوصول لقاعدة البيانات السحابية (Realtime Database)
         dbRef = FirebaseDatabase.getInstance().getReference();
-        // getInstance(): يرجع نسخة Firebase.
-        // getReference(): يرجع مرجع الجذر Root في قاعدة البيانات.
 
-        // عند الضغط على زر الحفظ يتم استدعاء saveFood()
+        // إعداد حدث النقر على زر الحفظ
         btnSaveFood.setOnClickListener(v -> saveFood());
-        // setOnClickListener: Listener ينفذ الكود عند الضغط.
     }
 
     /**
-     * saveFood:
-     * تقرأ البيانات، تتحقق منها، ثم تحفظها.
+     * دالة saveFood: تقوم بقراءة البيانات من الحقول، التحقق منها، ثم حفظها محلياً وسحابياً.
      */
     private void saveFood() {
 
-        // قراءة القيم من الحقول وتحويلها إلى String
+        // قراءة النصوص من الحقول وحذف المسافات الزائدة
         String foodName = etFoodName.getText().toString().trim();
         String caloriesStr = etCalories.getText().toString().trim();
         String proteinStr = etProtein.getText().toString().trim();
         String carbsStr = etCarbs.getText().toString().trim();
         String fatStr = etFat.getText().toString().trim();
-        // getText(): تجلب النص.
-        // toString(): تحويله إلى String.
-        // trim(): إزالة الفراغات الزائدة.
 
-        // التحقق أن اسم الطعام والسعرات غير فارغين
+        // --- 1. التحقق من المدخلات الأساسية ---
         if (foodName.isEmpty() || caloriesStr.isEmpty()) {
-
-            Toast.makeText(this,
-                    "Please fill in at least Food Name and Calories",
-                    Toast.LENGTH_SHORT).show();
-
-            return;
-            // إيقاف تنفيذ الدالة إذا البيانات ناقصة.
+            Toast.makeText(this, "يرجى إدخال اسم الطعام والسعرات الحرارية على الأقل", Toast.LENGTH_SHORT).show();
+            return; // توقف عن إكمال العملية
         }
 
         try {
-
-            // تحويل السعرات إلى int
+            // تحويل النصوص إلى أرقام (الأرقام الصحيحة والعشرية)
             int calories = Integer.parseInt(caloriesStr);
-            // parseInt: تحويل String إلى رقم صحيح.
-
-            // إذا الحقل فارغ نحط 0، غير ذلك نحوله لرقم
             double protein = proteinStr.isEmpty() ? 0 : Double.parseDouble(proteinStr);
             double carbs = carbsStr.isEmpty() ? 0 : Double.parseDouble(carbsStr);
             double fat = fatStr.isEmpty() ? 0 : Double.parseDouble(fatStr);
-            // ?: هذا يسمى Ternary Operator.
 
-            // إنشاء كائن يمثل الطعام
+            // --- 2. إنشاء كائن الوجبة (Model Object) ---
             UserFood userFood = new UserFood(foodName, calories, protein, carbs, fat);
-            // هنا أنشأنا Object يحتوي كل بيانات الطعام.
+            
+            // تحديد تاريخ اليوم وتخزينه مع الوجبة
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            userFood.setDate(currentDate);
 
-            // حفظ التاريخ الحالي داخل الكائن
-            userFood.setDate(
-                    new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                            .format(new Date())
-            );
-            // new Date(): يجلب الوقت الحالي.
-            // SimpleDateFormat: ينسق التاريخ.
-            // format(): يحول التاريخ إلى String.
-
-            // الحصول على نسخة من قاعدة البيانات المحلية Room
+            // --- 3. الحفظ في قاعدة البيانات المحلية (Room) ---
+            // الحصول على نسخة قاعدة البيانات المحلية
             AppDataBase1 db = AppDataBase1.getDatabase(getApplicationContext());
-            // getDatabase(): ترجع Singleton لقاعدة البيانات.
-
+            // إدراج الوجبة في الجدول المخصص
             db.userFoodQuery().insert(userFood);
-            // userFoodQuery(): DAO.
-            // insert(): إدخال الكائن في قاعدة البيانات المحلية.
 
-            // حفظ البيانات أيضاً على Firebase
+            // --- 4. الحفظ في قاعدة البيانات السحابية (Firebase) ---
             saveFoodToFirebase(userFood);
 
-            Toast.makeText(this,
-                    "Food saved successfully",
-                    Toast.LENGTH_SHORT).show();
-
+            // إظهار رسالة نجاح وإغلاق الشاشة للعودة للقائمة
+            Toast.makeText(this, "تم حفظ الوجبة بنجاح", Toast.LENGTH_SHORT).show();
             finish();
-            // إغلاق الشاشة بعد الحفظ.
 
         } catch (NumberFormatException e) {
-            // إذا فشل التحويل من نص إلى رقم.
-
-            Toast.makeText(this,
-                    "Please enter valid numbers",
-                    Toast.LENGTH_SHORT).show();
+            // في حال إدخال نصوص في حقول الأرقام
+            Toast.makeText(this, "يرجى التأكد من إدخال أرقام صحيحة في حقول السعرات والعناصر الغذائية", Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
-     * saveFoodToFirebase:
-     * تحفظ الطعام داخل Firebase بصيغة JSON.
+     * دالة saveFoodToFirebase: لحفظ بيانات الوجبة في السحابة للمزامنة.
+     * @param userFood كائن الوجبة المراد حفظه.
      */
     private void saveFoodToFirebase(UserFood userFood) {
-
-        // إنشاء HashMap لتجميع البيانات
+        // تجهيز البيانات في HashMap (مفتاح -> قيمة) لتتوافق مع نظام JSON في Firebase
         HashMap<String, Object> foodData = new HashMap<>();
-
         foodData.put("foodName", userFood.getFoodName());
         foodData.put("calories", userFood.getCalories());
         foodData.put("protein", userFood.getProtein());
         foodData.put("carbs", userFood.getCarbs());
         foodData.put("fat", userFood.getFat());
         foodData.put("date", userFood.getDate());
-        // put(): تخزين Key → Value.
-        // Firebase سيحول HashMap إلى JSON تلقائياً.
 
-        // UID افتراضي (يفضل استخدام FirebaseAuth للمستخدم الحقيقي)
-        String uid = "default";
+        // استخدام معرف افتراضي (في تطبيق حقيقي يفضل استخدام UID المستخدم المسجل)
+        String uid = "default_user";
 
         /**
-         * المسار النهائي:
-         * users
-         *   └── uid
-         *         └── foods
-         *               └── push()
+         * المسار في السحابة: users -> [User_ID] -> foods
+         * push() تنشئ معرفاً فريداً تلقائياً لكل وجبة تضاف.
          */
-        dbRef.child("users")      // الدخول إلى عقدة users
-                .child(uid)       // الدخول إلى المستخدم المحدد
-                .child("foods")   // الدخول إلى foods
-                .push()           // إنشاء ID عشوائي جديد
+        dbRef.child("users")
+                .child(uid)
+                .child("foods")
+                .push()
                 .updateChildren(foodData)
-                // updateChildren: يضيف البيانات بدون حذف الباقي
-
                 .addOnSuccessListener(aVoid -> {
-                    // يتم تنفيذ هذا الكود إذا نجح الحفظ
+                    // تم الحفظ بنجاح في السحابة
                 })
-
                 .addOnFailureListener(e -> {
-                    // يتم تنفيذ هذا الكود إذا فشل الحفظ
-
-                    Toast.makeText(this,
-                            "Failed to save to Firebase: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                    // فشل الحفظ في السحابة (مثلاً بسبب انقطاع الإنترنت)
+                    Toast.makeText(this, "فشل المزامنة مع السحابة: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 }

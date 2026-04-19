@@ -1,114 +1,60 @@
-/**
- * الحزمة الأساسية التي تحتوي هذا الكلاس.
- */
 package com.example.finalhamada;
 
-import android.content.Intent; // Intent: يستخدم للانتقال بين الشاشات (Activities).
-import android.os.Bundle; // Bundle: يحتوي بيانات حالة الشاشة عند إنشائها.
-import android.widget.Button; // Button: زر في واجهة المستخدم.
-import android.widget.EditText; // EditText: حقل إدخال نص.
-import android.widget.RadioButton; // RadioButton: خيار فردي داخل RadioGroup.
-import android.widget.RadioGroup; // RadioGroup: مجموعة خيارات يُسمح باختيار واحد فقط منها.
-import android.widget.Toast; // Toast: رسالة قصيرة تظهر للمستخدم.
+import android.content.Intent; // استيراد كلاس Intent للانتقال بين الواجهات (Activities).
+import android.os.Bundle; // كلاس Bundle لحفظ واسترجاع حالة الشاشة.
+import android.widget.Button; // تمثيل لزر الضغط في واجهة المستخدم.
+import android.widget.EditText; // تمثيل لحقل إدخال النص القابل للتعديل.
+import android.widget.RadioButton; // تمثيل لخيار فردي ضمن مجموعة خيارات.
+import android.widget.RadioGroup; // حاوية لمجموعة من RadioButtons تسمح باختيار واحد فقط.
+import android.widget.Toast; // أداة لعرض رسائل نصية منبثقة قصيرة أسفل الشاشة.
 
-import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي لأي Activity.
-import androidx.core.graphics.Insets; // Insets: يمثل أبعاد الحواف للنظام (Status/Nav bar).
-import androidx.core.view.ViewCompat; // ViewCompat: دعم خصائص متوافقة مع إصدارات مختلفة.
-import androidx.core.view.WindowInsetsCompat; // WindowInsetsCompat: للتعامل مع هوامش النظام.
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي للشاشات.
+import androidx.core.graphics.Insets; // للتعامل مع أبعاد حواف النظام (System Bars).
+import androidx.core.view.ViewCompat; // توفير ميزات التوافق لعناصر الواجهة.
+import androidx.core.view.WindowInsetsCompat; // للتعامل مع مسافات النظام (أشرطة الحالة والتنقل).
 
-import com.google.firebase.auth.FirebaseAuth;
-// FirebaseAuth: لإدارة المستخدم الحالي (الحصول على UID).
+import com.google.firebase.auth.FirebaseAuth; // نظام المصادقة في Firebase (للحصول على معرف المستخدم).
+import com.google.firebase.database.DatabaseReference; // مرجع للوصول لمكان محدد في قاعدة البيانات السحابية.
+import com.google.firebase.database.FirebaseDatabase; // الوصول لقاعدة بيانات Firebase Realtime السحابية.
 
-import com.google.firebase.database.DatabaseReference;
-// DatabaseReference: مرجع يشير إلى مسار معين داخل Realtime Database.
-
-import com.google.firebase.database.FirebaseDatabase;
-// FirebaseDatabase: نقطة الدخول إلى Realtime Database.
-
-import java.util.HashMap;
-// HashMap: بنية بيانات (Key → Value) تُستخدم لتجميع البيانات قبل إرسالها.
+import java.util.HashMap; // بنية بيانات (مفتاح -> قيمة) لتسهيل إرسال البيانات للـ Firebase.
 
 /**
- * ============================================================
- * AboutYourself Activity
- * ============================================================
- * هذه الشاشة تجمع معلومات المستخدم الأساسية:
- * - العمر
- * - الطول
- * - الوزن
- * - الجنس
- *
- * ثم تقوم بحفظها داخل Firebase Realtime Database
- * تحت حساب المستخدم الحالي.
- * ============================================================
+ * AboutYourself Activity: شاشة "حدثنا عن نفسك".
+ * ---------------------------------------------------------
+ * تهدف هذه الشاشة إلى جمع البيانات الجسدية الأساسية للمستخدم (العمر، الطول، الوزن، الجنس)
+ * بعد عملية التسجيل مباشرة، وتخزينها في قاعدة البيانات السحابية لتهيئة تجربة مستخدم مخصصة.
  */
 public class AboutYourself extends AppCompatActivity {
 
-    /** حقول إدخال البيانات */
-    private EditText etAge, etHeight, etWeight;
+    // === عناصر واجهة المستخدم (UI Elements) ===
+    private EditText etAge, etHeight, etWeight; // حقول إدخال العمر والطول والوزن
+    private RadioGroup genderGroup;              // مجموعة اختيار الجنس
+    private RadioButton radioMale, radioFemale, radioOther; // خيارات الجنس المتاحة
+    private Button nextButton;                   // زر الانتقال للمرحلة التالية
 
-    /** مجموعة اختيار الجنس */
-    private RadioGroup genderGroup;
-
-    /** أزرار اختيار الجنس */
-    private RadioButton radioMale, radioFemale, radioOther;
-
-    /** زر الانتقال للخطوة التالية */
-    private Button nextButton;
-
-    /** FirebaseAuth للحصول على المستخدم الحالي */
-    private FirebaseAuth auth;
+    // === كائنات خدمات Firebase ===
+    private FirebaseAuth auth;          // كائن للحصول على معلومات الحساب الحالي
+    private DatabaseReference dbRef;    // مرجع للتعامل مع قاعدة البيانات السحابية
 
     /**
-     * ============================================================
-     * Firebase Realtime Database
-     * ============================================================
-     * - قاعدة بيانات NoSQL (ليست جداول مثل SQL).
-     * - تخزن البيانات على شكل JSON Tree.
-     * - تعمل Online + Realtime (أي تحديث يظهر فورًا).
-     * - كل مستخدم يتم تخزين بياناته تحت UID خاص به.
-     *
-     * مثال شكل البيانات:
-     *
-     * users
-     *   └── uid123
-     *         └── profile
-     *               ├── age: 22
-     *               ├── height: 175
-     *               ├── weight: 70
-     *               └── gender: "Male"
-     *
-     * هنا نستخدمها لتخزين بيانات الملف الشخصي مرة واحدة
-     * بعد التسجيل.
-     * ============================================================
-     */
-    private DatabaseReference dbRef;
-
-    /**
-     * onCreate:
-     * - ربط XML
-     * - تجهيز Edge-to-Edge
-     * - تهيئة Firebase
-     * - إعداد ClickListener
+     * دالة onCreate: يتم استدعاؤها عند بدء إنشاء الشاشة.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // ربط ملف التصميم activity_about_yourself.xml بهذا الكود
         setContentView(R.layout.activity_about_yourself);
 
-        /**
-         * Edge-to-Edge Layout:
-         * يجعل المحتوى يمتد خلف شريط الحالة وشريط التنقل
-         * ويضيف padding تلقائي حسب حجم النظام.
-         */
+        // ضبط واجهة المستخدم لتتوافق مع حواف الشاشة (Edge-to-Edge)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top,
-                    systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // ربط العناصر بالواجهة
+        // --- ربط العناصر البرمجية بالـ IDs من ملف الـ XML ---
         etAge = findViewById(R.id.etAge);
         etHeight = findViewById(R.id.etHeight);
         etWeight = findViewById(R.id.etWeight);
@@ -118,130 +64,84 @@ public class AboutYourself extends AppCompatActivity {
         radioOther = findViewById(R.id.radioOther);
         nextButton = findViewById(R.id.nextButton);
 
-        // تهيئة FirebaseAuth
+        // تهيئة نظام مصادقة Firebase للحصول على UID الخاص بالمستخدم
         auth = FirebaseAuth.getInstance();
 
-        /**
-         * getReference():
-         * يعطينا مرجع للجذر (Root) في قاعدة البيانات.
-         * بعد ذلك نحدد المسار باستخدام child().
-         */
+        // تهيئة مرجع قاعدة البيانات السحابية (النقطة الرئيسية للاتصال)
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        /**
-         * ClickListener:
-         * عند الضغط على Next
-         * يتم حفظ البيانات في Firebase.
-         */
+        // --- إعداد حدث النقر على زر "التالي" ---
         nextButton.setOnClickListener(v -> saveUserData());
     }
 
     /**
-     * saveUserData:
-     * ----------------------------------
-     * 1- قراءة البيانات من الحقول.
-     * 2- التحقق من صحتها.
-     * 3- تحويلها لأرقام.
-     * 4- حفظها في Realtime Database.
+     * دالة saveUserData: تقوم بقراءة البيانات من الحقول، التحقق منها، ثم رفعها للـ Firebase.
      */
     private void saveUserData() {
 
-        // قراءة القيم كنصوص
+        // استخراج النصوص من الحقول وحذف الفراغات
         String ageStr = etAge.getText().toString().trim();
         String heightStr = etHeight.getText().toString().trim();
         String weightStr = etWeight.getText().toString().trim();
 
         String gender = "";
 
-        // معرفة أي RadioButton تم اختياره
+        // تحديد الجنس المختار بناءً على الـ RadioButton المضغوط
         int selectedId = genderGroup.getCheckedRadioButtonId();
+        if (selectedId == radioMale.getId()) gender = "ذكر";
+        else if (selectedId == radioFemale.getId()) gender = "أنثى";
+        else if (selectedId == radioOther.getId()) gender = "غير ذلك";
 
-        if (selectedId == radioMale.getId()) gender = "Male";
-        else if (selectedId == radioFemale.getId()) gender = "Female";
-        else if (selectedId == radioOther.getId()) gender = "Other";
-
-        /**
-         * Validation:
-         * التأكد أن جميع الحقول ممتلئة.
-         */
-        if (ageStr.isEmpty() || heightStr.isEmpty() ||
-                weightStr.isEmpty() || gender.isEmpty()) {
-
-            Toast.makeText(this,
-                    "Please fill all fields",
-                    Toast.LENGTH_SHORT).show();
+        // --- 1. التحقق من أن جميع الحقول ممتلئة ---
+        if (ageStr.isEmpty() || heightStr.isEmpty() || weightStr.isEmpty() || gender.isEmpty()) {
+            Toast.makeText(this, "يرجى ملء جميع الحقول المطلوبة", Toast.LENGTH_SHORT).show();
             return;
         }
 
         long age;
         double height, weight;
 
-        /**
-         * تحويل النصوص إلى أرقام.
-         * في حال إدخال حروف بدلاً من أرقام
-         * سيتم رمي NumberFormatException.
-         */
+        // --- 2. محاولة تحويل النصوص إلى أرقام (للتأكد من صحة المدخلات) ---
         try {
             age = Long.parseLong(ageStr);
             height = Double.parseDouble(heightStr);
             weight = Double.parseDouble(weightStr);
         } catch (NumberFormatException e) {
-
-            Toast.makeText(this,
-                    "Enter valid numbers",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "يرجى إدخال أرقام صحيحة فقط", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        /**
-         * HashMap:
-         * ----------------------------------
-         * نستخدمها لتجميع البيانات على شكل:
-         * Key → Value
-         *
-         * Firebase يحولها تلقائيًا إلى JSON عند الحفظ.
-         */
+        // --- 3. تجهيز البيانات في HashMap تمهيداً لإرسالها للـ Firebase ---
         HashMap<String, Object> profileData = new HashMap<>();
         profileData.put("age", age);
         profileData.put("height", height);
         profileData.put("weight", weight);
         profileData.put("gender", gender);
 
-        /**
-         * الحصول على UID للمستخدم الحالي.
-         * UID هو المفتاح الأساسي الذي يميز كل مستخدم.
-         */
+        // الحصول على المعرف الفريد للمستخدم الحالي (UID)
+        if (auth.getCurrentUser() == null) return; // حماية في حال عدم وجود مستخدم
         String uid = auth.getCurrentUser().getUid();
 
         /**
-         * updateChildren:
-         * ----------------------------------
-         * - يحدث القيم المحددة فقط.
-         * - لا يحذف بيانات أخرى موجودة.
-         *
-         * المسار النهائي للحفظ:
-         * users → uid → profile
+         * حفظ البيانات في المسار التالي:
+         * users -> [User_UID] -> profile
+         * نستخدم updateChildren لتحديث الحقول المحددة دون مسح البيانات السابقة في نفس المسار.
          */
         dbRef.child("users")
                 .child(uid)
                 .child("profile")
                 .updateChildren(profileData)
-
                 .addOnSuccessListener(aVoid -> {
+                    // في حال نجاح عملية الحفظ في السحابة
+                    Toast.makeText(this, "تم حفظ بياناتك بنجاح", Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(this,
-                            "Data saved successfully",
-                            Toast.LENGTH_SHORT).show();
-
-                    // الانتقال للشاشة التالية
+                    // الانتقال لشاشة "تحديد الهدف" (YourGoal)
                     startActivity(new Intent(AboutYourself.this, YourGoal.class));
-                    finish();
+                    finish(); // إغلاق الشاشة الحالية
                 })
-
-                .addOnFailureListener(e ->
-                        Toast.makeText(this,
-                                "Failed: " + e.getMessage(),
-                                Toast.LENGTH_LONG).show()
-                );
+                .addOnFailureListener(e -> {
+                    // في حال حدوث خطأ في الاتصال أو الحفظ
+                    Toast.makeText(this, "فشل الحفظ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }

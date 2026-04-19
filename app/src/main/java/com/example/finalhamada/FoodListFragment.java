@@ -1,189 +1,303 @@
-package com.example.finalhamada; // تعريف الحزمة التي ينتمي لها هذا الكلاس داخل المشروع
+package com.example.finalhamada;
 
-import android.content.Context; // Context يمثل البيئة الحالية (Activity) ويُستخدم للوصول للموارد وقاعدة البيانات
-import android.os.Bundle; // Bundle يُستخدم لحفظ البيانات المؤقتة عند إنشاء الـ Fragment
-import android.view.LayoutInflater; // LayoutInflater يحول XML إلى View حقيقي
-import android.view.View; // View هو الكلاس الأب لكل عناصر الواجهة
-import android.view.ViewGroup; // ViewGroup هو حاوية تحتوي عناصر أخرى
-import android.widget.Toast; // Toast لعرض رسالة قصيرة للمستخدم
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull; // تعني أن القيمة لا يمكن أن تكون null
-import androidx.annotation.Nullable; // تعني أن القيمة ممكن أن تكون null
-import androidx.fragment.app.Fragment; // Fragment هو جزء من الشاشة داخل Activity
-import androidx.recyclerview.widget.LinearLayoutManager; // يحدد ترتيب العناصر عموديًا في RecyclerView
-import androidx.recyclerview.widget.RecyclerView; // RecyclerView لعرض قائمة عناصر قابلة للتمرير
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.finalhamada.data.AppDataBase.AppDataBase1; // قاعدة بيانات Room المحلية
-import com.example.finalhamada.data.MyTaskTable.FoodAdapter; // Adapter يربط البيانات مع RecyclerView
-import com.example.finalhamada.data.MyTaskTable.FoodCategory; // Model يمثل فئة طعام (عنوان + عناصر)
-import com.example.finalhamada.data.MyTaskTable.UserFood; // Model يمثل عنصر طعام واحد
-import com.google.android.material.dialog.MaterialAlertDialogBuilder; // لإنشاء Dialog حديث
+import com.example.finalhamada.data.AppDataBase.AppDataBase1;
+import com.example.finalhamada.data.MyTaskTable.FoodAdapter;
+import com.example.finalhamada.data.MyTaskTable.FoodCategory;
+import com.example.finalhamada.data.MyTaskTable.UserFood;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.text.SimpleDateFormat; // لتنسيق التاريخ كنص
-import java.util.ArrayList; // قائمة ديناميكية
-import java.util.Date; // يمثل الوقت الحالي
-import java.util.List; // Interface يمثل قائمة
-import java.util.Locale; // لتحديد لغة وتنسيق النظام
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class FoodListFragment extends Fragment implements FoodAdapter.AdapterInteractionListener {
-// تعريف Fragment جديد ويطبق Interface من Adapter للتفاعل مع الضغطات
 
-    public static final int TYPE_USER_LOG = 0; // ثابت يمثل عرض سجل المستخدم
-    public static final int TYPE_EXPLORE = 1; // ثابت يمثل عرض قائمة الاستكشاف
-    private static final String ARG_TYPE = "fragment_type"; // مفتاح لتخزين نوع الـ Fragment داخل Bundle
+    public static final int TYPE_USER_LOG = 0;
+    public static final int TYPE_EXPLORE = 1;
 
-    private RecyclerView recyclerView; // RecyclerView لعرض القائمة
-    private FoodAdapter foodAdapter; // Adapter لربط البيانات بالعرض
-    private int fragmentType; // يخزن نوع الـ Fragment الحالي
-    private OnDataUpdateListener dataUpdateListener; // Interface للتواصل مع Activity
+    private static final String ARG_TYPE = "fragment_type";
 
-    private final List<Object> displayItems = new ArrayList<>(); // قائمة عناصر العرض (فئات + أطعمة)
-    private final List<FoodCategory> originalCategories = new ArrayList<>(); // قائمة الفئات الأصلية
+    private RecyclerView recyclerView;
+    private FoodAdapter foodAdapter;
+    private int fragmentType;
 
-    public interface OnDataUpdateListener { // Interface تُستخدم لإبلاغ الـ Activity بتحديث البيانات
-        void onDataUpdated(); // دالة تُستدعى عند إضافة أو حذف طعام
+    private OnDataUpdateListener dataUpdateListener;
+
+    private final List<Object> displayItems = new ArrayList<>();
+    private final List<FoodCategory> originalCategories = new ArrayList<>();
+
+    public interface OnDataUpdateListener {
+        void onDataUpdated();
     }
 
-    public static FoodListFragment newInstance(int type) { // دالة لإنشاء Fragment مع تحديد نوعه
-        FoodListFragment fragment = new FoodListFragment(); // إنشاء Fragment
-        Bundle args = new Bundle(); // إنشاء Bundle
-        args.putInt(ARG_TYPE, type); // تخزين النوع داخل Bundle
-        fragment.setArguments(args); // تمرير البيانات للـ Fragment
-        return fragment; // إرجاع Fragment جاهز
+    public static FoodListFragment newInstance(int type) {
+        FoodListFragment fragment = new FoodListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    public void onAttach(@NonNull Context context) { // تُستدعى عند ربط الـ Fragment بالـ Activity
-        super.onAttach(context); // استدعاء الأب
-        if (context instanceof OnDataUpdateListener) { // التأكد أن الـ Activity تطبق الواجهة
-            dataUpdateListener = (OnDataUpdateListener) context; // حفظ المرجع
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnDataUpdateListener) {
+            dataUpdateListener = (OnDataUpdateListener) context;
         } else {
-            throw new RuntimeException(context + " must implement OnDataUpdateListener"); // خطأ إذا لم تطبق Activity الواجهة
+            throw new RuntimeException(context + " must implement OnDataUpdateListener");
         }
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) { // تُستدعى عند إنشاء الـ Fragment
-        super.onCreate(savedInstanceState); // استدعاء الأب
-        if (getArguments() != null) { // التأكد أن هناك بيانات مرسلة
-            fragmentType = getArguments().getInt(ARG_TYPE); // قراءة نوع Fragment
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            fragmentType = getArguments().getInt(ARG_TYPE);
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_food_list, container, false); // تحويل XML إلى View
-        recyclerView = view.findViewById(R.id.recyclerView); // ربط RecyclerView
-        setupRecyclerView(); // إعداد RecyclerView
-        return view; // إرجاع View النهائي
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState
+    ) {
+
+        View view = inflater.inflate(R.layout.fragment_food_list, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+
+        setupRecyclerView();
+
+        return view;
     }
 
     @Override
-    public void onResume() { // تُستدعى عند العودة للـ Fragment
-        super.onResume(); // استدعاء الأب
-        loadData(); // إعادة تحميل البيانات
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 
     private void setupRecyclerView() {
-        // وظيفة الدالة: إعداد RecyclerView (تحديد الاتجاه وربط Adapter)
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // عرض العناصر عموديًا
-        foodAdapter = new FoodAdapter(displayItems, this, fragmentType); // إنشاء Adapter وتمرير القائمة
-        recyclerView.setAdapter(foodAdapter); // ربط Adapter بالـ RecyclerView
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        foodAdapter = new FoodAdapter(displayItems, this, fragmentType);
+
+        recyclerView.setAdapter(foodAdapter);
     }
 
     private void loadData() {
-        // وظيفة الدالة: تحميل البيانات حسب نوع الـ Fragment
-        originalCategories.clear(); // مسح البيانات القديمة
-        if (fragmentType == TYPE_USER_LOG) { // إذا كان عرض سجل المستخدم
-            originalCategories.addAll(getUserLogGroup()); // جلب سجل المستخدم
+
+        originalCategories.clear();
+
+        if (fragmentType == TYPE_USER_LOG) {
+
+            originalCategories.addAll(getUserLogGroup());
+
         } else {
-            originalCategories.addAll(getExploreFoodCategories()); // جلب قائمة الاستكشاف
+
+            originalCategories.addAll(getExploreFoodCategories());
+
         }
-        buildDisplayList(); // بناء القائمة النهائية للعرض
+
+        buildDisplayList();
     }
 
     private void buildDisplayList() {
-        // وظيفة الدالة: تجهيز القائمة المعروضة (فئات + عناصر داخلها)
-        displayItems.clear(); // مسح القائمة
-        for (FoodCategory category : originalCategories) { // المرور على كل فئة
-            displayItems.add(category); // إضافة عنوان الفئة
-            if (category.isExpanded() && category.getFoodItems() != null) { // إذا كانت الفئة مفتوحة
-                displayItems.addAll(category.getFoodItems()); // إضافة عناصرها
+
+        displayItems.clear();
+
+        for (FoodCategory category : originalCategories) {
+
+            displayItems.add(category);
+
+            if (category.isExpanded() && category.getFoodItems() != null) {
+
+                displayItems.addAll(category.getFoodItems());
+
             }
         }
-        if (foodAdapter != null) { // التأكد من وجود Adapter
-            foodAdapter.notifyDataSetChanged(); // تحديث العرض
-        }
+
+        foodAdapter.notifyDataSetChanged();
     }
 
     private List<FoodCategory> getUserLogGroup() {
-        // وظيفة الدالة: جلب سجل المستخدم من قاعدة بيانات Room
-        List<FoodCategory> categoryList = new ArrayList<>(); // إنشاء قائمة فئات
-        AppDataBase1 db = AppDataBase1.getDatabase(getContext()); // جلب قاعدة البيانات
-        List<UserFood> userFoods = db.userFoodQuery().getAll(); // جلب كل الأطعمة
 
-        if (userFoods.isEmpty()) { // إذا السجل فارغ
-            UserFood exampleFood = new UserFood("Log is empty. Add food from Explore!", 0, 0, 0, 0); // إنشاء عنصر وهمي
-            exampleFood.setId(-1); // تعيين ID خاص لتمييزه
-            userFoods.add(exampleFood); // إضافته للقائمة
+        List<FoodCategory> categoryList = new ArrayList<>();
+
+        AppDataBase1 db = AppDataBase1.getDatabase(getContext());
+
+        List<UserFood> userFoods = db.userFoodQuery().getAll();
+
+        if (userFoods.isEmpty()) {
+
+            UserFood exampleFood =
+                    new UserFood("Log is empty. Add food from Explore!", 0, 0, 0, 0);
+
+            exampleFood.setId(-1);
+
+            userFoods.add(exampleFood);
         }
 
-        categoryList.add(new FoodCategory("Today's Log", userFoods, true)); // إنشاء فئة بعنوان Today's Log
-        return categoryList; // إرجاع القائمة
+        categoryList.add(
+                new FoodCategory("Today's Log", userFoods, true)
+        );
+
+        return categoryList;
     }
 
     private List<FoodCategory> getExploreFoodCategories() {
-        // وظيفة الدالة: إنشاء قائمة أطعمة جاهزة للاستكشاف
-        List<FoodCategory> categories = new ArrayList<>(); // قائمة الفئات
 
-        // (باقي الكود كما هو لإنشاء قوائم البروتين، الكارب، الدهون، الخضار، الفواكه)
-        // كل سطر proteinList.add(...) ينشئ عنصر UserFood جديد بقيم غذائية محددة
-        // ثم يتم تجميعهم داخل FoodCategory باسم الفئة
+        List<FoodCategory> categories = new ArrayList<>();
 
-        return categories; // إرجاع القائمة النهائية
+        // Protein
+        List<UserFood> proteinList = new ArrayList<>();
+
+        proteinList.add(new UserFood("Chicken Breast",165,31,0,3.6));
+        proteinList.add(new UserFood("Egg",78,6,1,5));
+        proteinList.add(new UserFood("Tuna",132,28,0,1));
+        proteinList.add(new UserFood("Greek Yogurt",100,10,4,0));
+
+        categories.add(new FoodCategory("Protein", proteinList, true));
+
+
+        // Carbs
+        List<UserFood> carbsList = new ArrayList<>();
+
+        carbsList.add(new UserFood("Rice",206,4,45,0));
+        carbsList.add(new UserFood("Potato",161,4,37,0));
+        carbsList.add(new UserFood("Oats",389,17,66,7));
+
+        categories.add(new FoodCategory("Carbs", carbsList, false));
+
+
+        // Fats
+        List<UserFood> fatsList = new ArrayList<>();
+
+        fatsList.add(new UserFood("Avocado",160,2,9,15));
+        fatsList.add(new UserFood("Olive Oil",119,0,0,14));
+        fatsList.add(new UserFood("Almonds",164,6,6,14));
+
+        categories.add(new FoodCategory("Fats", fatsList, false));
+
+
+        // Fruits
+        List<UserFood> fruitsList = new ArrayList<>();
+
+        fruitsList.add(new UserFood("Banana",105,1,27,0));
+        fruitsList.add(new UserFood("Apple",95,0,25,0));
+        fruitsList.add(new UserFood("Orange",62,1,15,0));
+
+        categories.add(new FoodCategory("Fruits", fruitsList, false));
+
+
+        // Vegetables
+        List<UserFood> vegetablesList = new ArrayList<>();
+
+        vegetablesList.add(new UserFood("Broccoli",55,4,11,0));
+        vegetablesList.add(new UserFood("Carrot",41,1,10,0));
+        vegetablesList.add(new UserFood("Spinach",23,3,4,0));
+
+        categories.add(new FoodCategory("Vegetables", vegetablesList, false));
+
+
+        return categories;
     }
 
     @Override
     public void onAddFoodClicked(UserFood food) {
-        // وظيفة الدالة: إضافة طعام إلى سجل المستخدم
-        AppDataBase1 db = AppDataBase1.getDatabase(getContext()); // جلب قاعدة البيانات
-        UserFood newFoodEntry = new UserFood(food.getFoodName(), food.getCalories(), food.getProtein(), food.getCarbs(), food.getFat()); // إنشاء نسخة جديدة
-        newFoodEntry.setDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date())); // حفظ تاريخ اليوم
-        db.userFoodQuery().insert(newFoodEntry); // إدخال الطعام في Room
 
-        Toast.makeText(getContext(), food.getFoodName() + " added!", Toast.LENGTH_SHORT).show(); // رسالة نجاح
+        AppDataBase1 db = AppDataBase1.getDatabase(getContext());
 
-        if (dataUpdateListener != null) { // إذا كان هناك Listener
-            dataUpdateListener.onDataUpdated(); // إبلاغ Activity أن البيانات تغيرت
+        UserFood newFoodEntry = new UserFood(
+                food.getFoodName(),
+                food.getCalories(),
+                food.getProtein(),
+                food.getCarbs(),
+                food.getFat()
+        );
+
+        newFoodEntry.setDate(
+                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        .format(new Date())
+        );
+
+        db.userFoodQuery().insert(newFoodEntry);
+
+        Toast.makeText(
+                getContext(),
+                food.getFoodName() + " added!",
+                Toast.LENGTH_SHORT
+        ).show();
+
+        if (dataUpdateListener != null) {
+
+            dataUpdateListener.onDataUpdated();
+
         }
     }
 
     @Override
     public void onDeleteFoodClicked(UserFood food) {
-        // وظيفة الدالة: حذف طعام من السجل
-        if (food.getId() == -1) return; // لا تحذف العنصر الوهمي
 
-        new MaterialAlertDialogBuilder(requireContext()) // إنشاء Dialog تأكيد
-                .setTitle("Delete Food") // عنوان
-                .setMessage("Delete '" + food.getFoodName() + "' from your log?") // رسالة
-                .setNegativeButton("Cancel", null) // زر إلغاء
-                .setPositiveButton("Delete", (dialog, which) -> { // زر تأكيد
-                    AppDataBase1 db = AppDataBase1.getDatabase(getContext()); // جلب قاعدة البيانات
-                    db.userFoodQuery().deleteFoodById(food.getId()); // حذف الطعام حسب ID
-                    Toast.makeText(getContext(), "Food deleted", Toast.LENGTH_SHORT).show(); // رسالة نجاح
-                    loadData(); // إعادة تحميل البيانات
+        if (food.getId() == -1) return;
+
+        new MaterialAlertDialogBuilder(requireContext())
+
+                .setTitle("Delete Food")
+
+                .setMessage("Delete '" + food.getFoodName() + "' from your log?")
+
+                .setNegativeButton("Cancel", null)
+
+                .setPositiveButton("Delete", (dialog, which) -> {
+
+                    AppDataBase1 db = AppDataBase1.getDatabase(getContext());
+
+                    db.userFoodQuery().deleteFoodById(food.getId());
+
+                    Toast.makeText(
+                            getContext(),
+                            "Food deleted",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    loadData();
                 })
-                .show(); // عرض الـ Dialog
+
+                .show();
     }
 
     @Override
     public void onCategoryHeaderClicked(int position) {
-        // وظيفة الدالة: فتح/إغلاق الفئة عند الضغط عليها
-        if (displayItems.get(position) instanceof FoodCategory) { // التأكد أنه عنوان فئة
-            FoodCategory category = (FoodCategory) displayItems.get(position); // تحويله إلى FoodCategory
-            category.setExpanded(!category.isExpanded()); // عكس حالة الفتح/الإغلاق
-            buildDisplayList(); // إعادة بناء القائمة
+
+        if (displayItems.get(position) instanceof FoodCategory) {
+
+            FoodCategory category =
+                    (FoodCategory) displayItems.get(position);
+
+            category.setExpanded(!category.isExpanded());
+
+            buildDisplayList();
         }
     }
 }

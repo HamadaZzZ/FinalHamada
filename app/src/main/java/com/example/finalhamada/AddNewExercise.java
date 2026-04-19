@@ -1,158 +1,219 @@
-package com.example.finalhamada; // تعريف الـ Package: مكان هذا الكلاس داخل المشروع (تنظيم الملفات)
+package com.example.finalhamada;
 
-import android.annotation.SuppressLint; // SuppressLint: لإخفاء تحذيرات Lint محددة من Android Studio
-import android.os.Bundle; // Bundle: يحمل بيانات حالة الـ Activity عند إنشائها/إعادة إنشائها
-import android.widget.ArrayAdapter; // ArrayAdapter: يربط Array بيانات مع Spinner لعرض الخيارات
-import android.widget.Button; // Button: عنصر زر في الواجهة
-import android.widget.EditText; // EditText: حقل إدخال نص من المستخدم
-import android.widget.ImageView; // ImageView: لعرض صورة داخل الواجهة
-import android.widget.Spinner; // Spinner: قائمة منسدلة لاختيار عنصر واحد
-import android.widget.TextView; // TextView: لعرض نص داخل الواجهة
-import android.widget.Toast; // Toast: رسالة قصيرة تظهر للمستخدم
+import android.annotation.SuppressLint;
+import android.os.Bundle; // كلاس Bundle يستخدم لتمرير البيانات وحفظ حالة الشاشة عند إنشائها.
+import android.widget.ArrayAdapter; // محول لربط مصفوفة من البيانات بـ Spinner.
+import android.widget.Button; // تمثيل لزر الضغط في واجهة المستخدم.
+import android.widget.EditText; // تمثيل لحقل إدخال النص القابل للتعديل.
+import android.widget.ImageView; // تمثيل لعنصر عرض الصور.
+import android.widget.Spinner; // عنصر واجهة لعرض قائمة منسدلة من الخيارات.
+import android.widget.TextView; // تمثيل لعنصر عرض النصوص الثابتة.
+import android.widget.Toast; // أداة لعرض رسائل نصية منبثقة قصيرة أسفل الشاشة.
 
-import androidx.appcompat.app.AppCompatActivity; // AppCompatActivity: كلاس أساسي لأي Activity مع دعم خصائص حديثة
-import androidx.core.graphics.Insets; // Insets: يمثل هوامش النظام (Status/Nav bars) لاستخدام Edge-to-Edge
-import androidx.core.view.ViewCompat; // ViewCompat: أدوات متوافقة للتعامل مع Views عبر نسخ أندرويد المختلفة
-import androidx.core.view.WindowInsetsCompat; // WindowInsetsCompat: للتعامل مع Insets الخاصة بالنظام
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي للشاشات.
+import androidx.core.graphics.Insets; // للتعامل مع أبعاد حواف النظام (System Bars).
+import androidx.core.view.ViewCompat; // توفير ميزات التوافق لعناصر الواجهة.
+import androidx.core.view.WindowInsetsCompat; // للتعامل مع مسافات النظام (أشرطة الحالة والتنقل).
 
-import com.example.finalhamada.data.AppDataBase.AppDataBase1; // AppDataBase1: قاعدة بيانات Room المحلية الخاصة بالتطبيق
-import com.example.finalhamada.data.MyTaskTable.UserExercise; // UserExercise: Model يمثل بيانات تمرين المستخدم
-import com.google.firebase.database.DatabaseReference; // DatabaseReference: مرجع لمسار داخل Firebase Realtime Database
-import com.google.firebase.database.FirebaseDatabase; // FirebaseDatabase: الدخول إلى Realtime Database
+import com.example.finalhamada.data.AppDataBase.AppDataBase1; // كلاس قاعدة البيانات المحلية (Room).
+import com.example.finalhamada.data.MyTaskTable.UserExercise; // كلاس النموذج (Model) لتمثيل التمرين الرياضي.
+import com.example.finalhamada.data.MyTaskTable.UserExerciseQuery; // واجهة الاستعلامات (DAO) للتمارين.
+import com.google.firebase.database.DatabaseReference; // مرجع للوصول لمكان محدد في قاعدة البيانات السحابية.
+import com.google.firebase.database.FirebaseDatabase; // الوصول لقاعدة بيانات Firebase Realtime السحابية.
 
-import java.util.HashMap; // HashMap: تجميع البيانات Key->Value قبل إرسالها لـ Firebase (تتحول JSON تلقائياً)
+import java.util.HashMap; // بنية بيانات (مفتاح -> قيمة) لتسهيل إرسال البيانات للـ Firebase.
 
 /**
- * ============================================================
- * AddNewExercise Activity
- * ============================================================
- * شاشة إضافة تمرين جديد للمستخدم.
+ * AddNewExercise Activity: شاشة إضافة أو تعديل تمرين رياضي.
+ * ---------------------------------------------------------
+ * تتيح هذه الشاشة للمستخدم:
+ * 1. إدخال بيانات تمرين جديد (الاسم، الفئة، التكرارات، المجموعات، الوزن، المدة، السعرات، ملاحظات).
+ * 2. تعديل بيانات تمرين موجود مسبقاً في قاعدة البيانات.
+ * 3. حفظ البيانات محلياً في Room وسحابياً في Firebase Realtime Database.
  */
-public class AddNewExercise extends AppCompatActivity { // تعريف Activity جديدة باسم AddNewExercise وترث من AppCompatActivity
+public class AddNewExercise extends AppCompatActivity {
 
-    private TextView tvTitle; // tvTitle: TextView لعرض عنوان الشاشة
-
-    private Button btnSaveExercise; // btnSaveExercise: زر لحفظ التمرين
-
+    // === عناصر واجهة المستخدم (UI Elements) ===
+    private TextView tvTitle; // عنوان الشاشة (إضافة أو تعديل)
+    private Button btnSaveExercise; // زر الحفظ أو التحديث
     private EditText etExerciseName, etReps, etSets, etWeight, etDuration, etCalories, etNote; // حقول إدخال بيانات التمرين
+    private Spinner spCategory; // القائمة المنسدلة لاختيار فئة التمرين
+    private ImageView ivExerciseImage; // أيقونة أو صورة التمرين
 
-    private Spinner spCategory; // spCategory: Spinner لاختيار فئة التمرين
+    // === أدوات البيانات (Database Tools) ===
+    private DatabaseReference dbRef; // مرجع قاعدة البيانات السحابية
+    private UserExerciseQuery exerciseQuery; // واجهة الوصول للبيانات المحلية
+    private UserExercise existingExercise; // كائن لتخزين بيانات التمرين في حال وضع "التعديل"
+    private boolean isEditMode = false;   // متغير لتحديد نوع العملية (إضافة = false, تعديل = true)
 
-    private ImageView ivExerciseImage; // ivExerciseImage: ImageView لعرض صورة التمرين
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // ربط ملف التصميم activity_add_new_exercise.xml بهذا الكود البرمجي
+        setContentView(R.layout.activity_add_new_exercise);
 
-    private DatabaseReference dbRef; // dbRef: مرجع Firebase لتحديد مكان حفظ البيانات داخل Realtime Database
+        // ضبط واجهة المستخدم لتتوافق مع حواف الشاشة (Edge-to-Edge) وتجنب تداخل العناصر مع شريط الحالة
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-    @SuppressLint("MissingInflatedId") // إخفاء تحذير MissingInflatedId (عادةً بسبب اختلاف IDs بين layouts أو مشاكل تضخيم)
-    @Override // Override: نعدل سلوك دالة من الكلاس الأب
-    protected void onCreate(Bundle savedInstanceState) { // onCreate: تُستدعى عند إنشاء الشاشة أول مرة
-        super.onCreate(savedInstanceState); // استدعاء onCreate للأب لتهيئة دورة حياة الـ Activity
+        // --- 1. ربط العناصر البرمجية بالمعرفات (IDs) من ملف الـ XML ---
+        tvTitle = findViewById(R.id.tvTitle);
+        btnSaveExercise = findViewById(R.id.btnSaveExercise);
+        etExerciseName = findViewById(R.id.etExerciseName);
+        etReps = findViewById(R.id.etReps);
+        etSets = findViewById(R.id.etSets);
+        etWeight = findViewById(R.id.etWeight);
+        etDuration = findViewById(R.id.etDuration);
+        etCalories = findViewById(R.id.etCalories);
+        etNote = findViewById(R.id.etNote);
+        spCategory = findViewById(R.id.spCategory);
+        ivExerciseImage = findViewById(R.id.ivExerciseImage);
 
-        setContentView(R.layout.activity_add_new_exercise); // ربط ملف XML activity_add_new_exercise بهذه الشاشة
+        // --- 2. إعداد القائمة المنسدلة (Spinner) لفئات التمارين ---
+        String[] categories = {"Cardio", "Strength", "Yoga", "Cycling"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCategory.setAdapter(adapter);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> { // Listener لضبط padding حسب هوامش النظام (Edge-to-Edge)
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars()); // جلب هوامش شريط الحالة والتنقل
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom); // تطبيق padding حتى لا تختفي العناصر خلف شريط النظام
-            return insets; // إرجاع insets بعد التعامل معها
-        }); // نهاية listener
+        // --- 3. تهيئة قواعد البيانات (Room & Firebase) ---
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        exerciseQuery = AppDataBase1.getDatabase(this).userExerciseQuery();
 
-        tvTitle = findViewById(R.id.tvTitle); // ربط tvTitle بعنصر TextView من XML
-        btnSaveExercise = findViewById(R.id.btnSaveExercise); // ربط زر الحفظ من XML
-        etExerciseName = findViewById(R.id.etExerciseName); // ربط حقل اسم التمرين
-        etReps = findViewById(R.id.etReps); // ربط حقل عدد التكرارات Reps
-        etSets = findViewById(R.id.etSets); // ربط حقل عدد المجموعات Sets
-        etWeight = findViewById(R.id.etWeight); // ربط حقل الوزن Weight
-        etDuration = findViewById(R.id.etDuration); // ربط حقل المدة Duration
-        etCalories = findViewById(R.id.etCalories); // ربط حقل السعرات Calories
-        etNote = findViewById(R.id.etNote); // ربط حقل الملاحظة Note
-        spCategory = findViewById(R.id.spCategory); // ربط Spinner الفئات
-        ivExerciseImage = findViewById(R.id.ivExerciseImage); // ربط ImageView الخاصة بصورة التمرين
+        // --- 4. التحقق مما إذا كان الهدف من فتح الشاشة هو "تعديل" تمرين موجود ---
+        if (getIntent().hasExtra("exercise_id")) {
+            isEditMode = true; // تفعيل وضع التعديل
+            int exerciseId = getIntent().getIntExtra("exercise_id", -1); // الحصول على ID التمرين المختار
+            loadExerciseData(exerciseId); // جلب البيانات القديمة وعرضها في الحقول
+            tvTitle.setText("تعديل التمرين"); // تحديث العنوان ليناسب العملية
+            btnSaveExercise.setText("تحديث البيانات"); // تحديث نص الزر
+        }
 
-        String[] categories = {"Cardio", "Strength", "Yoga", "Cycling"}; // مصفوفة نصوص تمثل فئات التمارين التي ستظهر في Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, // إنشاء Adapter لربط الفئات بالـ Spinner
-                android.R.layout.simple_spinner_item, categories); // simple_spinner_item: تصميم افتراضي لعنصر داخل spinner + categories: البيانات
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // تحديد تصميم العناصر عند فتح القائمة المنسدلة
-        spCategory.setAdapter(adapter); // ربط الـ Spinner بالـ Adapter لعرض الفئات
+        // --- 5. إعداد حدث النقر على زر الحفظ/التحديث ---
+        btnSaveExercise.setOnClickListener(v -> saveExercise());
+    }
 
-        dbRef = FirebaseDatabase.getInstance().getReference(); // تهيئة Firebase: أخذ مرجع الجذر Root من Realtime Database
+    /**
+     * دالة loadExerciseData: تجلب بيانات تمرين محدد من قاعدة البيانات المحلية وتعرضها في الواجهة.
+     * @param id معرف التمرين الفريد في Room.
+     */
+    private void loadExerciseData(int id) {
+        // تشغيل المهمة في خيط منفصل (Background Thread) لتجنب تجميد الواجهة
+        new Thread(() -> {
+            existingExercise = exerciseQuery.getExerciseById(id); // الاستعلام عن التمرين
+            if (existingExercise != null) {
+                // تحديث عناصر الواجهة يجب أن يتم في الخيط الرئيسي (Main Thread)
+                runOnUiThread(() -> {
+                    etExerciseName.setText(existingExercise.getName());
+                    etReps.setText(String.valueOf(existingExercise.getReps()));
+                    etSets.setText(String.valueOf(existingExercise.getSets()));
+                    etWeight.setText(String.valueOf(existingExercise.getWeight()));
+                    etDuration.setText(String.valueOf(existingExercise.getDuration()));
+                    etCalories.setText(String.valueOf(existingExercise.getCalories()));
+                    etNote.setText(existingExercise.getNote());
+                    
+                    // تحديد الفئة الصحيحة في القائمة المنسدلة بناءً على البيانات المسترجعة
+                    for (int i = 0; i < spCategory.getCount(); i++) {
+                        if (spCategory.getItemAtPosition(i).toString().equalsIgnoreCase(existingExercise.getCategory())) {
+                            spCategory.setSelection(i);
+                            break;
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
 
-        btnSaveExercise.setOnClickListener(v -> saveExercise()); // ClickListener: عند الضغط على زر الحفظ استدعاء دالة saveExercise()
-    } // نهاية onCreate
+    /**
+     * دالة saveExercise: تقرأ البيانات من الحقول وتنفذ عملية الحفظ (إما إدراج جديد أو تحديث).
+     */
+    private void saveExercise() {
+        // استخراج القيم من الحقول مع تنظيف المسافات الزائدة
+        String name = etExerciseName.getText().toString().trim();
+        String category = spCategory.getSelectedItem().toString();
+        int reps = parseOrZero(etReps.getText().toString());
+        int sets = parseOrZero(etSets.getText().toString());
+        int weight = parseOrZero(etWeight.getText().toString());
+        int duration = parseOrZero(etDuration.getText().toString());
+        int calories = parseOrZero(etCalories.getText().toString());
+        String note = etNote.getText().toString().trim();
 
-    private void saveExercise() { // saveExercise: تقرأ البيانات وتتحقق منها ثم تحفظها في Room و Firebase
+        // التحقق من إدخال اسم التمرين (حقل إلزامي)
+        if (name.isEmpty()) {
+            etExerciseName.setError("يرجى إدخال اسم التمرين");
+            return;
+        }
 
-        String name = etExerciseName.getText().toString().trim(); // قراءة اسم التمرين من EditText وتحويله String وإزالة الفراغات
-        String category = spCategory.getSelectedItem().toString(); // قراءة الفئة المختارة من Spinner وتحويلها إلى String
+        if (isEditMode && existingExercise != null) {
+            // --- وضع التعديل: تحديث بيانات الكائن الحالي ---
+            existingExercise.setName(name);
+            existingExercise.setCategory(category);
+            existingExercise.setReps(reps);
+            existingExercise.setSets(sets);
+            existingExercise.setWeight(weight);
+            existingExercise.setDuration(duration);
+            existingExercise.setCalories(calories);
+            existingExercise.setNote(note);
 
-        int reps = parseOrZero(etReps.getText().toString()); // تحويل reps إلى رقم صحيح أو 0 إذا غير صالح (باستخدام parseOrZero)
-        int sets = parseOrZero(etSets.getText().toString()); // تحويل sets إلى رقم صحيح أو 0 إذا غير صالح
-        int weight = parseOrZero(etWeight.getText().toString()); // تحويل weight إلى رقم صحيح أو 0 إذا غير صالح
-        int duration = parseOrZero(etDuration.getText().toString()); // تحويل duration إلى رقم صحيح أو 0 إذا غير صالح
-        int calories = parseOrZero(etCalories.getText().toString()); // تحويل calories إلى رقم صحيح أو 0 إذا غير صالح
+            new Thread(() -> {
+                exerciseQuery.update(existingExercise); // تحديث في قاعدة البيانات المحلية
+                saveToFirebase(existingExercise);      // تحديث (أو إضافة) في السحابة
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "تم تحديث التمرين بنجاح!", Toast.LENGTH_SHORT).show();
+                    finish(); // العودة للشاشة السابقة
+                });
+            }).start();
 
-        String note = etNote.getText().toString().trim(); // قراءة الملاحظة وإزالة الفراغات
+        } else {
+            // --- وضع الإضافة: إنشاء تمرين جديد بالكامل ---
+            UserExercise newExercise = new UserExercise(name, category, reps, sets, weight, duration, calories, note, R.drawable.ic_exercise);
+            new Thread(() -> {
+                exerciseQuery.insert(newExercise); // إدراج جديد في Room
+                saveToFirebase(newExercise);      // إدراج جديد في Firebase
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "تم حفظ التمرين الجديد!", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+            }).start();
+        }
+    }
 
-        if (name.isEmpty()) { // Validation: إذا اسم التمرين فارغ
-            etExerciseName.setError("Name is required"); // عرض خطأ على حقل الاسم
-            return; // إيقاف تنفيذ الدالة لأنه لا يمكن الحفظ بدون اسم
-        } // نهاية التحقق من الاسم
+    /**
+     * دالة saveToFirebase: لحفظ بيانات التمرين في قاعدة البيانات السحابية (Realtime Database).
+     * @param exercise كائن التمرين المراد حفظه.
+     */
+    private void saveToFirebase(UserExercise exercise) {
+        // تجهيز خريطة البيانات (Key-Value) لتخزينها في JSON السحابي
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", exercise.getName());
+        map.put("category", exercise.getCategory());
+        map.put("reps", exercise.getReps());
+        map.put("sets", exercise.getSets());
+        map.put("weight", exercise.getWeight());
+        map.put("duration", exercise.getDuration());
+        map.put("calories", exercise.getCalories());
+        map.put("note", exercise.getNote());
 
-        UserExercise exercise = new UserExercise( // إنشاء كائن UserExercise لتجميع بيانات التمرين
-                name, // تمرير اسم التمرين
-                category, // تمرير الفئة المختارة
-                reps, // تمرير عدد التكرارات
-                sets, // تمرير عدد المجموعات
-                weight, // تمرير الوزن
-                duration, // تمرير المدة
-                calories, // تمرير السعرات
-                note, // تمرير الملاحظة
-                R.drawable.ic_info // تمرير صورة افتراضية للتمرين (Resource ID)
-        ); // نهاية إنشاء الكائن
+        // في تطبيق فعلي يجب استخدام UID المستخدم من FirebaseAuth.getInstance().getCurrentUser().getUid()
+        String uid = "default_user"; 
+        dbRef.child("users").child(uid).child("exercises").push().setValue(map);
+    }
 
-        AppDataBase1 db = AppDataBase1.getDatabase(AddNewExercise.this); // جلب instance لقاعدة Room (Singleton) باستخدام Context
-        db.userExerciseQuery().insert(exercise); // إدخال التمرين داخل جدول التمارين في Room عبر DAO
-
-        saveExerciseToFirebase(exercise); // حفظ نفس بيانات التمرين أيضًا على Firebase
-
-        Toast.makeText(this, "Exercise saved successfully", Toast.LENGTH_SHORT).show(); // عرض رسالة نجاح للمستخدم
-        finish(); // إغلاق الشاشة والعودة للشاشة السابقة بعد الحفظ
-    } // نهاية saveExercise
-
-    private void saveExerciseToFirebase(UserExercise exercise) { // دالة لحفظ التمرين على Firebase
-
-        HashMap<String, Object> exerciseData = new HashMap<>(); // إنشاء HashMap لتجميع البيانات كـ Key->Value قبل رفعها (Firebase يحولها JSON)
-        // HashMap كيف بتشتغل: كل Key ينحسب له hashCode -> يحدد bucket داخل الذاكرة -> يخزن (key,value) -> الوصول سريع O(1) غالبًا
-
-        exerciseData.put("name", exercise.getName()); // تخزين اسم التمرين داخل الخريطة بمفتاح "name"
-        exerciseData.put("category", exercise.getCategory()); // تخزين الفئة بمفتاح "category"
-        exerciseData.put("reps", exercise.getReps()); // تخزين reps بمفتاح "reps"
-        exerciseData.put("sets", exercise.getSets()); // تخزين sets بمفتاح "sets"
-        exerciseData.put("weight", exercise.getWeight()); // تخزين الوزن بمفتاح "weight"
-        exerciseData.put("duration", exercise.getDuration()); // تخزين المدة بمفتاح "duration"
-        exerciseData.put("calories", exercise.getCalories()); // تخزين السعرات بمفتاح "calories"
-        exerciseData.put("note", exercise.getNote()); // تخزين الملاحظة بمفتاح "note"
-        exerciseData.put("imageRes", exercise.getImageRes()); // تخزين رقم الصورة (Resource ID) بمفتاح "imageRes"
-
-        String uid = "default"; // uid افتراضي الآن؛ لاحقًا الأفضل استخدام UID الحقيقي للمستخدم من FirebaseAuth
-
-        dbRef.child("users") // اختيار/إنشاء عقدة users تحت Root
-                .child(uid) // اختيار/إنشاء عقدة المستخدم المحدد uid
-                .child("exercises") // اختيار/إنشاء عقدة exercises الخاصة بتمارين هذا المستخدم
-                .push() // push(): ينشئ ID عشوائي فريد للعنصر الجديد حتى لا تتعارض العناصر (مثل -Nxyz123...)
-                .updateChildren(exerciseData) // updateChildren: يكتب المفاتيح الموجودة داخل map بدون مسح باقي البيانات في نفس المسار
-                .addOnSuccessListener(aVoid -> { // Listener: ينفذ عند نجاح رفع البيانات على Firebase
-                    // نجاح الحفظ على Firebase (هنا تركتها فارغة)
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, // Listener: ينفذ عند فشل رفع البيانات
-                        "Failed to save to Firebase: " + e.getMessage(), // إظهار سبب الفشل القادم من Firebase
-                        Toast.LENGTH_LONG).show()); // عرض الرسالة لمدة أطول
-    } // نهاية saveExerciseToFirebase
-
-    private int parseOrZero(String value) { // دالة مساعدة: تحول النص إلى رقم صحيح أو 0 إذا كان النص غير صالح
-        if (value == null || value.trim().isEmpty()) return 0; // إذا القيمة null أو فاضية -> رجع 0 فورًا
-        try { // محاولة التحويل إلى int
-            return Integer.parseInt(value.trim()); // parseInt: تحويل String إلى int بعد trim
-        } catch (Exception e) { // إذا صار خطأ مثل وجود حروف
-            return 0; // رجع 0 بدل ما ينهار التطبيق
-        } // نهاية catch
-    } // نهاية parseOrZero
-} // نهاية الكلاس
+    /**
+     * دالة مساعدة parseOrZero: تحويل النص إلى رقم صحيح بشكل آمن مع التعامل مع النصوص الفارغة.
+     * @param value النص المراد تحويله.
+     * @return الرقم الصحيح المقابل أو 0 في حال حدوث خطأ أو كان النص فارغاً.
+     */
+    private int parseOrZero(String value) {
+        if (value == null || value.trim().isEmpty()) return 0;
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+}

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#FFFFFF">
+    android:background="@color/background">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"
-        android:showDividers="none">
+        android:padding="20dp">
 
         <!-- العنوان -->
         <TextView
@@ -22,33 +21,47 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="#000"
-            android:padding="12dp" />
+            android:textColor="@color/textPrimary"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
 
-        <!-- صورة التمرين -->
-        <ImageView
-            android:id="@+id/ivExerciseImage"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+        <!-- صورة التمرين مع خلفية دائرية خفيفة -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_info"
-            android:contentDescription="Exercise Image" />
+            app:cardCornerRadius="60dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivExerciseImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_exercise"
+                android:padding="25dp"
+                app:tint="@color/iconColor"
+                android:scaleType="centerInside"
+                android:contentDescription="Exercise Image" />
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- ==================== INPUTS ==================== -->
 
         <!-- Exercise Name -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Exercise Name"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="@color/iconColor"
+            app:hintTextColor="@color/iconColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etExerciseName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/textPrimary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,81 +70,131 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:textSize="16sp"
-            android:paddingBottom="5dp" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/textSecondary"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="8dp" />
 
-        <Spinner
-            android:id="@+id/spCategory"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="22dp" />
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="20dp"
+            android:padding="4dp">
 
-        <!-- Reps -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Reps"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etReps"
-                android:inputType="number"
+            <Spinner
+                android:id="@+id/spCategory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="48dp"
+                android:spinnerMode="dropdown" />
+        </FrameLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Sets -->
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Sets"
-            android:layout_marginBottom="16dp">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSets"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!-- Reps -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Reps"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                app:boxStrokeColor="@color/iconColor"
+                app:hintTextColor="@color/iconColor">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etReps"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <!-- Weight -->
-        <com.google.android.material.textfield.TextInputLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Sets -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Sets"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
+                app:boxStrokeColor="@color/iconColor"
+                app:hintTextColor="@color/iconColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSets"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Weight (kg)"
-            android:layout_marginBottom="16dp">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etWeight"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!-- Weight -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Weight (kg)"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                app:boxStrokeColor="@color/iconColor"
+                app:hintTextColor="@color/iconColor">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWeight"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <!-- Duration -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Duration (min)"
-            android:layout_marginBottom="16dp">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDuration"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!-- Duration -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Duration (min)"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
+                app:boxStrokeColor="@color/iconColor"
+                app:hintTextColor="@color/iconColor">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDuration"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <!-- Calories -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Calories"
-            android:layout_marginBottom="16dp">
+            android:hint="Calories Burned"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="@color/iconColor"
+            app:hintTextColor="@color/iconColor"
+            app:startIconDrawable="@drawable/ic_steps"
+            app:startIconTint="@color/iconColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCalories"
@@ -143,30 +206,37 @@
 
         <!-- Note -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Note"
-            android:layout_marginBottom="22dp">
+            android:hint="Notes"
+            android:layout_marginBottom="24dp"
+            app:boxStrokeColor="@color/iconColor"
+            app:hintTextColor="@color/iconColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNote"
-                android:maxLines="4"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:minLines="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- زر الحفظ -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveExercise"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:text="Save Exercise"
             android:textAllCaps="false"
-            android:backgroundTint="#2979FF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#1E88E5"
             android:textColor="#FFFFFF"
-            android:padding="14dp"
-            android:layout_marginTop="10dp"
+            app:cornerRadius="12dp"
+            app:elevation="4dp"
             android:layout_marginBottom="20dp" />
 
     </LinearLayout>

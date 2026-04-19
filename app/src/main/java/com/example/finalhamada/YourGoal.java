@@ -1,82 +1,63 @@
 package com.example.finalhamada;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.content.Intent; // استيراد كلاس Intent للانتقال بين الواجهات (Activities).
+import android.os.Bundle; // كلاس Bundle لحفظ واسترجاع حالة الشاشة.
+import android.widget.Button; // تمثيل لزر الضغط في واجهة المستخدم.
+import android.widget.LinearLayout; // تمثيل لحاوية العناصر الخطية.
+import android.widget.RadioButton; // تمثيل لخيار فردي ضمن مجموعة خيارات.
+import android.widget.RadioGroup; // حاوية لمجموعة من RadioButtons تسمح باختيار واحد فقط.
+import android.widget.Toast; // أداة لعرض رسائل نصية منبثقة قصيرة أسفل الشاشة.
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي للشاشات.
+import androidx.core.graphics.Insets; // للتعامل مع أبعاد حواف النظام (System Bars).
+import androidx.core.view.ViewCompat; // توفير ميزات التوافق لعناصر الواجهة.
+import androidx.core.view.WindowInsetsCompat; // للتعامل مع مسافات النظام (أشرطة الحالة والتنقل).
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth; // نظام المصادقة في Firebase (للحصول على معرف المستخدم).
+import com.google.firebase.database.DatabaseReference; // مرجع للوصول لمكان محدد في قاعدة البيانات السحابية.
+import com.google.firebase.database.FirebaseDatabase; // الوصول لقاعدة بيانات Firebase Realtime السحابية.
 
-import java.util.HashMap;
+import java.util.HashMap; // بنية بيانات (مفتاح -> قيمة) لتسهيل إرسال البيانات للـ Firebase.
 
 /**
- * ============================================================
- * YourGoal Activity
- * ============================================================
- *
- * شاشة اختيار الهدف الرئيسي للمستخدم:
- * - خسارة وزن (Lose Weight)
- * - الحفاظ على الوزن (Maintain Weight)
- * - زيادة الوزن (Gain Weight)
- *
- * الوظائف:
- * 1️⃣ عرض ثلاثة خيارات باستخدام RadioButtons + LinearLayouts
- * 2️⃣ التأكد من اختيار واحد فقط (RadioGroup)
- * 3️⃣ الضغط على LinearLayout يقوم بتحديد RadioButton المقابل
- * 4️⃣ حفظ الهدف في Firebase Realtime Database تحت المسار:
- *    users/{uid}/profile/goal
- * 5️⃣ الانتقال إلى Dashboard بعد الحفظ
- *
- * توثيق إضافي:
- * - Realtime Database: قاعدة بيانات سحابية بصيغة JSON
- * - HashMap: تُحوّل تلقائيًا إلى JSON عند الحفظ
+ * YourGoal Activity: شاشة تحديد الهدف الرياضي.
+ * ---------------------------------------------------------
+ * تتيح هذه الشاشة للمستخدم اختيار هدفه الرئيسي من بين ثلاثة خيارات:
+ * 1. خسارة الوزن (Lose Weight).
+ * 2. الحفاظ على الوزن الحالي (Maintain Weight).
+ * 3. زيادة الوزن (Gain Weight).
+ * يتم تخزين هذا الهدف في قاعدة البيانات السحابية لتخصيص خطة المستخدم.
  */
 public class YourGoal extends AppCompatActivity {
 
-    // ==========================
-    // UI Components
-    // ==========================
-    private RadioButton rbLose, rbMaintain, rbGain;
-    private LinearLayout LLloseWeight, LLmaintainWeight, LLgainWeight;
-    private Button btnContinue;
-    private RadioGroup radioGroup;
+    // === عناصر واجهة المستخدم (UI Components) ===
+    private RadioButton rbLose, rbMaintain, rbGain; // خيارات الأهداف
+    private LinearLayout LLloseWeight, LLmaintainWeight, LLgainWeight; // حاويات الخيارات القابلة للنقر
+    private Button btnContinue; // زر المتابعة
+    private RadioGroup radioGroup; // مجموعة خيارات الأهداف لضمان اختيار واحد فقط
 
-    // ==========================
-    // Firebase
-    // ==========================
-    private FirebaseAuth auth;
-    private DatabaseReference dbRef;
+    // === كائنات خدمات Firebase ===
+    private FirebaseAuth auth;          // نظام المصادقة للحصول على هوية المستخدم
+    private DatabaseReference dbRef;    // مرجع للتعامل مع قاعدة البيانات السحابية
 
     /**
-     * onCreate
-     * ------------------------------------------------------
-     * ربط عناصر الواجهة + Edge-to-Edge layout + Firebase
-     * + تصحيح اختيار واحد فقط + إعداد زر Continue
+     * دالة onCreate: يتم استدعاؤها عند بدء إنشاء الشاشة.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // ربط ملف التصميم activity_your_goal.xml بهذا الكود
         setContentView(R.layout.activity_your_goal);
 
-        // ====== Edge-to-Edge layout ======
+        // ضبط واجهة المستخدم لتتوافق مع حواف الشاشة (Edge-to-Edge)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top,
-                    systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // ====== Bind UI elements ======
+        // --- ربط العناصر البرمجية بالـ IDs من ملف الـ XML ---
         rbLose = findViewById(R.id.rbLose);
         rbMaintain = findViewById(R.id.rbMaintain);
         rbGain = findViewById(R.id.rbGain);
@@ -88,77 +69,67 @@ public class YourGoal extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         radioGroup = findViewById(R.id.radioGroupGoals);
 
-        // ====== Firebase ======
+        // تهيئة نظام مصادقة Firebase
         auth = FirebaseAuth.getInstance();
+        
+        // الحصول على المرجع الرئيسي لقاعدة بيانات التطبيق في Firebase
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        // ====== LinearLayouts clickable + تصحيح اختيار واحد فقط ======
+        // --- جعل حاويات الخيارات (Layouts) قابلة للنقر لتسهيل الاختيار على المستخدم ---
         LLloseWeight.setOnClickListener(v -> rbLose.setChecked(true));
         LLmaintainWeight.setOnClickListener(v -> rbMaintain.setChecked(true));
         LLgainWeight.setOnClickListener(v -> rbGain.setChecked(true));
 
-        // ====== Continue button ======
+        // --- إعداد حدث النقر على زر "متابعة" ---
         btnContinue.setOnClickListener(v -> saveGoalToFirebase());
     }
 
     /**
-     * saveGoalToFirebase
-     * ------------------------------------------------------
-     * 1️⃣ التأكد من اختيار المستخدم لهدف واحد فقط
-     * 2️⃣ حفظ الهدف في Firebase Realtime Database باستخدام HashMap
-     * 3️⃣ الانتقال إلى DashboardActivity عند النجاح
+     * دالة saveGoalToFirebase: تقوم بتحديد الهدف المختار وحفظه في Firebase.
      */
     private void saveGoalToFirebase() {
 
         String selectedGoal = "";
 
-        if (rbLose.isChecked()) selectedGoal = "Lose Weight";
-        else if (rbMaintain.isChecked()) selectedGoal = "Maintain Weight";
-        else if (rbGain.isChecked()) selectedGoal = "Gain Weight";
+        // تحديد النص المقابل للهدف المختار
+        if (rbLose.isChecked()) selectedGoal = "خسارة وزن";
+        else if (rbMaintain.isChecked()) selectedGoal = "الحفاظ على الوزن";
+        else if (rbGain.isChecked()) selectedGoal = "زيادة وزن";
 
+        // التحقق من أن المستخدم قام باختيار هدف واحد على الأقل
         if (selectedGoal.isEmpty()) {
-            Toast.makeText(this, "Please select a goal", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "يرجى اختيار هدف واحد للمتابعة", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // ==========================
-        // HashMap لتخزين الهدف
-        // ==========================
-        /**
-         * HashMap
-         * ------------------------------------------------------
-         * - Key = اسم الحقل داخل Firebase
-         * - Value = قيمة الهدف الذي اختاره المستخدم
-         *
-         * Firebase Realtime Database يستقبل HashMap كـ JSON تلقائيًا.
-         * مثال عند الحفظ:
-         * {
-         *   "goal": "Lose Weight"
-         * }
-         */
+        // تجهيز البيانات في HashMap
         HashMap<String, Object> goalData = new HashMap<>();
         goalData.put("goal", selectedGoal);
 
-        // UID المستخدم الحالي
+        // الحصول على المعرف الفريد للمستخدم الحالي (UID)
+        if (auth.getCurrentUser() == null) return;
         String uid = auth.getCurrentUser().getUid();
 
         /**
-         * حفظ الهدف داخل:
-         * users/{uid}/profile/goal
-         * updateChildren يضمن دمج البيانات دون حذف الحقول الأخرى
+         * حفظ الهدف المختار في مسار الملف الشخصي للمستخدم:
+         * users -> [User_UID] -> profile
+         * نستخدم updateChildren لتعديل حقل الهدف فقط دون المساس ببيانات الطول والوزن وغيرها.
          */
         dbRef.child("users")
                 .child(uid)
                 .child("profile")
                 .updateChildren(goalData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Goal saved successfully", Toast.LENGTH_SHORT).show();
-                    // الانتقال للشاشة التالية
+                    // في حال نجاح عملية الحفظ
+                    Toast.makeText(this, "تم تحديد هدفك بنجاح", Toast.LENGTH_SHORT).show();
+                    
+                    // الانتقال للوحة التحكم الرئيسية (DashboardActivity)
                     startActivity(new Intent(YourGoal.this, DashboardActivity.class));
-                    finish();
+                    finish(); // إغلاق شاشة تحديد الهدف
                 })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to save goal: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                );
+                .addOnFailureListener(e -> {
+                    // في حال فشل الحفظ
+                    Toast.makeText(this, "حدث خطأ أثناء الحفظ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }

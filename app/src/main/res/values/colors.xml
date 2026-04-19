@@ -1,21 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- الألوان الأساسية -->
-    <color name="purple_200">#BB86FC</color>
-    <color name="purple_500">#6200EE</color>
-    <color name="purple_700">#3700B3</color>
-    <color name="teal_200">#03DAC5</color>
-    <color name="teal_700">#018786</color>
+    <!-- الألوان الأساسية المأخوذة من الـ Dashboard -->
+    <color name="purple_200">#D1C4E9</color>
+    <color name="purple_500">#1E88E5</color> <!-- الأزرق الأساسي -->
+    <color name="purple_700">#1565C0</color>
+    <color name="teal_200">#80CBC4</color>
+    <color name="teal_700">#00796B</color>
 
-    <!-- الخلفيات والنصوص -->
-    <color name="background">#FFFFFF</color>
-    <color name="cardBackground">#F5F5F5</color>
-    <color name="textPrimary">#000000</color>
-    <color name="textSecondary">#888888</color>
+    <!-- الخلفيات والنصوص مطابقة للـ Dashboard -->
+    <color name="background">#F5F5F5</color> <!-- رمادي فاتح جداً للخلفية -->
+    <color name="cardBackground">#FFFFFF</color> <!-- أبيض للبطاقات -->
+    <color name="textPrimary">#212121</color> <!-- أسود Dashboard -->
+    <color name="textSecondary">#757575</color> <!-- رمادي Dashboard -->
+    <color name="iconColor">#1E88E5</color> <!-- أزرق الأيقونات -->
 
-    <!-- الأيقونات -->
-    <color name="iconColor">#000000</color>
-
-    <!-- الألوان الناقصة -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 </resources>
