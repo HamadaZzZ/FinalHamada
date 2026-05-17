@@ -11,6 +11,8 @@ recyclerview = "1.4.0"
 gridlayout = "1.1.0"
 cardview = "1.0.0"
 firebaseDatabase = "22.0.1"
+firebaseAi = "17.11.0"
+generativeai = "0.9.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,7 +26,8 @@ recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version
 gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-ai = { group = "com.google.firebase", name = "firebase-ai", version.ref = "firebaseAi" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-

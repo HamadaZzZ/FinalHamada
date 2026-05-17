@@ -1,129 +1,279 @@
 package com.example.finalhamada;
 
-import android.content.Intent; // استيراد كلاس Intent للانتقال بين الواجهات (Activities).
-import android.os.Bundle; // كلاس Bundle لحفظ واسترجاع حالة الشاشة.
+import android.content.Intent; // Intent يستخدم للانتقال من شاشة إلى شاشة أخرى.
+import android.os.Bundle; // Bundle يُستخدم لحفظ حالة الشاشة عند إنشائها أو إعادة إنشائها.
 
-import androidx.annotation.NonNull; // وسام للتأكيد على أن القيمة لا يمكن أن تكون null.
-import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي للشاشات.
-import androidx.fragment.app.Fragment; // الكلاس الأساسي للأجزاء (Fragments).
-import androidx.viewpager2.adapter.FragmentStateAdapter; // محول خاص لإدارة الأجزاء داخل ViewPager2.
-import androidx.viewpager2.widget.ViewPager2; // عنصر واجهة يسمح بالتنقل بين الصفحات بالسحب يميناً ويساراً.
+import androidx.annotation.NonNull; // للتأكيد أن القيمة لا يجب أن تكون null.
+import androidx.appcompat.app.AppCompatActivity; // الكلاس الأساسي للشاشات في Android.
+import androidx.fragment.app.Fragment; // الكلاس الأساسي لأي Fragment.
+import androidx.viewpager2.adapter.FragmentStateAdapter; // Adapter مسؤول عن إدارة Fragments داخل ViewPager2.
+import androidx.viewpager2.widget.ViewPager2; // عنصر يسمح بالتنقل بين صفحات مختلفة بالسحب.
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton; // الزر العائم (FAB).
-import com.google.android.material.tabs.TabLayout; // عنصر واجهة لعرض علامات التبويب (Tabs).
-import com.google.android.material.tabs.TabLayoutMediator; // أداة لربط TabLayout بـ ViewPager2.
+import com.google.android.material.floatingactionbutton.FloatingActionButton; // زر عائم لإضافة طعام جديد.
+import com.google.android.material.tabs.TabLayout; // شريط تبويبات لعرض Today’s Log و Explore.
+import com.google.android.material.tabs.TabLayoutMediator; // يربط TabLayout مع ViewPager2.
 
 /**
- * FoodsActivity: شاشة إدارة الأطعمة والتغذية.
+ * FoodsActivtiy:
  * ---------------------------------------------------------
- * تتيح هذه الشاشة للمستخدم:
- * 1. عرض سجل الطعام اليومي الخاص به (Today's Log).
- * 2. استكشاف قائمة أطعمة مقترحة (Explore).
- * 3. إضافة أطعمة جديدة عبر زر عائم.
- * تعتمد الشاشة على نظام التبويبات (Tabs) لسهولة التنقل.
+ * هذه الشاشة مسؤولة عن إدارة قسم الطعام في التطبيق.
+ *
+ * تعرض للمستخدم تبويبين:
+ * 1. Today's Log: سجل الطعام اليومي.
+ * 2. Explore: قائمة أطعمة جاهزة يمكن إضافتها.
+ *
+ * كما تحتوي على زر عائم (+)
+ * يفتح شاشة AddFoods لإضافة طعام يدويًا.
+ *
+ * أهمية الشاشة:
+ * بدون هذه الشاشة لن يستطيع المستخدم إدارة الطعام،
+ * أو التنقل بين السجل اليومي وقائمة الأطعمة الجاهزة.
  */
 public class FoodsActivtiy extends AppCompatActivity implements FoodListFragment.OnDataUpdateListener {
 
-    // === عناصر واجهة المستخدم (UI Elements) ===
-    
-    // عنصر عرض الصفحات المنزلقة
+    /**
+     * ViewPager2:
+     * ---------------------------------------------------------
+     * مسؤول عن عرض أكثر من صفحة داخل نفس الشاشة.
+     * f
+     * في هذه الشاشة يعرض:
+     * - Fragment للسجل اليومي.
+     * - Fragment للاستكشاف.
+     *
+     * بدون ViewPager2 لن نستطيع التنقل بين التبويبين بالسحب.
+     */
     private ViewPager2 viewPager;
-    
-    // المحول المسؤول عن تزويد ViewPager بالصفحات (Fragments)
+
+    /**
+     * FoodPagerAdapter:
+     * ---------------------------------------------------------
+     * Adapter مسؤول عن تزويد ViewPager2 بالـ Fragments المناسبة.
+     *
+     * بدون هذا الـ Adapter لن يعرف ViewPager2
+     * أي Fragment يعرض في كل تبويب.
+     */
     private FoodPagerAdapter adapter;
 
     /**
-     * دالة onCreate: يتم استدعاؤها عند بدء إنشاء الشاشة.
+     * onCreate:
+     * ---------------------------------------------------------
+     * أول دالة تعمل عند فتح شاشة FoodsActivity.
+     *
+     * تقوم بـ:
+     * - ربط الشاشة بملف XML.
+     * - تجهيز Toolbar.
+     * - ربط ViewPager2 و TabLayout.
+     * - إنشاء Adapter.
+     * - ربط التبويبات بالصفحات.
+     * - تجهيز زر إضافة الطعام.
+     *
+     * أهمية الدالة:
+     * بدونها لن يتم بناء الشاشة أو ربط عناصرها بالكود.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // ربط ملف التصميم activity_foods_activtiy.xml بهذا الكود
+
+        // ربط شاشة Java مع ملف التصميم XML الخاص بها.
         setContentView(R.layout.activity_foods_activtiy);
 
-        // إعداد شريط الأدوات العلوي (Toolbar)
+        /**
+         * setSupportActionBar:
+         * ---------------------------------------------------------
+         * تجعل الـ Toolbar الموجود في XML يعمل كشريط علوي رسمي للشاشة.
+         *
+         * بدونها قد يظهر الـ Toolbar كشكل فقط
+         * بدون التعامل معه كـ ActionBar.
+         */
         setSupportActionBar(findViewById(R.id.toolbar));
-        
-        // --- ربط العناصر بالمعرفات (IDs) من ملف الـ XML ---
+
+        // ربط ViewPager2 من XML بالكود.
         viewPager = findViewById(R.id.viewPager);
+
+        // ربط TabLayout من XML بالكود.
         TabLayout tabLayout = findViewById(R.id.tabLayout);
+
+        // ربط الزر العائم من XML بالكود.
         FloatingActionButton fab = findViewById(R.id.fab_add_food);
 
-        // تهيئة المحول وربطه بـ ViewPager2
+        /**
+         * إنشاء Adapter وربطه مع ViewPager2.
+         *
+         * أهمية هذا الجزء:
+         * ViewPager2 لا يعرف وحده ماذا يعرض.
+         * لذلك يحتاج Adapter يحدد له الـ Fragments.
+         */
         adapter = new FoodPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
         /**
-         * ربط الـ TabLayout بـ ViewPager2.
-         * TabLayoutMediator تقوم بتعيين عناوين التبويبات بناءً على موضع الصفحة.
+         * TabLayoutMediator:
+         * ---------------------------------------------------------
+         * يربط بين TabLayout و ViewPager2.
+         *
+         * وظيفته:
+         * عندما يضغط المستخدم على Tab،
+         * ينتقل ViewPager2 للصفحة المناسبة.
+         *
+         * وأيضًا عندما يسحب المستخدم بين الصفحات،
+         * يتغير الـ Tab تلقائيًا.
+         *
+         * بدون TabLayoutMediator:
+         * قد يظهر TabLayout و ViewPager2،
+         * لكنهما لن يكونا مربوطين ببعض.
          */
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            // تحديد نص التبويب بناءً على الموضع (0 أو 1)
-            tab.setText(position == 0 ? "سجلي اليومي" : "استكشاف");
-        }).attach();
 
-        // --- إعداد حدث النقر على الزر العائم (إضافة طعام) ---
+            /**
+             * تحديد اسم كل تبويب حسب رقمه.
+             *
+             * position == 0:
+             * التبويب الأول هو Today's Log.
+             *
+             * position == 1:
+             * التبويب الثاني هو Explore.
+             */
+            tab.setText(position == 0 ? "Today's Log" : "Explore");
+
+        }).attach();//تفعيل الربط
+        /**
+         * OnClickListener للزر العائم:
+         * ---------------------------------------------------------
+         * ينتظر ضغط المستخدم على زر (+).
+         *
+         * عند الضغط:
+         * ينتقل المستخدم إلى شاشة AddFoods
+         * لإضافة طعام جديد يدويًا.
+         *
+         * بدون هذا Listener:
+         * الزر سيظهر في الشاشة لكنه لن يفعل شيئًا عند الضغط عليه.
+         */
         fab.setOnClickListener(v -> {
-            // الانتقال لشاشة "AddFoods" لإدخال طعام جديد يدوياً
+
+            // الانتقال إلى شاشة إضافة الطعام.
             startActivity(new Intent(this, AddFoods.class));
         });
     }
 
     /**
-     * دالة onResume: يتم استدعاؤها عندما تعود الشاشة للواجهة.
+     * onResume:
+     * ---------------------------------------------------------
+     * تُستدعى عندما ترجع هذه الشاشة للواجهة.
+     *
+     * مثال:
+     * إذا ذهب المستخدم إلى AddFoods ثم رجع،
+     * يتم استدعاء onResume.
+     *
+     * استخدمناها هنا حتى نحدث العرض
+     * ونعيد المستخدم إلى تبويب Today's Log.
+     *
+     * بدونها:
+     * قد يرجع المستخدم من إضافة الطعام
+     * ولا يرى التحديث مباشرة بالشكل المطلوب.
      */
     @Override
     protected void onResume() {
         super.onResume();
-        // التحقق من تحديث البيانات لضمان دقة العرض
+
+        // التأكد أن الـ Adapter موجود قبل استخدامه.
         if (adapter != null) onDataUpdated();
     }
 
     /**
-     * دالة onDataUpdated: يتم استدعاؤها عند حدوث تغيير في البيانات (إضافة/حذف).
-     * تنفذ واجهة OnDataUpdateListener المعرفة في FoodListFragment.
+     * onDataUpdated:
+     * ---------------------------------------------------------
+     * هذه الدالة تأتي من الواجهة:
+     * FoodListFragment.OnDataUpdateListener
+     *
+     * يتم استدعاؤها عندما تتغير بيانات الطعام
+     * مثل إضافة أو حذف طعام.
+     *
+     * وظيفتها هنا:
+     * إعادة المستخدم إلى التبويب الأول Today's Log.
+     *
+     * بدونها:
+     * بعد إضافة طعام من Explore أو AddFoods
+     * قد يبقى المستخدم في نفس التبويب ولا يرى السجل اليومي مباشرة.
      */
     @Override
     public void onDataUpdated() {
-        // إعادة المستخدم تلقائياً للتبويب الأول (السجل اليومي) عند تحديث البيانات
+
+        // الانتقال للتبويب الأول مع حركة انتقال.
         viewPager.setCurrentItem(0, true);
     }
 
     /**
-     * FoodPagerAdapter: فئة داخلية (Inner Class) لإدارة صفحات التبويب.
-     * تستخدم FragmentStateAdapter لضمان كفاءة استهلاك الذاكرة.
+     * FoodPagerAdapter:
+     * ---------------------------------------------------------
+     * كلاس داخلي مسؤول عن إدارة الـ Fragments داخل ViewPager2.
+     *
+     استخدام  FragmentStateAdapter
+     لأنه مناسب لإدارة وعرض Fragments
+     داخل ViewPager2.
+
+     كما أنه يساعد في تحسين استهلاك الذاكرة،
+     لأنه يدمر الـ Fragments غير المستخدمة
+     ويعيد إنشائها عند الحاجة.
+     * أهمية هذا الكلاس:
+     * بدونه ViewPager2 لن يعرف عدد الصفحات
+     * ولا أي Fragment يعرض في كل صفحة.
      */
     private static class FoodPagerAdapter extends FragmentStateAdapter {
 
         /**
-         * مشيد الفئة (Constructor).
-         * @param activity النشاط المضيف.
+         * Constructor:
+         * ---------------------------------------------------------
+         * يستقبل الـ Activity التي تحتوي على ViewPager2.
+         *
+         * نرسلها إلى super
+         * حتى يستطيع FragmentStateAdapter إدارة الـ Fragments
+         * داخل هذه الشاشة.
          */
         public FoodPagerAdapter(@NonNull AppCompatActivity activity) {
             super(activity);
         }
 
         /**
-         * دالة createFragment: لإنشاء الجزء (Fragment) المناسب لكل تبويب.
-         * @param position رقم التبويب المختار.
-         * @return كائن من نوع Fragment.
+         * createFragment:
+         * ---------------------------------------------------------
+         * هذه الدالة يطلبها ViewPager2 من الـ Adapter.
+         *
+         * وظيفتها:
+         * إنشاء Fragment مناسب حسب رقم التبويب.
+         *
+         * position == 0:
+         * إنشاء Fragment خاص بالسجل اليومي.
+         *
+         * position == 1:
+         * إنشاء Fragment خاص بقائمة Explore.
+         *
+         * بدون هذه الدالة:
+         * ViewPager2 لن يعرف ماذا يعرض في الصفحات.
          */
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            // إذا كان الموضع 0 ننشئ قائمة السجل اليومي، وإذا كان 1 ننشئ قائمة الاستكشاف
+
             return position == 0
                     ? FoodListFragment.newInstance(FoodListFragment.TYPE_USER_LOG)
                     : FoodListFragment.newInstance(FoodListFragment.TYPE_EXPLORE);
         }
 
         /**
-         * دالة getItemCount: تعيد عدد التبويبات الكلي.
+         * getItemCount:
+         * ---------------------------------------------------------
+         * ترجع عدد الصفحات داخل ViewPager2.
+         *
+         * في هذه الشاشة لدينا صفحتان فقط:
+         * 1. Today's Log
+         * 2. Explore
+         *
+         * لو رجعت رقم غير صحيح،
+         * عدد التبويبات والصفحات سيكون خاطئًا.
          */
         @Override
         public int getItemCount() {
-            return 2; // لدينا تبويبان فقط
+            return 2;
         }
     }
 }

@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services' // لتفعيل Firebase
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -19,7 +19,9 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'
+            ), 'proguard-rules.pro'
         }
     }
 
@@ -32,39 +34,38 @@ android {
 dependencies {
     // AndroidX Core
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation libs.activity
+
+    // Material Design
     implementation 'com.google.android.material:material:1.11.0'
 
-    // Gemini AI
+    // Gemini API القديم - اللي كود GeminiHelper تبعك يحتاجه
     implementation 'com.google.ai.client.generativeai:generativeai:0.9.0'
 
-    // Gson & Guava
+    // Gson
     implementation 'com.google.code.gson:gson:2.10.1'
-    implementation "com.google.guava:guava:31.0.1-android"
-    implementation "org.reactivestreams:reactive-streams:1.0.4"
 
-    // Room
+    // Guava + Reactive Streams
+    implementation 'com.google.guava:guava:31.0.1-android'
+    implementation 'org.reactivestreams:reactive-streams:1.0.4'
+
+    // Room Database
     implementation 'androidx.room:room-runtime:2.5.2'
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
 
-    // Firebase BOM - هذا يحل مشاكل النسخ
+    // Firebase BOM
     implementation platform('com.google.firebase:firebase-bom:32.2.0')
 
-    // Firebase بدون نسخ محددة، BOM بيضبطها
+    // Firebase Services
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-database'
 
-    // AndroidX Preferences
-    implementation 'androidx.preference:preference:1.2.0'
-
-    // اختياري - Testing
+    // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
-
-// Google Services plugin يجب أن يكون آخر شيء
-apply plugin: 'com.google.gms.google-services'

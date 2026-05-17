@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- إذن الإنترنت لازم يكون داخل manifest وخارج application -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
-        android:name="MyApp"
+        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,22 +26,38 @@
         </activity>
 
         <!-- Auth -->
-        <activity android:name=".SignIn" android:exported="false" />
-        <activity android:name=".SignUp" android:exported="false" />
+        <activity
+            android:name=".SignIn"
+            android:exported="false" />
+
+        <activity
+            android:name=".SignUp"
+            android:exported="false" />
 
         <!-- Onboarding -->
-        <activity android:name=".AboutYourself" android:exported="true" />
-        <activity android:name=".YourGoal" android:exported="true" />
+        <activity
+            android:name=".AboutYourself"
+            android:exported="true" />
+
+        <activity
+            android:name=".YourGoal"
+            android:exported="true" />
 
         <!-- Main -->
-        <activity android:name=".DashboardActivity" android:exported="false" />
-        <activity android:name=".Profile" android:exported="false" />
-        <activity android:name=".Progress" android:exported="false" />
-        <activity android:name=".Exercises" android:exported="false" />
-        <activity android:name=".AddNewExercise" android:exported="false" />
-        <activity android:name=".AddFoods" android:exported="false" />
-        <activity android:name=".FoodsActivtiy" android:exported="false" />
-        <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity
+            android:name=".DashboardActivity" android:exported="false" />
+        <activity
+            android:name=".Profile" android:exported="false" />
+        <activity
+            android:name=".Exercises" android:exported="false" />
+        <activity
+            android:name=".AddNewExercise" android:exported="false" />
+        <activity
+            android:name=".AddFoods" android:exported="false" />
+        <activity
+            android:name=".FoodsActivtiy" android:exported="false" />
+        <activity
+            android:name=".SettingsActivity" android:exported="false" />
 
     </application>
 

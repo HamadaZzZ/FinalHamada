@@ -34,48 +34,21 @@
         app:layout_constraintHorizontal_bias="0.5" />
 
     <!-- ===== STEP TEXT ===== -->
-    <TextView
-        android:id="@+id/tvstepText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Step 1 of 5"
-        android:textSize="14sp"
-        android:textColor="#666666"
-        app:layout_constraintTop_toBottomOf="@id/backButton"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"/>
 
     <!-- ===== PROGRESS BAR ===== -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:progress="20"
-        android:max="100"
-        android:progressTint="#13a4ec"
-        android:backgroundTint="#3313a4ec"
-        app:layout_constraintTop_toBottomOf="@id/tvstepText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="8dp"
-        android:indeterminate="false" />
 
     <!-- ===== TITLE ===== -->
     <TextView
         android:id="@+id/tvheading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="Tell us about yourself"
         android:textColor="#000000"
-        android:textStyle="bold"
         android:textSize="22sp"
-        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"/>
+        tools:layout_editor_absoluteY="131dp" />
 
     <!-- ===== AGE INPUT ===== -->
     <EditText

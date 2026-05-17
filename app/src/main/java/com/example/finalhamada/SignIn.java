@@ -78,8 +78,23 @@ public class SignIn extends AppCompatActivity {
                 String password = etPassword.getText().toString().trim();
 
                 /**
-                 * استخدام Firebase لمحاولة تسجيل الدخول بالبريد وكلمة المرور.
-                 * يتم إرسال طلب لخوادم Firebase والانتظار حتى انتهاء المهمة (Task).
+                 signInWithEmailAndPassword
+                 تستخدم لتسجيل دخول المستخدم
+                 باستخدام البريد الإلكتروني وكلمة المرور
+                 عن طريق Firebase Authentication.
+
+                 تقوم Firebase بالتحقق من صحة البيانات،
+                 وإذا كانت صحيحة يتم تسجيل دخول المستخدم.
+
+
+                 استخدمت addOnCompleteListener
+                 لأن Firebase يعمل بشكل غير مباشر (Asynchronous)
+                 ويحتاج وقت لإرجاع النتيجة.
+
+                 الListener ينتظر انتهاء العملية،
+                 ثم ينفذ الكود المناسب
+                 سواء نجحت العملية أو فشلت.
+
                  */
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
@@ -128,8 +143,23 @@ public class SignIn extends AppCompatActivity {
     }
 
     /**
-     * دالة validateAndLogin: للتحقق من صحة البيانات المدخلة قبل إرسال الطلب للخادم.
-     * @return true إذا كانت البيانات مطابقة للشروط، false خلاف ذلك.
+     ا validateAndLogi
+     للتحقق من صحة البيانات المدخلة
+     مثل الإيميل وكلمة المرور
+     قبل إرسالها إلى Firebase.
+
+     هذا يمنع إرسال بيانات خاطئة أو ناقصة،
+     ويحسن تجربة المستخدم ويقلل الأخطاء.
+
+
+     Patterns.EMAIL_ADDRESS
+     هي أداة جاهزة من Android
+     تستخدم للتحقق من أن النص المدخل
+     يتبع تنسيق بريد إلكتروني صحيح.
+
+     استخدمتها لمنع المستخدم
+     من إدخال Email غير صالح
+     قبل إرساله إلى Firebase.
      */
     private boolean validateAndLogin() {
 
@@ -137,6 +167,7 @@ public class SignIn extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
 
         boolean isValid = true;
+
 
         // 1. التحقق من أن حقل الإيميل ليس فارغاً ويتبع التنسيق الصحيح (name@domain.com)
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {

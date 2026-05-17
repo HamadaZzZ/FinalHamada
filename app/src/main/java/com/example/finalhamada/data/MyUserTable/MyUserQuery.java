@@ -1,84 +1,223 @@
-package com.example.finalhamada.data.MyUserTable;
+package com.example.finalhamada.data.MyUserTable; // مكان الواجهة داخل المشروع
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.room.Dao; // يحول الواجهة إلى DAO داخل Room Database
+import androidx.room.Delete; // يستخدم لحذف بيانات من قاعدة البيانات
+import androidx.room.Insert; // يستخدم لإضافة بيانات جديدة
+import androidx.room.Query; // يستخدم لتنفيذ SQL Query
+import androidx.room.Update; // يستخدم لتعديل بيانات موجودة
 
-import java.util.List;
+import java.util.List; // لتخزين قائمة من المستخدمين
 
+/**
+ * ============================================================
+ * MyUserQuery
+ * ============================================================
+ *
+ * هذه الواجهة تعتبر DAO
+ * الخاصة بجدول المستخدمين.
+ *
+ * DAO اختصار لـ:
+ * Data Access Object
+ *
+ * يعني:
+ * واجهة مسؤولة عن
+ * التواصل مع قاعدة البيانات.
+ *
+ * استخدمتها للتعامل مع:
+ * - إضافة مستخدم
+ * - تعديل بيانات المستخدم
+ * - حذف مستخدم
+ * - جلب المستخدمين
+ * - تسجيل الدخول
+ *
+ * Room يقوم تلقائيًا
+ * بتحويل هذه الدوال
+ * إلى SQL Queries حقيقية.
+ */
 @Dao
 public interface MyUserQuery {
 
+    /**
+     * ============================================================
+     * @Insert
+     * ============================================================
+     *
+     * Insert يعني:
+     * إضافة بيانات جديدة
+     * إلى قاعدة البيانات.
+     *
+     * عندما أرسل MyUser
+     * إلى هذه الدالة،
+     * يقوم Room بإضافته
+     * داخل جدول المستخدمين.
+     */
+
+    /**
+     * ============================================================
+     * insertUser
+     * ============================================================
+     *
+     * هذه الدالة تضيف
+     * مستخدم جديد
+     * إلى قاعدة البيانات.
+     *
+     * استخدمتها عند:
+     * - إنشاء حساب جديد
+     * - تسجيل مستخدم جديد
+     *
+     * @param user المستخدم المراد إضافته
+     */
     @Insert
-/**
- * Method: insertUser
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param user - description
- */
     void insertUser(MyUser user);
 
+    /**
+     * ============================================================
+     * @Update
+     * ============================================================
+     *
+     * Update يعني:
+     * تعديل بيانات موجودة مسبقًا
+     * داخل قاعدة البيانات.
+     */
+
+    /**
+     * ============================================================
+     * updateUser
+     * ============================================================
+     *
+     * هذه الدالة تعدل
+     * بيانات المستخدم.
+     *
+     * استخدمتها عندما يقوم المستخدم
+     * بتعديل بياناته مثل:
+     * - الاسم
+     * - الوزن
+     * - الهدف
+     *
+     * @param user المستخدم بعد التعديل
+     */
     @Update
-/**
- * Method: updateUser
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param user - description
- */
     void updateUser(MyUser user);
 
+    /**
+     * ============================================================
+     * @Delete
+     * ============================================================
+     *
+     * Delete يعني:
+     * حذف بيانات
+     * من قاعدة البيانات.
+     */
+
+    /**
+     * ============================================================
+     * deleteUser
+     * ============================================================
+     *
+     * هذه الدالة تحذف
+     * مستخدم من قاعدة البيانات.
+     *
+     * @param user المستخدم المراد حذفه
+     */
     @Delete
-/**
- * Method: deleteUser
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param user - description
- */
     void deleteUser(MyUser user);
 
+    /**
+     * ============================================================
+     * @Query
+     * ============================================================
+     *
+     * Query تعني:
+     * تنفيذ أمر SQL
+     * على قاعدة البيانات.
+     */
+
+    /**
+     * ============================================================
+     * getAllUsers
+     * ============================================================
+     *
+     * هذه الدالة تجلب
+     * جميع المستخدمين
+     * من قاعدة البيانات.
+     *
+     * SQL:
+     * SELECT * FROM MyUser
+     *
+     * معناها:
+     * جلب جميع الصفوف
+     * من جدول المستخدمين.
+     *
+     * استخدمتها لعرض
+     * جميع المستخدمين
+     * داخل RecyclerView.
+     *
+     * @return قائمة جميع المستخدمين
+     */
     @Query("SELECT * FROM MyUser")
-/**
- * Method: getAllUsers
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * @return ReferenceType(arguments=[TypeArgument(pattern_type=None, type=ReferenceType(arguments=None, dimensions=[], name=MyUser, sub_type=None))], dimensions=[], name=List, sub_type=None) - description
- */
     List<MyUser> getAllUsers();
 
+    /**
+     * ============================================================
+     * getUserByEmail
+     * ============================================================
+     *
+     * هذه الدالة تبحث
+     * عن مستخدم
+     * باستخدام الإيميل.
+     *
+     * SQL:
+     * WHERE email = :email
+     *
+     * معناها:
+     * جلب المستخدم
+     * الذي يملك نفس الإيميل المرسل.
+     *
+     * LIMIT 1:
+     * يعني إرجاع أول نتيجة فقط.
+     *
+     * استخدمتها للتحقق:
+     * هل الإيميل موجود مسبقًا أم لا.
+     *
+     * @param email البريد الإلكتروني
+     *
+     * @return المستخدم المطلوب
+     */
     @Query("SELECT * FROM MyUser WHERE email = :email LIMIT 1")
-/**
- * Method: getUserByEmail
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param email - description
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=MyUser, sub_type=None) - description
- */
     MyUser getUserByEmail(String email);
 
+    /**
+     * ============================================================
+     * login
+     * ============================================================
+     *
+     * هذه الدالة تستخدم
+     * لتسجيل الدخول.
+     *
+     * تقوم بالبحث
+     * عن مستخدم يملك:
+     * - نفس الإيميل
+     * - ونفس كلمة المرور
+     *
+     * SQL:
+     * WHERE email = :email
+     * AND password = :password
+     *
+     * معناها:
+     * يجب أن تتطابق
+     * القيمتان معًا.
+     *
+     * LIMIT 1:
+     * يعني إرجاع مستخدم واحد فقط.
+     *
+     * استخدمتها للتحقق
+     * من صحة بيانات تسجيل الدخول.
+     *
+     * @param email البريد الإلكتروني
+     * @param password كلمة المرور
+     *
+     * @return المستخدم إذا كانت البيانات صحيحة
+     */
     @Query("SELECT * FROM MyUser WHERE email = :email AND password = :password LIMIT 1")
-/**
- * Method: login
- * Purpose (EN): Describe what this method does.
- * الهدف (AR): شرح مختصر لوظيفة هذه الدالة.
- *
- * Parameters:
- * @param email - description
- * @param password - description
- *
- * @return ReferenceType(arguments=None, dimensions=[], name=MyUser, sub_type=None) - description
- */
     MyUser login(String email, String password);
 }
-

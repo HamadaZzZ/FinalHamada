@@ -1,39 +1,101 @@
 package com.example.finalhamada;
 
-import android.app.Application; // الكلاس الأساسي لتعريف إعدادات التطبيق العامة.
-import android.content.SharedPreferences; // أداة لتخزين واسترجاع إعدادات بسيطة (مثل وضع النهار/الليل).
-import androidx.appcompat.app.AppCompatDelegate; // أداة للتحكم في سمات التطبيق (Themes).
+import android.app.Application; // الكلاس الأساسي للتطبيق، يعمل قبل أي Activity.
+import android.content.SharedPreferences; // يستخدم لحفظ واسترجاع الإعدادات البسيطة.
+import androidx.appcompat.app.AppCompatDelegate; // للتحكم بوضع التطبيق (Dark / Light).
 
 /**
- * MyApp: كلاس التطبيق الرئيسي (Application Class).
+ * MyApp:
  * ---------------------------------------------------------
- * يتم تشغيل هذا الكلاس مرة واحدة فقط عند بدء تشغيل التطبيق (قبل أي شاشة).
- * نستخدمه لتهيئة الإعدادات العامة التي يجب أن تطبق على جميع الشاشات،
- * مثل التحقق من تفضيلات المستخدم لوضع الرؤية (Dark Mode).
+ * هذا الكلاس يمثل التطبيق بالكامل (Application Class).
+ *
+ * يتم تشغيله مرة واحدة فقط
+ * عند فتح التطبيق لأول مرة،
+ * قبل تشغيل أي شاشة.
+ *
+ * استخدمته لتطبيق الإعدادات العامة
+ * على جميع شاشات التطبيق،
+ * مثل:
+ * Dark Mode / Light Mode.
  */
 public class MyApp extends Application {
 
     /**
-     * دالة onCreate: يتم استدعاؤها عند تشغيل التطبيق لأول مرة.
+     * دالة onCreate:
+     * ---------------------------------------------------------
+     * أول دالة تعمل عند تشغيل التطبيق.
+     *
+     * استخدمتها من أجل:
+     * - قراءة إعدادات المستخدم المحفوظة.
+     * - معرفة إذا كان المستخدم اختار Dark Mode.
+     * - تطبيق الثيم على التطبيق كامل.
+     *
+     * أهمية الدالة:
+     * بدونها لن يتم تطبيق الإعدادات العامة
+     * تلقائيًا عند تشغيل التطبيق.
      */
     @Override
     public void onCreate() {
+
         super.onCreate();
 
-        // --- استعادة إعدادات المستخدم من الذاكرة الدائمة (SharedPreferences) ---
-        // نفتح ملف الإعدادات المسمى "settings" بوضع الخصوصية (MODE_PRIVATE)
-        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        
-        // قراءة قيمة "dark_mode"، وإذا لم توجد نعتبر القيمة الافتراضية "false" (وضع النهار)
-        boolean darkMode = prefs.getBoolean("dark_mode", false);
+        /**
+         * SharedPreferences:
+         * ---------------------------------------------------------
+         *  لحفظ واسترجاع الإعدادات البسيطة
+         * داخل ذاكرة الجهاز.
+         *
+         * استخدمتها لحفظ:
+         * حالة Dark Mode.
+         *
+         * أهمية استخدامها:
+         * تجعل التطبيق يتذكر اختيار المستخدم
+         * حتى بعد إغلاق التطبيق.
+         */
+        SharedPreferences prefs =
+                getSharedPreferences("settings", MODE_PRIVATE);
 
-        // --- تطبيق الوضع المختار على مستوى التطبيق بالكامل ---
+        /**
+         * getBoolean():
+         * ---------------------------------------------------------
+         * تقوم بقراءة قيمة dark_mode
+         * من SharedPreferences.
+         *
+         * إذا لم تكن القيمة موجودة،
+         * يتم استخدام false كقيمة افتراضية.
+         */
+        boolean darkMode =
+                prefs.getBoolean("dark_mode", false);
+
+        /**
+         * التحقق إذا كان المستخدم
+         * فعّل الوضع الليلي.
+         */
         if (darkMode) {
-            // تفعيل الوضع الليلي (Dark Mode)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            /**
+             * setDefaultNightMode():
+             * ---------------------------------------------------------
+             * تقوم بتفعيل Dark Mode
+             * على جميع شاشات التطبيق.
+             *
+             * MODE_NIGHT_YES:
+             * يعني تشغيل الوضع الليلي.
+             */
+            AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+            );
+
         } else {
-            // تفعيل وضع النهار (Light Mode)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+            /**
+             * MODE_NIGHT_NO:
+             * ---------------------------------------------------------
+             * يعني تشغيل الوضع النهاري (Light Mode).
+             */
+            AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+            );
         }
     }
 }
