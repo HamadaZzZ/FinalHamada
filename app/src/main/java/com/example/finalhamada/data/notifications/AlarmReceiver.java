@@ -84,7 +84,7 @@ public class AlarmReceiver extends BroadcastReceiver {
              * notify:
              * الرقم 1001 هو id الإشعار.
              */
-            manager.notify(1001, builder.build());
+            manager.notify(1001, builder.build());// يطلع الاشعار على شاشه الجهاز
         }
     }
 }
