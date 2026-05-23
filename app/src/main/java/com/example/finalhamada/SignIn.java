@@ -137,7 +137,7 @@ public class SignIn extends AppCompatActivity {
 
         // إذا وُجد مستخدم مسجل مسبقاً، يتم نقله تلقائياً لتخطي شاشة الدخول
         if (currentUser != null) {
-            startActivity(new Intent(SignIn.this, AboutYourself.class));
+           startActivity(new Intent(SignIn.this, AboutYourself.class));
             finish();
         }
     }

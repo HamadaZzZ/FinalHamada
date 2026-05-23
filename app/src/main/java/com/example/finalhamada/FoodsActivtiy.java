@@ -122,20 +122,17 @@ public class FoodsActivtiy extends AppCompatActivity implements FoodListFragment
          * قد يظهر TabLayout و ViewPager2،
          * لكنهما لن يكونا مربوطين ببعض.
          */
+
+// Lambda الكود المخفي من
+// public void onConfigureTab(TabLayout.Tab tab, int position) {
+        //onConfigureTab  * يتم استدعاؤها تلقائيًا من TabLayoutMediator
+        //                         * لتجهيز كل Tab داخل TabLayout.
+
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
 
-            /**
-             * تحديد اسم كل تبويب حسب رقمه.
-             *
-             * position == 0:
-             * التبويب الأول هو Today's Log.
-             *
-             * position == 1:
-             * التبويب الثاني هو Explore.
-             */
             tab.setText(position == 0 ? "Today's Log" : "Explore");
 
-        }).attach();//تفعيل الربط
+        }).attach();
         /**
          * OnClickListener للزر العائم:
          * ---------------------------------------------------------

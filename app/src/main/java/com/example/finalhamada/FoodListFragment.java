@@ -243,7 +243,7 @@ public class FoodListFragment extends Fragment implements FoodAdapter.AdapterInt
     ) {
         View view = inflater.inflate(R.layout.fragment_food_list, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView);//ربطو من الxml للكود
 
         setupRecyclerView();
 
@@ -269,22 +269,19 @@ public class FoodListFragment extends Fragment implements FoodAdapter.AdapterInt
     /**
      * setupRecyclerView:
      * ---------------------------------------------------------
-     * تجهز RecyclerView لعرض البيانات.
-     *
-     * تقوم بـ:
-     * - تحديد طريقة العرض العمودية بواسطة LinearLayoutManager.
-     * - إنشاء FoodAdapter.
-     * - ربط الـ Adapter بالـ RecyclerView.
+     * تجهز RecyclerView لعرض البيانات.*
      *
      * بدون هذه الدالة ستبقى القائمة غير جاهزة للعرض.
      */
     private void setupRecyclerView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // تحديد طريقة العرض العمودية بواسطة LinearLayoutManager.
 
-        foodAdapter = new FoodAdapter(displayItems, this, fragmentType);
+        foodAdapter = new FoodAdapter(displayItems, this, fragmentType);//إنشاء FoodAdapter.
 
-        recyclerView.setAdapter(foodAdapter);
+        recyclerView.setAdapter(foodAdapter);// * - بركب  الـ Adapter بالـ RecyclerView.
+
     }
 
     /**

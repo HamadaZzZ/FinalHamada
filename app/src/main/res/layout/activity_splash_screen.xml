@@ -1,55 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splashLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F9FA"
-    tools:context=".SplashScreen"
-    android:id="@+id/splashLayout">
+    android:background="#000000"
+    tools:context=".SplashScreen">
 
-    <!-- الخلفية: شخص يركض -->
-    <ImageView
-        android:id="@+id/bgRunner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:alpha="0.2"
-        android:scaleType="centerInside" />
-
-    <!-- دائرة تحتوي على علامة صح -->
+    <!-- Logo -->
     <ImageView
         android:id="@+id/checkIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="90dp"
+        android:src="@drawable/fittrack_logo"
+        android:scaleType="fitCenter" />
 
-    <!-- اسم التطبيق -->
+    <!-- App Name -->
     <TextView
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/checkIcon"
-        android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
-        android:text="FitMate"
-        android:textColor="#000000"
-        android:textSize="32sp"
+        android:layout_marginTop="12dp"
+        android:text="FitTrack"
+        android:textColor="#2196F3"
+        android:textSize="38sp"
         android:textStyle="bold" />
 
-    <!-- الوصف -->
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/appSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/appName"
-        android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:text="Your ultimate fitness companion."
-        android:textColor="#666666"
-        android:textSize="16sp" />
+        android:layout_marginTop="6dp"
+        android:text="Track your fitness journey"
+        android:textColor="#42A5F5"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
-    <!-- شريط التحميل -->
+    <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -58,6 +52,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="24dp"
         android:progress="60"
-        android:progressTint="#42A5F5"
-        android:progressBackgroundTint="#BBDEFB" />
+        android:progressTint="#2196F3"
+        android:progressBackgroundTint="#1E1E1E" />
+
 </RelativeLayout>

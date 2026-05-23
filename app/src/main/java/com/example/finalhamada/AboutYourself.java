@@ -71,11 +71,10 @@ public class AboutYourself extends AppCompatActivity {
 
         // ربط الشاشة بملف التصميم XML
         setContentView(R.layout.activity_about_yourself);
-
-        // ضبط الشاشة لتتناسب مع حواف النظام
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-
+            // ضبط الشاشة لتتناسب مع حواف النظام
+            // يعني بضيف مساحات
             v.setPadding(
                     systemBars.left,
                     systemBars.top,
@@ -290,7 +289,6 @@ public class AboutYourself extends AppCompatActivity {
                  * إذا حدث خطأ أثناء الحفظ.
                  */
                 .addOnFailureListener(e -> {
-
                     Toast.makeText(
                             this,
                             "Save failed " + e.getMessage(),
